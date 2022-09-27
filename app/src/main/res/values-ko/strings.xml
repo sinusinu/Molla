@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="main_menu_all">모든 앱</string>
+    <string name="main_menu_settings">설정</string>
+    <string name="main_placeholder_time">12:00</string>
+    <string name="main_placeholder_bat">100%</string>
+    <string name="main_bat">%d%%</string>
+    <string name="main_edit_fav">바로가기 편집</string>
+
+    <string name="all_title">모든 앱</string>
+    <string name="all_back">뒤로</string>
+
+    <string name="edit_title">바로가기</string>
+    <string name="edit_subtitle">첫 화면에 표시할 앱을 선택합니다.</string>
+
+    <string name="settings_title">설정</string>
+    <string name="settings_wallpaper_title">배경화면 변경</string>
+    <string name="settings_wallpaper_desc">런처에서 사용될 배경화면을 변경합니다. 시스템 배경화면은 변경되지 않습니다.</string>
+    <string name="settings_hide_non_tv_apps_title">비 TV 앱 숨기기</string>
+    <string name="settings_hide_non_tv_apps_desc">Android TV에서 지원되지 않는 앱들을 숨깁니다.</string>
+    <string name="settings_error_wallpaper">이 기기에서는 배경화면을 사용할 수 없습니다</string>
+    <string name="settings_error_wallpaper_no_picker">이미지를 선택할 수 있는 앱이 없습니다, 갤러리 앱을 설치해주세요</string>
+</resources>

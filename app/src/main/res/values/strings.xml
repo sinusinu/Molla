@@ -1,0 +1,27 @@
+<resources>
+    <string name="app_name" translatable="false">Molla</string>
+
+    <string name="main_menu_all">All Apps</string>
+    <string name="main_menu_settings">Settings</string>
+    <string name="main_placeholder_time">12:00</string>
+    <string name="main_placeholder_bat">100%</string>
+    <string name="main_bat">%d%%</string>
+    <string name="main_edit_fav">Edit Quick Access</string>
+
+    <string name="all_title">All apps</string>
+    <string name="all_back">Back</string>
+
+    <string name="edit_title">Quick Access</string>
+    <string name="edit_subtitle">Selected items will be shown on main screen.</string>
+
+    <string name="settings_title">Settings</string>
+    <string name="settings_wallpaper_title">Change Wallpaper</string>
+    <string name="settings_wallpaper_desc">Change the wallpaper used within this launcher. This will not change the system wallpaper.</string>
+    <string name="settings_hide_non_tv_apps_title">Hide non-TV apps</string>
+    <string name="settings_hide_non_tv_apps_desc">Do not show apps that are not supported on Android TV.</string>
+    <string name="settings_about_title" translatable="false">Molla %s</string>
+    <string name="settings_about_desc" translatable="false">© 2022 sinu</string>
+    <string name="settings_error_wallpaper">Wallpaper is not supported on this device</string>
+    <string name="settings_error_wallpaper_no_picker">Image picking app is not found, install at least one gallery app</string>
+</resources>
+
