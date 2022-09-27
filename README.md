@@ -8,7 +8,7 @@ Specifically, Molla is made for use on my ODROID-GO Super. ~~yes i run android o
 
 ## Some important notes
 
-- Molla is **not** made with performance, stability, long-term maintenance or whatever in mind. The first release (v0.1) was made within 2 days by a half-asleep bonehead. In current state, it is highly fragile, crude, and full of bugs. Since I am "if it works it works" kind of guy, those problems probably won't be fixed unless I get the necessity of it.
+- Molla is **not** made with performance, stability, long-term maintenance or whatever in mind. Molla is in very early stage of development, highly fragile, crude, and full of bugs. Since I am "if it works it works" kind of guy, those problems probably won't be fixed unless I get the necessity of it.
 
 - Molla is best used on devices with:
   - no touchscreen
