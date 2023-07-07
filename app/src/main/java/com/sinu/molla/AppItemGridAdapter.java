@@ -49,6 +49,7 @@ public class AppItemGridAdapter extends RecyclerView.Adapter<AppItemGridAdapter.
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnHoverListener, View.OnFocusChangeListener {
+        public final FrameLayout fvBody;
         public final ImageView ivBanner;
         public final ImageView ivIcon;
 
@@ -59,6 +60,7 @@ public class AppItemGridAdapter extends RecyclerView.Adapter<AppItemGridAdapter.
         public ViewHolder(@NonNull View v) {
             super(v);
 
+            fvBody = v.findViewById(R.id.fv_appitem_grid_body);
             ivBanner = v.findViewById(R.id.iv_appitem_grid_banner);
             ivIcon = v.findViewById(R.id.iv_appitem_grid_icon);
 
@@ -110,6 +112,9 @@ public class AppItemGridAdapter extends RecyclerView.Adapter<AppItemGridAdapter.
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Drawable appBanner = null;
         Drawable appIcon = null;
+
+        holder.fvBody.setContentDescription(list.get(position).displayName);
+
         if (IconCache.containsKey(list.get(position).packageName)) {
             AppItemCache ci = IconCache.get(list.get(position).packageName);
             if (ci.type == 0) {

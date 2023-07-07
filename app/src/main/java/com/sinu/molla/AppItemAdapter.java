@@ -54,6 +54,7 @@ public class AppItemAdapter extends RecyclerView.Adapter<AppItemAdapter.ViewHold
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnHoverListener, View.OnFocusChangeListener {
+        public final FrameLayout fvBody;
         public final ImageView ivBanner;
         public final ImageView ivIcon;
 
@@ -65,6 +66,7 @@ public class AppItemAdapter extends RecyclerView.Adapter<AppItemAdapter.ViewHold
         public ViewHolder(@NonNull View v) {
             super(v);
 
+            fvBody = v.findViewById(R.id.fv_appitem_body);
             ivBanner = v.findViewById(R.id.iv_appitem_banner);
             ivIcon = v.findViewById(R.id.iv_appitem_icon);
 
@@ -124,12 +126,17 @@ public class AppItemAdapter extends RecyclerView.Adapter<AppItemAdapter.ViewHold
             holder.ivBanner.setImageDrawable(drawableGeneric);
             holder.ivIcon.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_edit));
 
+            holder.fvBody.setContentDescription(context.getString(R.string.main_edit_fav));
+
             holder.intent = new Intent(context, EditActivity.class);
             holder.isEdit = true;
         } else {
             holder.isEdit = false;
             Drawable appBanner = null;
             Drawable appIcon = null;
+
+            holder.fvBody.setContentDescription(list.get(position).displayName);
+
             if (IconCache.containsKey(list.get(position).packageName)) {
                 AppItemCache ci = IconCache.get(list.get(position).packageName);
                 if (ci.type == 0) {

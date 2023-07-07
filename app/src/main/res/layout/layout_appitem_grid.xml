@@ -2,13 +2,15 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fv_appitem_grid_body"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginEnd="12dp"
     android:layout_marginBottom="12dp"
     android:clickable="true"
     android:descendantFocusability="afterDescendants"
-    android:focusable="true">
+    android:focusable="true"
+    tools:ignore="SpeakableTextPresentCheck">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
