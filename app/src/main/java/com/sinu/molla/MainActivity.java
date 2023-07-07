@@ -9,6 +9,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.content.res.AppCompatResources;
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.Manifest;
@@ -116,7 +117,12 @@ public class MainActivity extends AppCompatActivity {
         }
 
         cm = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
-        wm = (WifiManager)getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+        // must explicitly check this permission, might be missing on devices without wifi
+        if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_WIFI_STATE) == PackageManager.PERMISSION_GRANTED) {
+            wm = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+        } else {
+            wm = null;
+        }
 
         rUpdateStatus = () -> {
             batteryStatus = registerReceiver(null, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
@@ -166,6 +172,7 @@ public class MainActivity extends AppCompatActivity {
                 binding.ivMainConnIcon.setVisibility(View.VISIBLE);
                 switch (ni.getType()) {
                     case ConnectivityManager.TYPE_WIFI:
+                        // assuming wm is non-null; devices without wifi won't reach here, right?
                         WifiInfo info = wm.getConnectionInfo();
                         int level = WifiManager.calculateSignalLevel(info.getRssi(), 3);
                         switch (level) {
