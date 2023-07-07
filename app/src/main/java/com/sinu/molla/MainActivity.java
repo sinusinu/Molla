@@ -212,7 +212,6 @@ public class MainActivity extends AppCompatActivity {
             binding.pbrMainLoading.setVisibility(View.INVISIBLE);
             binding.rvMainFav.setVisibility(View.INVISIBLE);
             binding.tvMainFavName.setVisibility(View.INVISIBLE);
-            getCurrentFocus().clearFocus();
         }
         h.removeCallbacks(rUpdateStatus);
     }
