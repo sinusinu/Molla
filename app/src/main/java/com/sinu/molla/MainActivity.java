@@ -21,6 +21,8 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.wifi.WifiInfo;
+import android.net.wifi.WifiManager;
 import android.os.BatteryManager;
 import android.os.Bundle;
 import android.os.Handler;
@@ -55,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
     Intent batteryStatus;
     boolean batteryExist;
     ConnectivityManager cm;
+    WifiManager wm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -113,6 +116,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         cm = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+        wm = (WifiManager)getApplicationContext().getSystemService(Context.WIFI_SERVICE);
 
         rUpdateStatus = () -> {
             batteryStatus = registerReceiver(null, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
@@ -162,7 +166,19 @@ public class MainActivity extends AppCompatActivity {
                 binding.ivMainConnIcon.setVisibility(View.VISIBLE);
                 switch (ni.getType()) {
                     case ConnectivityManager.TYPE_WIFI:
-                        binding.ivMainConnIcon.setImageDrawable(AppCompatResources.getDrawable(this, R.drawable.ic_conn_wifi));
+                        WifiInfo info = wm.getConnectionInfo();
+                        int level = WifiManager.calculateSignalLevel(info.getRssi(), 3);
+                        switch (level) {
+                            case 2:
+                                binding.ivMainConnIcon.setImageDrawable(AppCompatResources.getDrawable(this, R.drawable.ic_conn_wifi));
+                                break;
+                            case 1:
+                                binding.ivMainConnIcon.setImageDrawable(AppCompatResources.getDrawable(this, R.drawable.ic_conn_wifi_low));
+                                break;
+                            case 0:
+                                binding.ivMainConnIcon.setImageDrawable(AppCompatResources.getDrawable(this, R.drawable.ic_conn_wifi_verylow));
+                                break;
+                        }
                         break;
                     case ConnectivityManager.TYPE_MOBILE:
                         binding.ivMainConnIcon.setImageDrawable(AppCompatResources.getDrawable(this, R.drawable.ic_conn_cellular));
