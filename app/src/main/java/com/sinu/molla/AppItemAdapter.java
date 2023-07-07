@@ -3,7 +3,6 @@
 
 package com.sinu.molla;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -104,7 +103,8 @@ public class AppItemAdapter extends RecyclerView.Adapter<AppItemAdapter.ViewHold
         @Override
         public void onClick(View view) {
             if (isEdit) {
-                Activity a = (Activity)context;
+                MainActivity a = (MainActivity)context;
+                a.reserveFavListUpdate();
                 a.startActivity(intent);
                 a.overridePendingTransition(R.anim.no_anim, R.anim.no_anim);
             } else {

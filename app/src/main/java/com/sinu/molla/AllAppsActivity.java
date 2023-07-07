@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 
 import android.os.Bundle;
+import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 
@@ -27,18 +28,25 @@ public class AllAppsActivity extends AppCompatActivity {
         binding = ActivityAllAppsBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        items = AppItem.fetchAllApps(this);
-        Collections.sort(items, AppItem::compareByDisplayName);
+        AppItem.fetchAllAppsAsync(this, (items) -> {
+            this.items = items;
+            Collections.sort(items, AppItem::compareByDisplayName);
 
-        GridLayoutManager manager = new GridLayoutManager(this, 4);
-        adapter = new AppItemGridAdapter(this, manager, items);
+            runOnUiThread(() -> {
+                GridLayoutManager manager = new GridLayoutManager(this, 4);
+                adapter = new AppItemGridAdapter(this, manager, items);
 
-        adapter.setOnAppItemFocusChangedListener((i, n) -> {
-            binding.tvAllName.setText(n);
+                adapter.setOnAppItemFocusChangedListener((i, n) -> {
+                    binding.tvAllName.setText(n);
+                });
+
+                binding.rvAllAllapps.setLayoutManager(manager);
+                binding.rvAllAllapps.setAdapter(adapter);
+
+                binding.rvAllAllapps.setVisibility(View.VISIBLE);
+                binding.pbrAllLoading.setVisibility(View.GONE);
+            });
         });
-
-        binding.rvAllAllapps.setLayoutManager(manager);
-        binding.rvAllAllapps.setAdapter(adapter);
 
         binding.ivAllBack.setOnFocusChangeListener((view, hasFocus) -> {
             binding.ivAllBack.setBackgroundColor(getColor(hasFocus ? R.color.transparent_white : R.color.transparent));

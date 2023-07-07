@@ -41,26 +41,35 @@ public class EditActivity extends AppCompatActivity {
         String favAppsRaw = pref.getString("fav_apps", "");
         ArrayList<String> favApps = new ArrayList<String>(Arrays.asList(favAppsRaw.split("\\?")));
 
-        selectedItems = AppItem.fetchListOfApps(this, favApps);
+        AppItem.fetchListOfAppsAsync(this, favApps, (r) -> {
+            selectedItems = r;
 
-        items = AppItem.fetchAllApps(this);
-        Collections.sort(items, AppItem::compareByDisplayName);
+            AppItem.fetchAllAppsAsync(this, (rr) -> {
+                items = rr;
+                Collections.sort(items, AppItem::compareByDisplayName);
 
-        LinearLayoutManager manager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+                runOnUiThread(() -> {
+                    LinearLayoutManager manager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
 
-        itemClickListener = view -> {
-            int idx = manager.getPosition(view);
-            AppItem si = items.get(idx);
-            if (selectedItems.contains(si)) selectedItems.remove(si);
-            else selectedItems.add(si);
-            updatePref();
-            adapter.notifyItemChanged(idx);
-        };
+                    itemClickListener = view -> {
+                        int idx = manager.getPosition(view);
+                        AppItem si = items.get(idx);
+                        if (selectedItems.contains(si)) selectedItems.remove(si);
+                        else selectedItems.add(si);
+                        updatePref();
+                        adapter.notifyItemChanged(idx);
+                    };
 
-        adapter = new AppItemListAdapter(this, manager, items, selectedItems, itemClickListener);
+                    adapter = new AppItemListAdapter(this, manager, items, selectedItems, itemClickListener);
 
-        binding.rvEditList.setLayoutManager(manager);
-        binding.rvEditList.setAdapter(adapter);
+                    binding.rvEditList.setLayoutManager(manager);
+                    binding.rvEditList.setAdapter(adapter);
+
+                    binding.rvEditList.setVisibility(View.VISIBLE);
+                    binding.pbrEditLoading.setVisibility(View.GONE);
+                });
+            });
+        });
 
         binding.ivEditBack.setOnFocusChangeListener((view, hasFocus) -> {
             binding.ivEditBack.setBackgroundColor(getColor(hasFocus ? R.color.transparent_white : R.color.transparent));

@@ -3,18 +3,13 @@
 
 package com.sinu.molla;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.content.res.AppCompatResources;
-import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
-import android.app.WallpaperManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -28,17 +23,14 @@ import android.os.BatteryManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.format.DateFormat;
-import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.ImageView;
 
 import com.sinu.molla.databinding.ActivityMainBinding;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
@@ -59,6 +51,8 @@ public class MainActivity extends AppCompatActivity {
     boolean batteryExist;
     ConnectivityManager cm;
     WifiManager wm;
+
+    boolean isFavListUpdateReserved = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,6 +79,7 @@ public class MainActivity extends AppCompatActivity {
             overridePendingTransition(R.anim.no_anim, R.anim.no_anim);
         });
         binding.lvMainSettings.setOnClickListener((v) -> {
+            reserveFavListUpdate();
             startActivity(new Intent(this, SettingsActivity.class));
             overridePendingTransition(R.anim.no_anim, R.anim.no_anim);
         });
@@ -223,17 +218,32 @@ public class MainActivity extends AppCompatActivity {
         String favAppsRaw = pref.getString("fav_apps", "");
         ArrayList<String> favApps = new ArrayList<String>(Arrays.asList(favAppsRaw.split("\\?")));
 
-        ArrayList<AppItem> nitems = AppItem.fetchListOfApps(this, favApps);
-        //Collections.sort(nitems, AppItem::compareByDisplayName);
-
-        if (!nitems.equals(items)) {
-            items.clear();
-            items.addAll(nitems);
-            adapter.notifyDataSetChanged();
+        if (isFavListUpdateReserved) {
+            AppItem.fetchListOfAppsAsync(this, favApps, (nitems) -> {
+                if (!nitems.equals(items)) {
+                    items.clear();
+                    items.addAll(nitems);
+                }
+                runOnUiThread(() -> {
+                    adapter.notifyDataSetChanged();
+                    binding.pbrMainLoading.setVisibility(View.GONE);
+                    binding.rvMainFav.setVisibility(View.VISIBLE);
+                    binding.tvMainFavName.setVisibility(View.VISIBLE);
+                    binding.rvMainFav.scrollToPosition(0);
+                });
+            });
+            isFavListUpdateReserved = false;
         }
 
         Util.updateWallpaper(this, binding.ivMainWallpaper);
 
         rUpdateStatus.run();
+    }
+
+    public void reserveFavListUpdate() {
+        binding.pbrMainLoading.setVisibility(View.VISIBLE);
+        binding.rvMainFav.setVisibility(View.INVISIBLE);
+        binding.tvMainFavName.setVisibility(View.INVISIBLE);
+        isFavListUpdateReserved = true;
     }
 }

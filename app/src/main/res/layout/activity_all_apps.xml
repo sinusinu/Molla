@@ -93,9 +93,22 @@
         android:clipChildren="false"
         android:clipToPadding="false"
         android:padding="12dp"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/cl_all_lpane"
         app:layout_constraintTop_toTopOf="parent"
         tools:listitem="@layout/layout_appitem_grid" />
+
+    <ProgressBar
+        android:id="@+id/pbr_all_loading"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="36dp"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_all_wallpaper"
+        app:layout_constraintEnd_toEndOf="@+id/iv_all_wallpaper"
+        app:layout_constraintStart_toEndOf="@+id/cl_all_lpane"
+        app:layout_constraintTop_toTopOf="@+id/iv_all_wallpaper" />
 </androidx.constraintlayout.widget.ConstraintLayout>
