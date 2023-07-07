@@ -79,9 +79,9 @@ public class MainActivity extends AppCompatActivity {
             overridePendingTransition(R.anim.no_anim, R.anim.no_anim);
         });
         binding.lvMainSettings.setOnClickListener((v) -> {
-            reserveFavListUpdate();
             startActivity(new Intent(this, SettingsActivity.class));
             overridePendingTransition(R.anim.no_anim, R.anim.no_anim);
+            reserveFavListUpdate();
         });
 
         animScaleUp = AnimationUtils.loadAnimation(this, R.anim.scale_up);
@@ -208,6 +208,12 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
+        if (isFavListUpdateReserved) {
+            binding.pbrMainLoading.setVisibility(View.INVISIBLE);
+            binding.rvMainFav.setVisibility(View.INVISIBLE);
+            binding.tvMainFavName.setVisibility(View.INVISIBLE);
+            getCurrentFocus().clearFocus();
+        }
         h.removeCallbacks(rUpdateStatus);
     }
 
@@ -219,6 +225,7 @@ public class MainActivity extends AppCompatActivity {
         ArrayList<String> favApps = new ArrayList<String>(Arrays.asList(favAppsRaw.split("\\?")));
 
         if (isFavListUpdateReserved) {
+            binding.pbrMainLoading.setVisibility(View.VISIBLE);
             AppItem.fetchListOfAppsAsync(this, favApps, (nitems) -> {
                 if (!nitems.equals(items)) {
                     items.clear();
@@ -230,6 +237,7 @@ public class MainActivity extends AppCompatActivity {
                     binding.rvMainFav.setVisibility(View.VISIBLE);
                     binding.tvMainFavName.setVisibility(View.VISIBLE);
                     binding.rvMainFav.scrollToPosition(0);
+                    binding.rvMainFav.requestFocus();
                 });
             });
             isFavListUpdateReserved = false;
@@ -241,9 +249,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void reserveFavListUpdate() {
-        binding.pbrMainLoading.setVisibility(View.VISIBLE);
-        binding.rvMainFav.setVisibility(View.INVISIBLE);
-        binding.tvMainFavName.setVisibility(View.INVISIBLE);
         isFavListUpdateReserved = true;
     }
 }

@@ -104,9 +104,9 @@ public class AppItemAdapter extends RecyclerView.Adapter<AppItemAdapter.ViewHold
         public void onClick(View view) {
             if (isEdit) {
                 MainActivity a = (MainActivity)context;
-                a.reserveFavListUpdate();
                 a.startActivity(intent);
                 a.overridePendingTransition(R.anim.no_anim, R.anim.no_anim);
+                a.reserveFavListUpdate();
             } else {
                 if (intent != null) context.startActivity(intent);
             }
