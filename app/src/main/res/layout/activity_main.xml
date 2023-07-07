@@ -130,6 +130,7 @@
             android:focusableInTouchMode="true"
             android:nextFocusLeft="@id/rv_main_fav"
             android:nextFocusRight="@id/rv_main_fav"
+            android:orientation="horizontal"
             android:paddingStart="48dp"
             android:paddingTop="8dp"
             android:paddingEnd="48dp"
