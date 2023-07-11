@@ -6,10 +6,9 @@ package com.sinu.molla;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 
 import com.sinu.molla.databinding.ActivityAllAppsBinding;
 
@@ -71,6 +70,6 @@ public class AllAppsActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-        Util.updateWallpaper(this, binding.ivAllWallpaper);
+        WallpaperHandler.updateWallpaper(this, binding.ivAllWallpaper, false);
     }
 }

@@ -242,7 +242,7 @@ public class MainActivity extends AppCompatActivity {
             isFavListUpdateReserved = false;
         }
 
-        Util.updateWallpaper(this, binding.ivMainWallpaper);
+        WallpaperHandler.updateWallpaper(this, binding.ivMainWallpaper, false);
 
         rUpdateStatus.run();
     }

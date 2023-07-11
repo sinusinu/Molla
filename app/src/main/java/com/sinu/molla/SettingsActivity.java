@@ -13,10 +13,11 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
-import android.util.Log;
+import android.util.DisplayMetrics;
 import android.widget.Toast;
 
 import com.sinu.molla.databinding.ActivitySettingsBinding;
@@ -115,14 +116,32 @@ public class SettingsActivity extends AppCompatActivity {
             try {
                 final Uri imageUri = data.getData();
                 final InputStream imageStream = getContentResolver().openInputStream(imageUri);
-                final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
-                try (FileOutputStream fos = new FileOutputStream(new File(getFilesDir(), "wallpaper.png"))) {
-                    selectedImage.compress(Bitmap.CompressFormat.PNG, 100, fos);
-                    Util.updateWallpaper(this, binding.ivSettingsWallpaper);
+                Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
+
+                // downscale the bitmap if it's larger than screen size
+                DisplayMetrics displayMetrics = new DisplayMetrics();
+                getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+                int screenWidth = displayMetrics.widthPixels;
+                int screenHeight = displayMetrics.heightPixels;
+                if (selectedImage.getWidth() > screenWidth) {
+                    Bitmap o = selectedImage;
+                    selectedImage = Bitmap.createScaledBitmap(o, screenWidth, screenWidth * o.getHeight() / o.getWidth(), true);
+                    o.recycle();
+                }
+
+                try (FileOutputStream fos = new FileOutputStream(new File(getFilesDir(), "wallpaper.jpg"))) {
+                    selectedImage.compress(Bitmap.CompressFormat.JPEG, 80, fos);
                 } catch (IOException e) {
                     e.printStackTrace();
                     Toast.makeText(this, "Failed to set wallpaper", Toast.LENGTH_LONG).show();
+                    // Delete the file in case of it being corrupted, deletion result isn't important
+                    // noinspection ResultOfMethodCallIgnored
+                    new File(getFilesDir(), "wallpaper.png").delete();
                 }
+
+                WallpaperHandler.updateWallpaper(this, binding.ivSettingsWallpaper, true);
+
+                selectedImage.recycle();
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
                 Toast.makeText(this, "Failed to set wallpaper", Toast.LENGTH_LONG).show();
@@ -134,6 +153,6 @@ public class SettingsActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-        Util.updateWallpaper(this, binding.ivSettingsWallpaper);
+        WallpaperHandler.updateWallpaper(this, binding.ivSettingsWallpaper, false);
     }
 }

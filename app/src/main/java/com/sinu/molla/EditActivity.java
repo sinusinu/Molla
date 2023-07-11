@@ -4,11 +4,11 @@
 package com.sinu.molla;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -91,7 +91,7 @@ public class EditActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-        Util.updateWallpaper(this, binding.ivEditWallpaper);
+        WallpaperHandler.updateWallpaper(this, binding.ivEditWallpaper, false);
     }
 
     private void updatePref() {
