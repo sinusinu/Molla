@@ -3,12 +3,11 @@
 
 package com.sinu.molla;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.GridLayoutManager;
-
-import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.view.View;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
 
 import com.sinu.molla.databinding.ActivityAllAppsBinding;
 
