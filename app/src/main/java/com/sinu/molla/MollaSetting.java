@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 public class MollaSetting {
     public static final int TYPE_BUTTON = 0;
     public static final int TYPE_CHECKBOX = 1;
+    public static final int TYPE_CATEGORY = 2;
 
     public String title;
     public String desc;

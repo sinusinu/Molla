@@ -14,6 +14,7 @@
     <string name="edit_subtitle">첫 화면에 표시할 앱을 선택합니다.</string>
 
     <string name="settings_title">설정</string>
+    <string name="settings_category_general">일반</string>
     <string name="settings_wallpaper_title">배경화면 변경</string>
     <string name="settings_wallpaper_desc">런처에서 사용될 배경화면을 변경합니다. 시스템 배경화면은 변경되지 않습니다.</string>
     <string name="settings_hide_non_tv_apps_title">비 TV 앱 숨기기</string>

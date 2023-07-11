@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -19,8 +20,7 @@ public class SettingsAdapter extends RecyclerView.Adapter<SettingsAdapter.ViewHo
     SharedPreferences pref;
     RecyclerView.LayoutManager manager;
 
-    // TODO: use more sane method
-    public MollaSetting[] settings = new MollaSetting[3];
+    public MollaSetting[] settings;
 
     private OnSettingsClickedListener listener;
 
@@ -29,41 +29,59 @@ public class SettingsAdapter extends RecyclerView.Adapter<SettingsAdapter.ViewHo
         this.pref = pref;
         this.manager = manager;
 
-        settings[0] = new MollaSetting(
-                context.getString(R.string.settings_wallpaper_title),
-                context.getString(R.string.settings_wallpaper_desc),
-                MollaSetting.TYPE_BUTTON, "wallpaper"
-        );
-        settings[1] = new MollaSetting(
-                context.getString(R.string.settings_hide_non_tv_apps_title),
-                context.getString(R.string.settings_hide_non_tv_apps_desc),
-                MollaSetting.TYPE_CHECKBOX, "hide_non_tv"
-        );
-        settings[2] = new MollaSetting(
-                String.format(context.getString(R.string.settings_about_title), BuildConfig.VERSION_NAME),
-                context.getString(R.string.settings_about_desc),
-                MollaSetting.TYPE_BUTTON, "about"
-        );
+        settings = new MollaSetting[] {
+                new MollaSetting(
+                        context.getString(R.string.settings_category_general),
+                        null,
+                        MollaSetting.TYPE_CATEGORY, null
+                ),
+                new MollaSetting(
+                        context.getString(R.string.settings_wallpaper_title),
+                        context.getString(R.string.settings_wallpaper_desc),
+                        MollaSetting.TYPE_BUTTON, "wallpaper"
+                ),
+                new MollaSetting(
+                        context.getString(R.string.settings_hide_non_tv_apps_title),
+                        context.getString(R.string.settings_hide_non_tv_apps_desc),
+                        MollaSetting.TYPE_CHECKBOX, "hide_non_tv"
+                ),
+                new MollaSetting(
+                        String.format(context.getString(R.string.settings_about_title), BuildConfig.VERSION_NAME),
+                        context.getString(R.string.settings_about_desc),
+                        MollaSetting.TYPE_BUTTON, "about"
+                )
+        };
         for (MollaSetting s : settings) s.fetch(pref);
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        public TextView tvTitle;
-        public TextView tvDesc;
-        public CheckBox cbCheck;
+        public TextView tvPropertyTitle;
+        public TextView tvPropertyDesc;
+        public CheckBox cbPropertyCheck;
+        public TextView tvCategory;
+
+        public LinearLayout llCategory;
+        public LinearLayout llProperty;
+
+        public boolean isClickable = true;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            tvTitle = itemView.findViewById(R.id.tv_settings_list_title);
-            tvDesc = itemView.findViewById(R.id.tv_settings_list_desc);
-            cbCheck = itemView.findViewById(R.id.cb_settings_list_check);
+            tvPropertyTitle = itemView.findViewById(R.id.tv_settings_list_title);
+            tvPropertyDesc = itemView.findViewById(R.id.tv_settings_list_desc);
+            cbPropertyCheck = itemView.findViewById(R.id.cb_settings_list_check);
+            tvCategory = itemView.findViewById(R.id.tv_settings_category);
+
+            llCategory = itemView.findViewById(R.id.ll_settings_category);
+            llProperty = itemView.findViewById(R.id.ll_settings_property);
 
             itemView.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View view) {
+            if (!isClickable) return;
             int idx = manager.getPosition(view);
             if (listener != null) listener.onSettingsClick(idx, settings[idx].key);
         }
@@ -77,19 +95,33 @@ public class SettingsAdapter extends RecyclerView.Adapter<SettingsAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.tvTitle.setText(settings[position].title);
-        holder.tvDesc.setText(settings[position].desc);
-        if (settings[position].type == 1) {
-            holder.cbCheck.setVisibility(View.VISIBLE);
-            holder.cbCheck.setChecked(settings[position].value == 1);
+        if (settings[position].type == MollaSetting.TYPE_CATEGORY) {
+            holder.itemView.setClickable(false);
+            holder.itemView.setFocusable(false);
+            holder.llCategory.setVisibility(View.VISIBLE);
+            holder.llProperty.setVisibility(View.GONE);
+            holder.tvCategory.setText(settings[position].title);
+            holder.isClickable = false;
         } else {
-            holder.cbCheck.setVisibility(View.GONE);
+            holder.itemView.setClickable(true);
+            holder.itemView.setFocusable(true);
+            holder.llCategory.setVisibility(View.GONE);
+            holder.llProperty.setVisibility(View.VISIBLE);
+            holder.tvPropertyTitle.setText(settings[position].title);
+            holder.tvPropertyDesc.setText(settings[position].desc);
+            if (settings[position].type == MollaSetting.TYPE_CHECKBOX) {
+                holder.cbPropertyCheck.setVisibility(View.VISIBLE);
+                holder.cbPropertyCheck.setChecked(settings[position].value == 1);
+            } else {
+                holder.cbPropertyCheck.setVisibility(View.GONE);
+            }
+            holder.isClickable = true;
         }
     }
 
     @Override
     public int getItemCount() {
-        return 3;
+        return settings.length;
     }
 
     public void setOnSettingsClickedListener(OnSettingsClickedListener listener) {

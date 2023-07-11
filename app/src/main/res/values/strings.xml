@@ -15,6 +15,7 @@
     <string name="edit_subtitle">Selected items will be shown on main screen.</string>
 
     <string name="settings_title">Settings</string>
+    <string name="settings_category_general">General</string>
     <string name="settings_wallpaper_title">Change Wallpaper</string>
     <string name="settings_wallpaper_desc">Change the wallpaper used within this launcher. This will not change the system wallpaper.</string>
     <string name="settings_hide_non_tv_apps_title">Hide non-TV apps</string>
