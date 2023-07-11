@@ -28,25 +28,28 @@ public class AllAppsActivity extends AppCompatActivity {
         binding = ActivityAllAppsBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        AppItem.fetchAllAppsAsync(this, (items) -> {
-            this.items = items;
-            Collections.sort(items, AppItem::compareByDisplayName);
+        new Thread(() -> {
+            AppItem.fetchAllAppsAsync(this, (items) -> {
+                this.items = items;
+                Collections.sort(items, AppItem::compareByDisplayName);
 
-            runOnUiThread(() -> {
-                GridLayoutManager manager = new GridLayoutManager(this, 4);
-                adapter = new AppItemGridAdapter(this, manager, items);
+                runOnUiThread(() -> {
+                    GridLayoutManager manager = new GridLayoutManager(this, 4);
+                    adapter = new AppItemGridAdapter(this, manager, items);
 
-                adapter.setOnAppItemFocusChangedListener((i, n) -> {
-                    binding.tvAllName.setText(n);
+                    adapter.setOnAppItemFocusChangedListener((i, n) -> {
+                        binding.tvAllName.setText(n);
+                    });
+
+                    binding.rvAllAllapps.setLayoutManager(manager);
+                    binding.rvAllAllapps.setAdapter(adapter);
+
+                    binding.rvAllAllapps.setVisibility(View.VISIBLE);
+                    binding.pbrAllLoading.setVisibility(View.GONE);
                 });
-
-                binding.rvAllAllapps.setLayoutManager(manager);
-                binding.rvAllAllapps.setAdapter(adapter);
-
-                binding.rvAllAllapps.setVisibility(View.VISIBLE);
-                binding.pbrAllLoading.setVisibility(View.GONE);
             });
-        });
+        }).start();
+
 
         binding.ivAllBack.setOnFocusChangeListener((view, hasFocus) -> {
             binding.ivAllBack.setBackgroundColor(getColor(hasFocus ? R.color.transparent_white : R.color.transparent));
