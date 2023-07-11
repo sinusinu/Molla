@@ -91,6 +91,17 @@ public class SettingsActivity extends AppCompatActivity {
             }
         });
 
+        adapter.setOnSettingsLongClickedListener((idx, key) -> {
+            if ("wallpaper".equals(key)) {
+                File wpFile = new File(getFilesDir(), "wallpaper.jpg");
+                if (wpFile.exists()) {
+                    //noinspection ResultOfMethodCallIgnored
+                    wpFile.delete();
+                    WallpaperHandler.updateWallpaper(this, binding.ivSettingsWallpaper, true);
+                }
+            }
+        });
+
         binding.ivSettingsBack.setOnFocusChangeListener((view, hasFocus) -> {
             binding.ivSettingsBack.setBackgroundColor(getColor(hasFocus ? R.color.transparent_white : R.color.transparent));
         });

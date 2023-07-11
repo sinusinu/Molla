@@ -22,7 +22,8 @@ public class SettingsAdapter extends RecyclerView.Adapter<SettingsAdapter.ViewHo
 
     public MollaSetting[] settings;
 
-    private OnSettingsClickedListener listener;
+    private OnSettingsClickedListener clickListener;
+    private OnSettingsLongClickedListener longClickListener;
 
     public SettingsAdapter(Context context, SharedPreferences pref, RecyclerView.LayoutManager manager) {
         this.context = context;
@@ -74,7 +75,7 @@ public class SettingsAdapter extends RecyclerView.Adapter<SettingsAdapter.ViewHo
         for (MollaSetting s : settings) s.fetch(pref);
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
         public TextView tvPropertyTitle;
         public TextView tvPropertyDesc;
         public CheckBox cbPropertyCheck;
@@ -97,13 +98,22 @@ public class SettingsAdapter extends RecyclerView.Adapter<SettingsAdapter.ViewHo
             llProperty = itemView.findViewById(R.id.ll_settings_property);
 
             itemView.setOnClickListener(this);
+            itemView.setOnLongClickListener(this);
         }
 
         @Override
         public void onClick(View view) {
             if (!isClickable) return;
             int idx = manager.getPosition(view);
-            if (listener != null) listener.onSettingsClick(idx, settings[idx].key);
+            if (clickListener != null) clickListener.onSettingsClick(idx, settings[idx].key);
+        }
+
+        @Override
+        public boolean onLongClick(View view) {
+            if (!isClickable) return false;
+            int idx = manager.getPosition(view);
+            if (longClickListener != null) longClickListener.onSettingsLongClick(idx, settings[idx].key);
+            return true;
         }
     }
 
@@ -145,10 +155,18 @@ public class SettingsAdapter extends RecyclerView.Adapter<SettingsAdapter.ViewHo
     }
 
     public void setOnSettingsClickedListener(OnSettingsClickedListener listener) {
-        this.listener = listener;
+        this.clickListener = listener;
+    }
+
+    public void setOnSettingsLongClickedListener(OnSettingsLongClickedListener listener) {
+        this.longClickListener = listener;
     }
 
     public interface OnSettingsClickedListener {
         void onSettingsClick(int position, String key);
+    }
+
+    public interface OnSettingsLongClickedListener {
+        void onSettingsLongClick(int position, String key);
     }
 }
