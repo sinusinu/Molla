@@ -15,6 +15,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -62,6 +63,30 @@ public class SettingsActivity extends AppCompatActivity {
                     adapter.notifyItemChanged(idx);
                     break;
                 case "about":
+                    break;
+                case "open_set":
+                    try {
+                        Intent settingsIntent = new Intent(Settings.ACTION_SETTINGS);
+                        startActivity(settingsIntent);
+                    } catch (ActivityNotFoundException e) {
+                        Toast.makeText(this, getString(R.string.settings_error_settings_no_activity), Toast.LENGTH_LONG).show();
+                    }
+                    break;
+                case "open_set_disp":
+                    try {
+                        Intent settingsIntent = new Intent(Settings.ACTION_DISPLAY_SETTINGS);
+                        startActivity(settingsIntent);
+                    } catch (ActivityNotFoundException e) {
+                        Toast.makeText(this, getString(R.string.settings_error_settings_no_activity), Toast.LENGTH_LONG).show();
+                    }
+                    break;
+                case "open_set_apps":
+                    try {
+                        Intent settingsIntent = new Intent(Settings.ACTION_APPLICATION_SETTINGS);
+                        startActivity(settingsIntent);
+                    } catch (ActivityNotFoundException e) {
+                        Toast.makeText(this, getString(R.string.settings_error_settings_no_activity), Toast.LENGTH_LONG).show();
+                    }
                     break;
             }
         });

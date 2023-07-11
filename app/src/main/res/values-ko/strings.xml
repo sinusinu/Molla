@@ -19,6 +19,14 @@
     <string name="settings_wallpaper_desc">런처에서 사용될 배경화면을 변경합니다. 시스템 배경화면은 변경되지 않습니다.</string>
     <string name="settings_hide_non_tv_apps_title">비 TV 앱 숨기기</string>
     <string name="settings_hide_non_tv_apps_desc">Android TV에서 지원되지 않는 앱들을 숨깁니다.</string>
+    <string name="settings_category_system_settings">시스템 설정 바로가기</string>
+    <string name="settings_open_system_settings">시스템 설정</string>
+    <string name="settings_open_system_settings_desc">설정 앱을 실행합니다.</string>
+    <string name="settings_open_system_display">화면 설정</string>
+    <string name="settings_open_system_display_desc">설정 앱의 화면 설정을 실행합니다.</string>
+    <string name="settings_open_system_apps">앱 설정</string>
+    <string name="settings_open_system_apps_desc">설정 앱의 앱 설정을 실행합니다.</string>
     <string name="settings_error_wallpaper">이 기기에서는 배경화면을 사용할 수 없습니다</string>
-    <string name="settings_error_wallpaper_no_picker">이미지를 선택할 수 있는 앱이 없습니다, 갤러리 앱을 설치해주세요</string>
+    <string name="settings_error_wallpaper_no_picker">이 작업에 필요한 갤러리 앱을 찾을 수 없습니다!</string>
+    <string name="settings_error_settings_no_activity">이 작업은 이 장치에서 지원되지 않습니다!</string>
 </resources>

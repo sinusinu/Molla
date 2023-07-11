@@ -49,7 +49,27 @@ public class SettingsAdapter extends RecyclerView.Adapter<SettingsAdapter.ViewHo
                         String.format(context.getString(R.string.settings_about_title), BuildConfig.VERSION_NAME),
                         context.getString(R.string.settings_about_desc),
                         MollaSetting.TYPE_BUTTON, "about"
-                )
+                ),
+                new MollaSetting(
+                        context.getString(R.string.settings_category_system_settings),
+                        null,
+                        MollaSetting.TYPE_CATEGORY, null
+                ),
+                new MollaSetting(
+                        context.getString(R.string.settings_open_system_settings),
+                        context.getString(R.string.settings_open_system_settings_desc),
+                        MollaSetting.TYPE_BUTTON, "open_set"
+                ),
+                new MollaSetting(
+                        context.getString(R.string.settings_open_system_display),
+                        context.getString(R.string.settings_open_system_display_desc),
+                        MollaSetting.TYPE_BUTTON, "open_set_disp"
+                ),
+                new MollaSetting(
+                        context.getString(R.string.settings_open_system_apps),
+                        context.getString(R.string.settings_open_system_apps_desc),
+                        MollaSetting.TYPE_BUTTON, "open_set_apps"
+                ),
         };
         for (MollaSetting s : settings) s.fetch(pref);
     }

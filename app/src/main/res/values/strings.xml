@@ -22,7 +22,15 @@
     <string name="settings_hide_non_tv_apps_desc">Do not show apps that are not supported on Android TV.</string>
     <string name="settings_about_title" translatable="false">Molla %s</string>
     <string name="settings_about_desc" translatable="false">© 2022‐2023 sinu</string>
+    <string name="settings_category_system_settings">Quick Access to System Settings</string>
+    <string name="settings_open_system_settings">System Settings</string>
+    <string name="settings_open_system_settings_desc">Open the Settings app.</string>
+    <string name="settings_open_system_display">Display Settings</string>
+    <string name="settings_open_system_display_desc">Open the Display settings.</string>
+    <string name="settings_open_system_apps">Apps Settings</string>
+    <string name="settings_open_system_apps_desc">Open the Apps settings.</string>
     <string name="settings_error_wallpaper">Wallpaper is not supported on this device</string>
-    <string name="settings_error_wallpaper_no_picker">Image picking app is not found, install at least one gallery app</string>
+    <string name="settings_error_wallpaper_no_picker">Image picker app is needed for this action!</string>
+    <string name="settings_error_settings_no_activity">This action is not available on this device!</string>
 </resources>
 
