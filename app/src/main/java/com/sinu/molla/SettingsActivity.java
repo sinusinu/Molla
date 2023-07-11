@@ -133,10 +133,18 @@ public class SettingsActivity extends AppCompatActivity {
                 getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
                 int screenWidth = displayMetrics.widthPixels;
                 int screenHeight = displayMetrics.heightPixels;
-                if (selectedImage.getWidth() > screenWidth) {
-                    Bitmap o = selectedImage;
-                    selectedImage = Bitmap.createScaledBitmap(o, screenWidth, screenWidth * o.getHeight() / o.getWidth(), true);
-                    o.recycle();
+                if (selectedImage.getWidth() > selectedImage.getHeight()) {
+                    if (selectedImage.getWidth() > screenWidth) {
+                        Bitmap o = selectedImage;
+                        selectedImage = Bitmap.createScaledBitmap(o, screenWidth, screenWidth * o.getHeight() / o.getWidth(), true);
+                        o.recycle();
+                    }
+                } else {
+                    if (selectedImage.getHeight() > screenHeight) {
+                        Bitmap o = selectedImage;
+                        selectedImage = Bitmap.createScaledBitmap(o, screenHeight * o.getWidth() / o.getHeight(), screenHeight, true);
+                        o.recycle();
+                    }
                 }
 
                 try (FileOutputStream fos = new FileOutputStream(new File(getFilesDir(), "wallpaper.jpg"))) {
