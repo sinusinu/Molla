@@ -4,18 +4,18 @@
 
 Molla is a launcher app for Android, intended to be used on handheld retro gaming devices running Android.
 
-## Some important notes
+## About
 
-- Molla is **not** made with performance, stability, long-term maintenance in mind. Molla is written very hastily, is highly fragile, crude, and full of bugs. Since I am "if it works it works" kind of guy, those problems probably won't be fixed unless I get the necessity of it.
+- Disclaimer: Molla is written very hastily, is highly fragile, crude, and full of bugs. Since I am "if it works it works" kind of guy, those problems probably won't be fixed unless I get the necessity of it.
 
-- Molla is best used on devices with:
+- Molla is designed to be used on devices with:
   - no touchscreen
-  - D-pad always available
+  - D-pad controls
   - horizontal screen
 
-- It is **really not recommended** to use Molla on normal devices; e.g. phones or tablets.
+- Can be run on regular devices like phones and tablets and such, but is not supported.
 
-- Can be run on Android TV, but is not supported. Enabling "Hide non-TV apps" on settings is recommended if you are using on it.
+- Can be run on Android TV, but is not supported. Enable "Hide non-TV apps" on settings if you are running Molla on Android TV.
 
 ## Screenshots
 
