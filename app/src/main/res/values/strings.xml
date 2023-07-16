@@ -13,6 +13,10 @@
 
     <string name="edit_title">Quick Access</string>
     <string name="edit_subtitle">Selected items will be shown on main screen.</string>
+    <string name="edit_reorder">Reorder</string>
+
+    <string name="order_title">Reorder Icons</string>
+    <string name="order_subtitle">Change the order of Quick Access icons.</string>
 
     <string name="settings_title">Settings</string>
     <string name="settings_category_general">General</string>

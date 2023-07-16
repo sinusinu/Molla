@@ -4,11 +4,13 @@
 package com.sinu.molla;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
@@ -19,12 +21,15 @@ import java.util.Arrays;
 import java.util.Collections;
 
 public class EditActivity extends AppCompatActivity {
+    private final int REQ_REORDER = 1;
+
     ActivityEditBinding binding;
 
     SharedPreferences pref;
 
     ArrayList<AppItem> items;
     ArrayList<AppItem> selectedItems;
+    LinearLayoutManager manager;
     AppItemListAdapter adapter;
 
     View.OnClickListener itemClickListener;
@@ -37,38 +42,25 @@ public class EditActivity extends AppCompatActivity {
 
         pref = getSharedPreferences("com.sinu.molla.settings", Context.MODE_PRIVATE);
 
-        String favAppsRaw = pref.getString("fav_apps", "");
-        ArrayList<String> favApps = new ArrayList<String>(Arrays.asList(favAppsRaw.split("\\?")));
+        items = new ArrayList<>();
+        selectedItems = new ArrayList<>();
 
-        AppItem.fetchListOfAppsAsync(this, favApps, (r) -> {
-            selectedItems = r;
+        manager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        adapter = new AppItemListAdapter(this, manager, items, selectedItems, itemClickListener);
+        binding.rvEditList.setLayoutManager(manager);
+        binding.rvEditList.setAdapter(adapter);
+        binding.rvEditList.setItemAnimator(null);
 
-            AppItem.fetchAllAppsAsync(this, (rr) -> {
-                items = rr;
-                Collections.sort(items, AppItem::compareByDisplayName);
+        itemClickListener = view -> {
+            int idx = manager.getPosition(view);
+            AppItem si = items.get(idx);
+            if (selectedItems.contains(si)) selectedItems.remove(si);
+            else selectedItems.add(si);
+            updatePref();
+            adapter.notifyItemChanged(idx);
+        };
 
-                runOnUiThread(() -> {
-                    LinearLayoutManager manager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-
-                    itemClickListener = view -> {
-                        int idx = manager.getPosition(view);
-                        AppItem si = items.get(idx);
-                        if (selectedItems.contains(si)) selectedItems.remove(si);
-                        else selectedItems.add(si);
-                        updatePref();
-                        adapter.notifyItemChanged(idx);
-                    };
-
-                    adapter = new AppItemListAdapter(this, manager, items, selectedItems, itemClickListener);
-
-                    binding.rvEditList.setLayoutManager(manager);
-                    binding.rvEditList.setAdapter(adapter);
-
-                    binding.rvEditList.setVisibility(View.VISIBLE);
-                    binding.pbrEditLoading.setVisibility(View.GONE);
-                });
-            });
-        });
+        fetchItems();
 
         binding.ivEditBack.setOnFocusChangeListener((view, hasFocus) -> {
             binding.ivEditBack.setBackgroundColor(getColor(hasFocus ? R.color.transparent_white : R.color.transparent));
@@ -77,6 +69,49 @@ public class EditActivity extends AppCompatActivity {
         binding.ivEditBack.setOnClickListener((v) -> {
             finish();
             overridePendingTransition(R.anim.no_anim, R.anim.no_anim);
+        });
+
+        binding.ivEditReorder.setOnFocusChangeListener((view, hasFocus) -> {
+            binding.ivEditReorder.setBackgroundColor(getColor(hasFocus ? R.color.transparent_white : R.color.transparent));
+        });
+
+        binding.ivEditReorder.setOnClickListener((v) -> {
+            startActivityForResult(new Intent(this, OrderActivity.class), REQ_REORDER);
+            overridePendingTransition(R.anim.no_anim, R.anim.no_anim);
+        });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == REQ_REORDER) {
+            fetchItems();
+        }
+    }
+
+    private void fetchItems() {
+        String favAppsRaw = pref.getString("fav_apps", "");
+        Log.d("Molla", "fetchItems fetched fav_apps " + favAppsRaw);
+        ArrayList<String> favApps = new ArrayList<String>(Arrays.asList(favAppsRaw.split("\\?")));
+
+        AppItem.fetchListOfAppsAsync(this, favApps, (r) -> {
+            selectedItems.clear();
+            selectedItems.addAll(r);
+
+            AppItem.fetchAllAppsAsync(this, (rr) -> {
+                items.clear();
+                items.addAll(rr);
+                Collections.sort(items, AppItem::compareByDisplayName);
+
+                runOnUiThread(() -> {
+                    adapter = new AppItemListAdapter(this, manager, items, selectedItems, itemClickListener);
+                    binding.rvEditList.setAdapter(adapter);
+
+                    binding.rvEditList.setVisibility(View.VISIBLE);
+                    binding.pbrEditLoading.setVisibility(View.GONE);
+                });
+            });
         });
     }
 

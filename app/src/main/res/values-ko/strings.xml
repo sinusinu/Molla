@@ -12,6 +12,10 @@
 
     <string name="edit_title">바로가기</string>
     <string name="edit_subtitle">첫 화면에 표시할 앱을 선택합니다.</string>
+    <string name="edit_reorder">순서 변경</string>
+
+    <string name="order_title">순서 변경</string>
+    <string name="order_subtitle">바로가기의 순서를 변경합니다.</string>
 
     <string name="settings_title">설정</string>
     <string name="settings_category_general">일반</string>

@@ -4,11 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_weight="1"
-    tools:context=".EditActivity">
+    tools:context=".OrderActivity">
 
     <ImageView
-        android:id="@+id/iv_edit_wallpaper"
+        android:id="@+id/iv_ord_wallpaper"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:scaleType="centerCrop"
@@ -19,7 +18,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/iv_edit_wallpaper_tint"
+        android:id="@+id/iv_ord_wallpaper_tint"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="@color/black"
@@ -31,7 +30,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/cl_edit_lpane"
+        android:id="@+id/cl_ord_lpane"
         android:layout_width="160dp"
         android:layout_height="0dp"
         android:layout_marginStart="36dp"
@@ -42,19 +41,19 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:id="@+id/tv_edit_title"
+            android:id="@+id/tv_ord_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif-condensed"
             android:padding="6dp"
             android:paddingStart="9dp"
-            android:text="@string/edit_title"
+            android:text="@string/order_title"
             android:textSize="24sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
         <ImageView
-            android:id="@+id/iv_edit_back"
+            android:id="@+id/iv_ord_back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:clickable="true"
@@ -67,36 +66,21 @@
             app:srcCompat="@drawable/ic_arrow_back"
             tools:ignore="TouchTargetSizeCheck" />
 
-        <ImageView
-            android:id="@+id/iv_edit_reorder"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:clickable="true"
-            android:contentDescription="@string/edit_reorder"
-            android:focusable="true"
-            android:focusableInTouchMode="false"
-            android:padding="10dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/iv_edit_back"
-            app:srcCompat="@drawable/ic_swap"
-            tools:ignore="TouchTargetSizeCheck" />
-
         <TextView
-            android:id="@+id/tv_edit_name"
+            android:id="@+id/tv_ord_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:fontFamily="sans-serif-condensed"
-            android:text="@string/edit_subtitle"
-            app:layout_constraintBottom_toTopOf="@+id/tv_edit_title"
+            android:text="@string/order_subtitle"
+            app:layout_constraintBottom_toTopOf="@+id/tv_ord_title"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_edit_list"
+        android:id="@+id/rv_ord_list"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="24dp"
@@ -108,12 +92,12 @@
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/cl_edit_lpane"
+        app:layout_constraintStart_toEndOf="@+id/cl_ord_lpane"
         app:layout_constraintTop_toTopOf="parent"
-        tools:listitem="@layout/layout_appitem_list" />
+        tools:listitem="@layout/layout_appitem_order" />
 
     <ProgressBar
-        android:id="@+id/pbr_edit_loading"
+        android:id="@+id/pbr_ord_loading"
         style="?android:attr/progressBarStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -121,6 +105,7 @@
         android:layout_marginEnd="36dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/cl_edit_lpane"
-        app:layout_constraintTop_toTopOf="@+id/iv_edit_wallpaper" />
+        app:layout_constraintStart_toEndOf="@+id/cl_ord_lpane"
+        app:layout_constraintTop_toTopOf="@+id/iv_ord_wallpaper" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
