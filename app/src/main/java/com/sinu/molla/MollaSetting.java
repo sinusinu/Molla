@@ -24,7 +24,7 @@ public class MollaSetting {
     }
 
     public void fetch(SharedPreferences pref) {
-        if (this.type == TYPE_CHECKBOX) this.value = pref.getInt(key, -1);
+        if (this.type == TYPE_CHECKBOX) this.value = pref.getInt(key, 0);
     }
 
     public void set(SharedPreferences pref, int value) {
