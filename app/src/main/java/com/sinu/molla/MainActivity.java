@@ -37,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
     ActivityMainBinding binding;
 
     SharedPreferences pref;
+    boolean isCloseable = false;
 
     ArrayList<AppItem> items;
     AppItemAdapter adapter;
@@ -202,7 +203,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-
+        if (isCloseable) finish();
     }
 
     @Override
@@ -245,6 +246,8 @@ public class MainActivity extends AppCompatActivity {
         WallpaperHandler.updateWallpaper(this, binding.ivMainWallpaper, false);
 
         rUpdateStatus.run();
+
+        isCloseable = (pref.getInt("closeable", 0) == 1);
     }
 
     public void reserveFavListUpdate() {

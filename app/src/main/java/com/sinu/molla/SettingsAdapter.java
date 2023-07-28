@@ -47,6 +47,11 @@ public class SettingsAdapter extends RecyclerView.Adapter<SettingsAdapter.ViewHo
                         MollaSetting.TYPE_CHECKBOX, "hide_non_tv"
                 ),
                 new MollaSetting(
+                        context.getString(R.string.settings_closeable_title),
+                        context.getString(R.string.settings_closeable_desc),
+                        MollaSetting.TYPE_CHECKBOX, "closeable"
+                ),
+                new MollaSetting(
                         String.format(context.getString(R.string.settings_about_title), BuildConfig.VERSION_NAME),
                         context.getString(R.string.settings_about_desc),
                         MollaSetting.TYPE_BUTTON, "about"

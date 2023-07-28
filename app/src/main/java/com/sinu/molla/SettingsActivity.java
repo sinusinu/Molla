@@ -57,6 +57,7 @@ public class SettingsActivity extends AppCompatActivity {
                     }
                     break;
                 case "hide_non_tv":
+                case "closeable":
                     adapter.settings[idx].fetch(pref);
                     if (adapter.settings[idx].value == 0) adapter.settings[idx].set(pref, 1);
                     else adapter.settings[idx].set(pref, 0);
