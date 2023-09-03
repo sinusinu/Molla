@@ -21,7 +21,7 @@
     <string name="settings_title">Settings</string>
     <string name="settings_category_general">General</string>
     <string name="settings_wallpaper_title">Change Wallpaper</string>
-    <string name="settings_wallpaper_desc">Change the wallpaper used within this launcher. This will not change the system wallpaper. Long-press this menu to remove wallpaper.</string>
+    <string name="settings_wallpaper_desc">Change the wallpaper used within Molla. This will not change the system wallpaper. Long-press this menu to remove wallpaper.</string>
     <string name="settings_hide_non_tv_apps_title">Hide non-TV apps</string>
     <string name="settings_hide_non_tv_apps_desc">Only show apps that can be run on Android TV.</string>
     <string name="settings_closeable_title">Allow Close</string>
@@ -36,7 +36,7 @@
     <string name="settings_open_system_apps">Apps Settings</string>
     <string name="settings_open_system_apps_desc">Open the Apps settings.</string>
     <string name="settings_error_wallpaper">Wallpaper is not supported on this device</string>
-    <string name="settings_error_wallpaper_no_picker">Image picker app is needed for this action!</string>
+    <string name="settings_error_wallpaper_no_picker">Image viewer app is required for this action!</string>
     <string name="settings_error_settings_no_activity">This action is not available on this device!</string>
 </resources>
 
