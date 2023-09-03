@@ -184,7 +184,7 @@ public class MainActivity extends AppCompatActivity {
                         }
                         break;
                     case ConnectivityManager.TYPE_MOBILE:
-                        binding.ivMainConnIcon.setImageDrawable(AppCompatResources.getDrawable(this, R.drawable.ic_conn_cellular));
+                        binding.ivMainConnIcon.setImageDrawable(AppCompatResources.getDrawable(this, R.drawable.ic_conn_cellular_data));
                         break;
                     default:
                         binding.ivMainConnIcon.setImageDrawable(AppCompatResources.getDrawable(this, R.drawable.ic_conn_ethernet));
