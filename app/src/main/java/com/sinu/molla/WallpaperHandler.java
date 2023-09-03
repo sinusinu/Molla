@@ -10,6 +10,9 @@ import android.graphics.drawable.BitmapDrawable;
 import android.widget.ImageView;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 public class WallpaperHandler {
     public static BitmapDrawable wallpaper = null;
@@ -23,9 +26,22 @@ public class WallpaperHandler {
                 wallpaper = null;
             }
 
-            if (new File(context.getFilesDir(), "wallpaper.jpg").exists()) {
+            if (new File(context.getFilesDir(), "wallpaper.webp").exists()) {
+                Bitmap b = BitmapFactory.decodeFile(new File(context.getFilesDir(), "wallpaper.webp").getAbsolutePath());
+                wallpaper = new BitmapDrawable(context.getResources(), b);
+            } else if (new File(context.getFilesDir(), "wallpaper.jpg").exists()) {
+                // found jpg wallpaper, convert to webp
+                // jpg wallpaper will be used right now, but webp will be used next time updateWallpaper is called
                 Bitmap b = BitmapFactory.decodeFile(new File(context.getFilesDir(), "wallpaper.jpg").getAbsolutePath());
                 wallpaper = new BitmapDrawable(context.getResources(), b);
+
+                try (FileOutputStream fos = new FileOutputStream(new File(context.getFilesDir(), "wallpaper.webp"))) {
+                    b.compress(Bitmap.CompressFormat.WEBP, 90, fos);
+                } catch (Exception e) {
+                    // in any case we land here, let's just keep using jpg wallpaper and try again next time
+                    // noinspection ResultOfMethodCallIgnored
+                    new File(context.getFilesDir(), "wallpaper.webp").delete();
+                }
             } else {
                 wallpaper = null;
             }

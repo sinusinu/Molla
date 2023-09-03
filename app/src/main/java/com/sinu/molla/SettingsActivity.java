@@ -94,12 +94,20 @@ public class SettingsActivity extends AppCompatActivity {
 
         adapter.setOnSettingsLongClickedListener((idx, key) -> {
             if ("wallpaper".equals(key)) {
-                File wpFile = new File(getFilesDir(), "wallpaper.jpg");
+                File wpFile = new File(getFilesDir(), "wallpaper.webp");
                 if (wpFile.exists()) {
-                    //noinspection ResultOfMethodCallIgnored
+                    // noinspection ResultOfMethodCallIgnored
                     wpFile.delete();
-                    WallpaperHandler.updateWallpaper(this, binding.ivSettingsWallpaper, true);
                 }
+
+                // also delete jpg file if exists
+                File wpFileJ = new File(getFilesDir(), "wallpaper.jpg");
+                if (wpFileJ.exists()) {
+                    // noinspection ResultOfMethodCallIgnored
+                    wpFileJ.delete();
+                }
+
+                WallpaperHandler.updateWallpaper(this, binding.ivSettingsWallpaper, true);
             }
         });
 
@@ -148,14 +156,14 @@ public class SettingsActivity extends AppCompatActivity {
                     }
                 }
 
-                try (FileOutputStream fos = new FileOutputStream(new File(getFilesDir(), "wallpaper.jpg"))) {
-                    selectedImage.compress(Bitmap.CompressFormat.JPEG, 80, fos);
+                try (FileOutputStream fos = new FileOutputStream(new File(getFilesDir(), "wallpaper.webp"))) {
+                    selectedImage.compress(Bitmap.CompressFormat.WEBP, 90, fos);
                 } catch (IOException e) {
                     e.printStackTrace();
                     Toast.makeText(this, "Failed to set wallpaper", Toast.LENGTH_LONG).show();
                     // Delete the file in case of it being corrupted, deletion result isn't important
                     // noinspection ResultOfMethodCallIgnored
-                    new File(getFilesDir(), "wallpaper.png").delete();
+                    new File(getFilesDir(), "wallpaper.webp").delete();
                 }
 
                 WallpaperHandler.updateWallpaper(this, binding.ivSettingsWallpaper, true);
