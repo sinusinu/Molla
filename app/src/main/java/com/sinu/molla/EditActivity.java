@@ -9,6 +9,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -76,8 +77,12 @@ public class EditActivity extends AppCompatActivity {
         });
 
         binding.ivEditReorder.setOnClickListener((v) -> {
-            startActivityForResult(new Intent(this, OrderActivity.class), REQ_REORDER);
-            overridePendingTransition(R.anim.no_anim, R.anim.no_anim);
+            if (selectedItems.size() < 2) {
+                Toast.makeText(this, getString(R.string.edit_reorder_empty), Toast.LENGTH_SHORT).show();
+            } else {
+                startActivityForResult(new Intent(this, OrderActivity.class), REQ_REORDER);
+                overridePendingTransition(R.anim.no_anim, R.anim.no_anim);
+            }
         });
     }
 

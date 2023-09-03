@@ -14,6 +14,7 @@
     <string name="edit_title">Quick Access</string>
     <string name="edit_subtitle">Selected items will be shown on main screen.</string>
     <string name="edit_reorder">Reorder</string>
+    <string name="edit_reorder_empty">Not enough items to reorder</string>
 
     <string name="order_title">Reorder Icons</string>
     <string name="order_subtitle">Change the order of Quick Access icons.</string>
