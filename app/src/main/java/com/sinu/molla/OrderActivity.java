@@ -71,7 +71,6 @@ public class OrderActivity extends AppCompatActivity {
         });
 
         binding.ivOrdBack.setOnClickListener((v) -> {
-            // TODO: save order
             finish();
             overridePendingTransition(R.anim.no_anim, R.anim.no_anim);
         });

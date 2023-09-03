@@ -44,6 +44,7 @@ public class AllAppsActivity extends AppCompatActivity {
                 Collections.sort(items, AppItem::compareByDisplayName);
 
                 runOnUiThread(() -> {
+                    // TODO: do the thing done with HorizontallyFocusedLinearLayoutManager. for some reason GridLayoutManager won't cooperate.
                     GridLayoutManager manager = new GridLayoutManager(this, gridRowCount);
                     adapter = new AppItemGridAdapter(this, manager, items);
 
