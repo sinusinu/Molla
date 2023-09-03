@@ -97,7 +97,6 @@ public class EditActivity extends AppCompatActivity {
 
     private void fetchItems() {
         String favAppsRaw = pref.getString("fav_apps", "");
-        Log.d("Molla", "fetchItems fetched fav_apps " + favAppsRaw);
         ArrayList<String> favApps = new ArrayList<String>(Arrays.asList(favAppsRaw.split("\\?")));
 
         AppItem.fetchListOfAppsAsync(this, favApps, (r) -> {
@@ -136,7 +135,6 @@ public class EditActivity extends AppCompatActivity {
     private void updatePref() {
         StringBuilder sb = new StringBuilder();
         for (AppItem ai : selectedItems) {
-            Log.d("Molla", "updatePref: appending " + ai.packageName);
             sb.append(ai.packageName);
             sb.append("?");
         }

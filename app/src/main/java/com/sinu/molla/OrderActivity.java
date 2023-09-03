@@ -100,7 +100,6 @@ public class OrderActivity extends AppCompatActivity {
     private void updatePref() {
         StringBuilder sb = new StringBuilder();
         for (AppItem ai : selectedItems) {
-            Log.d("Molla", "OrderActivity updatePref: appending " + ai.packageName);
             sb.append(ai.packageName);
             sb.append("?");
         }
