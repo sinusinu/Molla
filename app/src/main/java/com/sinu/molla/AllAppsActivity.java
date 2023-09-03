@@ -4,6 +4,7 @@
 package com.sinu.molla;
 
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,11 +21,22 @@ public class AllAppsActivity extends AppCompatActivity {
     ArrayList<AppItem> items;
     AppItemGridAdapter adapter;
 
+    int gridRowCount = 4;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityAllAppsBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        // get screen aspect ratio, use 3-row if aspect ratio is shorter than 16:9
+        DisplayMetrics metrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getRealMetrics(metrics);
+        float longy = metrics.heightPixels;
+        float shorty = metrics.widthPixels;
+        if (longy < shorty) { float temp = longy; longy = shorty; shorty = temp; }
+        float ratio = longy / shorty;
+        if (ratio < 1.7f) gridRowCount = 3;
 
         new Thread(() -> {
             AppItem.fetchAllAppsAsync(this, (items) -> {
@@ -32,7 +44,7 @@ public class AllAppsActivity extends AppCompatActivity {
                 Collections.sort(items, AppItem::compareByDisplayName);
 
                 runOnUiThread(() -> {
-                    GridLayoutManager manager = new GridLayoutManager(this, 4);
+                    GridLayoutManager manager = new GridLayoutManager(this, gridRowCount);
                     adapter = new AppItemGridAdapter(this, manager, items);
 
                     adapter.setOnAppItemFocusChangedListener((i, n) -> {

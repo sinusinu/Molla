@@ -7,12 +7,14 @@
     android:layout_height="wrap_content"
     android:layout_marginEnd="12dp"
     android:layout_marginBottom="12dp"
+    android:background="@null"
     android:clickable="true"
     android:descendantFocusability="afterDescendants"
     android:focusable="true"
     tools:ignore="SpeakableTextPresentCheck">
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/cv_appitem_grid_card"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:clickable="false"

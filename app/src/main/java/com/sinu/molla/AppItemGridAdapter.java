@@ -17,6 +17,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -50,6 +51,7 @@ public class AppItemGridAdapter extends RecyclerView.Adapter<AppItemGridAdapter.
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnHoverListener, View.OnFocusChangeListener {
         public final FrameLayout fvBody;
+        public final CardView cvCard;
         public final ImageView ivBanner;
         public final ImageView ivIcon;
 
@@ -61,6 +63,7 @@ public class AppItemGridAdapter extends RecyclerView.Adapter<AppItemGridAdapter.
             super(v);
 
             fvBody = v.findViewById(R.id.fv_appitem_grid_body);
+            cvCard = v.findViewById(R.id.cv_appitem_grid_card);
             ivBanner = v.findViewById(R.id.iv_appitem_grid_banner);
             ivIcon = v.findViewById(R.id.iv_appitem_grid_icon);
 
@@ -73,8 +76,8 @@ public class AppItemGridAdapter extends RecyclerView.Adapter<AppItemGridAdapter.
         public void onFocusChange(View view, boolean hasFocus) {
             if (hasFocus) {
                 view.setZ(1f);
-                if (!focused) view.startAnimation(animScaleUp);
-                ((FrameLayout)view).setForeground(ContextCompat.getDrawable(context, R.drawable.outline));
+                if (!focused) cvCard.startAnimation(animScaleUp);
+                cvCard.setForeground(ContextCompat.getDrawable(context, R.drawable.outline));
                 focused = true;
                 selectedItem = manager.getPosition(view);
                 if (focusChangedListener != null) {
@@ -83,8 +86,8 @@ public class AppItemGridAdapter extends RecyclerView.Adapter<AppItemGridAdapter.
                 }
             } else {
                 view.setZ(0f);
-                if (focused) view.startAnimation(animScaleDown);
-                ((FrameLayout)view).setForeground(null);
+                if (focused) cvCard.startAnimation(animScaleDown);
+                cvCard.setForeground(null);
                 focused = false;
                 if (focusChangedListener != null) focusChangedListener.onAppItemFocusChanged(-1, null);
             }
