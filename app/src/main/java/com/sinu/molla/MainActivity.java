@@ -195,7 +195,7 @@ public class MainActivity extends AppCompatActivity {
 
             binding.tvMainTime.setText(DateFormat.getTimeFormat(this).format(new Date()));
 
-            h.postDelayed(rUpdateStatus, 5000);
+            h.postDelayed(rUpdateStatus, 2000);
         };
 
         h = new Handler(getMainLooper());
