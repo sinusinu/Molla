@@ -6,6 +6,9 @@ package com.sinu.molla;
 import android.graphics.drawable.Drawable;
 
 public class AppItemCache {
+    public static final int TYPE_LEANBACK = 0;
+    public static final int TYPE_NORMAL = 1;
+
     public int type;
     public Drawable drawable;
 

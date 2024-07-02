@@ -79,9 +79,9 @@ public class AppItemListAdapter extends RecyclerView.Adapter<AppItemListAdapter.
         Drawable appIcon = null;
         if (IconCache.containsKey(list.get(position).packageName)) {
             AppItemCache ci = IconCache.get(list.get(position).packageName);
-            if (ci.type == 0) {
+            if (ci.type == AppItemCache.TYPE_LEANBACK) {
                 appBanner = ci.drawable;
-            } else if (ci.type == 1) {
+            } else if (ci.type == AppItemCache.TYPE_NORMAL) {
                 appBanner = drawableGeneric;
                 appIcon = ci.drawable;
             }
@@ -93,17 +93,17 @@ public class AppItemListAdapter extends RecyclerView.Adapter<AppItemListAdapter.
                     if (appBanner == null) {
                         appBanner = drawableGeneric;
                         appIcon = context.getPackageManager().getApplicationIcon(list.get(position).packageName);
-                        IconCache.put(list.get(position).packageName, new AppItemCache(1, appIcon));
+                        IconCache.put(list.get(position).packageName, new AppItemCache(AppItemCache.TYPE_NORMAL, appIcon));
                     } else {
-                        IconCache.put(list.get(position).packageName, new AppItemCache(0, appBanner));
+                        IconCache.put(list.get(position).packageName, new AppItemCache(AppItemCache.TYPE_LEANBACK, appBanner));
                     }
                 } else {
-                    IconCache.put(list.get(position).packageName, new AppItemCache(0, appBanner));
+                    IconCache.put(list.get(position).packageName, new AppItemCache(AppItemCache.TYPE_LEANBACK, appBanner));
                 }
             } catch (PackageManager.NameNotFoundException e) {
                 appBanner = null;
                 appIcon = null;
-                IconCache.put(list.get(position).packageName, new AppItemCache(0, null));
+                IconCache.put(list.get(position).packageName, new AppItemCache(AppItemCache.TYPE_LEANBACK, null));
             }
         }
         holder.ivBanner.setImageDrawable(appBanner);
