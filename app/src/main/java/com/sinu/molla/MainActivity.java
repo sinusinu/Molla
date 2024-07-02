@@ -105,11 +105,9 @@ public class MainActivity extends AppCompatActivity {
         if (!batteryExist) {
             binding.ivMainBatIcon.setVisibility(View.GONE);
             binding.tvMainBatPercentage.setVisibility(View.GONE);
-            binding.spcMainBat.setVisibility(View.GONE);
         } else {
             binding.ivMainBatIcon.setVisibility(View.VISIBLE);
             binding.tvMainBatPercentage.setVisibility(View.VISIBLE);
-            binding.spcMainBat.setVisibility(View.VISIBLE);
         }
 
         cm = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -131,7 +129,6 @@ public class MainActivity extends AppCompatActivity {
 
                 binding.ivMainBatIcon.setVisibility(View.VISIBLE);
                 binding.tvMainBatPercentage.setVisibility(View.VISIBLE);
-                binding.spcMainBat.setVisibility(View.VISIBLE);
                 if (status == BatteryManager.BATTERY_STATUS_CHARGING) {
                     binding.ivMainBatIcon.setImageDrawable(AppCompatResources.getDrawable(this, R.drawable.ic_battery_charging));
                 } else if (status == BatteryManager.BATTERY_STATUS_FULL) {
