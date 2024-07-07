@@ -12,6 +12,7 @@ android {
         targetSdk 34
         versionCode 6
         versionName "1.0"
+        resConfigs 'en', 'ko'
     }
 
     buildTypes {
