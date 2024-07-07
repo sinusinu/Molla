@@ -23,7 +23,7 @@ Molla is a launcher app for Android, designed for handheld gaming devices.
 
 ![Editing Quick Access](images/3.png)
 
-Wallpaper is from [here](https://unsplash.com/photos/O_XpSoFwnYk)!
+Wallpaper is [Mountain dew during sunrise](https://unsplash.com/photos/mountain-dew-during-sunrise-xJ2tjuUHD9M) by Paul Earle.
 
 ## License
 
