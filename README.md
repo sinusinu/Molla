@@ -1,5 +1,7 @@
 # Molla
 
+[<img src="images/googleplay.png">](https://play.google.com/store/apps/details?id=com.sinu.molla)
+
 ![Icon](icon.png)
 
 Molla is a launcher app for Android, designed for handheld gaming devices.
