@@ -21,9 +21,9 @@
 
     <string name="settings_title">Settings</string>
     <string name="settings_category_general">General</string>
-    <string name="settings_wallpaper_title">Change Wallpaper</string>
-    <string name="settings_wallpaper_desc">Change the wallpaper used within Molla. This will not change the system wallpaper. Long-press this menu to remove wallpaper.</string>
-    <string name="settings_hide_non_tv_apps_title">Hide non-TV apps</string>
+    <string name="settings_wallpaper_title">Set Custom Wallpaper</string>
+    <string name="settings_wallpaper_desc">Set the wallpaper used within Molla. This will *not* change the system wallpaper. Long-press this menu to remove the wallpaper.</string>
+    <string name="settings_hide_non_tv_apps_title">Hide Non-TV Apps</string>
     <string name="settings_hide_non_tv_apps_desc">Only show apps that can be run on Android TV.</string>
     <string name="settings_closeable_title">Allow Close</string>
     <string name="settings_closeable_desc">Make Molla closeable by pressing Back on main screen. Useful if using Molla as an auxiliary launcher.</string>
