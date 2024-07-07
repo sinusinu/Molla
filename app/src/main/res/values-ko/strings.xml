@@ -35,5 +35,5 @@
     <string name="settings_open_system_apps_desc">설정 앱의 앱 설정을 실행합니다.</string>
     <string name="settings_error_wallpaper">이 기기에서는 배경화면을 사용할 수 없습니다</string>
     <string name="settings_error_wallpaper_no_picker">배경화면을 변경하려면 갤러리 앱이 필요합니다!</string>
-    <string name="settings_error_settings_no_activity">이 작업은 이 장치에서 지원되지 않습니다!</string>
+    <string name="settings_error_settings_no_activity">이 설정은 이 장치에서는 사용할 수 없습니다!</string>
 </resources>
