@@ -10,8 +10,8 @@ android {
         applicationId "com.sinu.molla"
         minSdk 23
         targetSdk 34
-        versionCode 8
-        versionName "1.1.1"
+        versionCode 9
+        versionName "1.1.2"
         resConfigs 'en', 'ko'
     }
 
