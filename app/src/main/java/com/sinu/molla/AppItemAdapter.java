@@ -81,8 +81,8 @@ public class AppItemAdapter extends RecyclerView.Adapter<AppItemAdapter.ViewHold
         public void onFocusChange(View view, boolean hasFocus) {
             if (hasFocus) {
                 view.setZ(1f);
-                if (!focused) cvCard.startAnimation(animScaleUp);
                 ivBanner.setForeground(ContextCompat.getDrawable(context, R.drawable.outline));
+                if (!focused) cvCard.startAnimation(animScaleUp);
                 focused = true;
                 selectedItem = manager.getPosition(view);
                 if (focusChangedListener != null) {
@@ -91,8 +91,8 @@ public class AppItemAdapter extends RecyclerView.Adapter<AppItemAdapter.ViewHold
                 }
             } else {
                 view.setZ(0f);
-                if (focused) cvCard.startAnimation(animScaleDown);
                 ivBanner.setForeground(null);
+                if (focused) cvCard.startAnimation(animScaleDown);
                 focused = false;
                 if (focusChangedListener != null) focusChangedListener.onAppItemFocusChanged(-1, null);
             }
