@@ -45,8 +45,8 @@
 
             <ImageView
                 android:id="@+id/iv_appitem_icon"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
+                android:layout_width="@dimen/_48sdp"
+                android:layout_height="@dimen/_48sdp"
                 android:clickable="false"
                 android:focusable="false"
                 app:layout_constraintBottom_toBottomOf="parent"

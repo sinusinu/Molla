@@ -3,17 +3,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="48dp"
+    android:layout_height="@dimen/_40sdp"
     android:background="?attr/selectableItemBackground"
     android:clickable="false"
     android:descendantFocusability="afterDescendants"
     android:focusable="false"
     android:gravity="center_vertical"
-    android:paddingStart="16dp"
-    android:paddingEnd="16dp">
+    android:paddingStart="@dimen/_16sdp"
+    android:paddingEnd="@dimen/_16sdp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="72dp"
+        android:layout_width="@dimen/_65sdp"
         android:layout_height="wrap_content"
         android:layout_weight="0"
         android:clickable="false"
@@ -35,8 +35,8 @@
 
         <ImageView
             android:id="@+id/iv_appitem_order_icon"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+            android:layout_width="@dimen/_20sdp"
+            android:layout_height="@dimen/_20sdp"
             android:clickable="false"
             android:focusable="false"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -54,24 +54,24 @@
         android:ellipsize="end"
         android:fontFamily="sans-serif-condensed"
         android:maxLines="1"
-        android:paddingStart="16dp"
-        android:paddingEnd="16dp"
+        android:paddingStart="@dimen/_12sdp"
+        android:paddingEnd="@dimen/_12sdp"
         android:text="@string/edit_title"
-        android:textSize="20sp" />
+        android:textSize="@dimen/_16ssp" />
 
     <ImageView
         android:id="@+id/iv_appitem_order_up"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:padding="12dp"
+        android:layout_width="@dimen/_40sdp"
+        android:layout_height="@dimen/_40sdp"
+        android:padding="@dimen/_10sdp"
         android:layout_weight="0"
         app:srcCompat="@drawable/ic_arrow_up" />
 
     <ImageView
         android:id="@+id/iv_appitem_order_down"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:padding="12dp"
+        android:layout_width="@dimen/_40sdp"
+        android:layout_height="@dimen/_40sdp"
+        android:padding="@dimen/_10sdp"
         android:layout_weight="0"
         app:srcCompat="@drawable/ic_arrow_down" />
 

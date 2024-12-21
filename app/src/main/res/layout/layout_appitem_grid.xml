@@ -45,8 +45,8 @@
 
             <ImageView
                 android:id="@+id/iv_appitem_grid_icon"
-                android:layout_width="36dp"
-                android:layout_height="36dp"
+                android:layout_width="@dimen/_32sdp"
+                android:layout_height="@dimen/_32sdp"
                 android:clickable="false"
                 android:focusable="false"
                 app:layout_constraintBottom_toBottomOf="parent"

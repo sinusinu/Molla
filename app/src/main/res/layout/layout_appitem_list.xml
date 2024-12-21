@@ -3,17 +3,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="48dp"
+    android:layout_height="@dimen/_40sdp"
     android:background="?attr/selectableItemBackground"
     android:clickable="true"
     android:descendantFocusability="afterDescendants"
     android:focusable="true"
     android:gravity="center_vertical"
-    android:paddingStart="16dp"
-    android:paddingEnd="16dp">
+    android:paddingStart="@dimen/_16sdp"
+    android:paddingEnd="@dimen/_16sdp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="72dp"
+        android:layout_width="@dimen/_65sdp"
         android:layout_height="wrap_content"
         android:layout_weight="0"
         android:clickable="false"
@@ -35,8 +35,8 @@
 
         <ImageView
             android:id="@+id/iv_appitem_list_icon"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+            android:layout_width="@dimen/_20sdp"
+            android:layout_height="@dimen/_20sdp"
             android:clickable="false"
             android:focusable="false"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -54,15 +54,15 @@
         android:ellipsize="end"
         android:fontFamily="sans-serif-condensed"
         android:maxLines="1"
-        android:paddingStart="16dp"
-        android:paddingEnd="16dp"
+        android:paddingStart="@dimen/_12sdp"
+        android:paddingEnd="@dimen/_12sdp"
         android:text="@string/edit_title"
-        android:textSize="20sp" />
+        android:textSize="@dimen/_16ssp" />
 
     <CheckBox
         android:id="@+id/cb_appitem_list_check"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="@dimen/_40sdp"
+        android:layout_height="@dimen/_40sdp"
         android:layout_weight="0"
         android:background="@null"
         android:clickable="false"
