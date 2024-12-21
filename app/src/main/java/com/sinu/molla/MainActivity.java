@@ -55,7 +55,6 @@ public class MainActivity extends AppCompatActivity {
     ConnectivityManager cm;
     WifiManager wm;
     BluetoothManager bt;
-    BluetoothAdapter ba;
 
     boolean isFavListUpdateReserved = true;
 
@@ -123,7 +122,6 @@ public class MainActivity extends AppCompatActivity {
         }
 
         bt = (BluetoothManager) getSystemService(Context.BLUETOOTH_SERVICE);
-        ba = bt.getAdapter();
 
         rUpdateStatus = () -> {
             batteryStatus = registerReceiver(null, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
@@ -198,6 +196,7 @@ public class MainActivity extends AppCompatActivity {
             }
 
             try {
+                BluetoothAdapter ba = bt.getAdapter();
                 binding.ivMainBtIcon.setVisibility(ba.isEnabled() ? View.VISIBLE : View.GONE);
             } catch (Exception ignored) {
                 binding.ivMainBtIcon.setVisibility(View.GONE);
