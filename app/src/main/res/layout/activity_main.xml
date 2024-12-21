@@ -149,46 +149,54 @@
         app:layout_constraintBottom_toTopOf="@+id/rv_main_fav"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <TextView
-        android:id="@+id/tv_main_time"
+    <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="20dp"
-        android:layout_gravity="center_horizontal|center_vertical"
+        android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="36dp"
-        android:gravity="center_vertical"
-        android:text="@string/main_placeholder_time"
+        android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <TextView
-        android:id="@+id/tv_main_bat_percentage"
-        android:layout_width="wrap_content"
-        android:layout_height="20dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="12dp"
-        android:gravity="center_vertical"
-        android:text="@string/main_placeholder_bat"
-        app:layout_constraintEnd_toStartOf="@+id/tv_main_time"
-        app:layout_constraintTop_toTopOf="parent" />
+        <ImageView
+            android:id="@+id/iv_main_bt_icon"
+            android:layout_width="16dp"
+            android:layout_height="20dp"
+            android:layout_marginEnd="12dp"
+            android:layout_weight="1"
+            android:visibility="gone"
+            app:srcCompat="@drawable/ic_bluetooth" />
 
-    <ImageView
-        android:id="@+id/iv_main_bat_icon"
-        android:layout_width="16dp"
-        android:layout_height="20dp"
-        android:layout_marginTop="24dp"
-        app:layout_constraintEnd_toStartOf="@+id/tv_main_bat_percentage"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_battery_charging" />
+        <ImageView
+            android:id="@+id/iv_main_conn_icon"
+            android:layout_width="16dp"
+            android:layout_height="20dp"
+            android:layout_marginEnd="12dp"
+            android:layout_weight="1"
+            app:srcCompat="@drawable/ic_conn_ethernet" />
 
-    <ImageView
-        android:id="@+id/iv_main_conn_icon"
-        android:layout_width="16dp"
-        android:layout_height="20dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="12dp"
-        android:layout_weight="1"
-        app:layout_constraintEnd_toStartOf="@+id/iv_main_bat_icon"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_conn_ethernet" />
+        <ImageView
+            android:id="@+id/iv_main_bat_icon"
+            android:layout_width="16dp"
+            android:layout_height="20dp"
+            android:layout_marginEnd="12dp"
+            app:srcCompat="@drawable/ic_battery_charging" />
+
+        <TextView
+            android:id="@+id/tv_main_bat_percentage"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:layout_marginEnd="12dp"
+            android:gravity="center_vertical"
+            android:text="@string/main_placeholder_bat" />
+
+        <TextView
+            android:id="@+id/tv_main_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal|center_vertical"
+            android:gravity="center_vertical"
+            android:text="@string/main_placeholder_time" />
+    </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

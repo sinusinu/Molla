@@ -5,6 +5,8 @@ package com.sinu.molla;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -52,6 +54,8 @@ public class MainActivity extends AppCompatActivity {
     boolean batteryExist;
     ConnectivityManager cm;
     WifiManager wm;
+    BluetoothManager bt;
+    BluetoothAdapter ba;
 
     boolean isFavListUpdateReserved = true;
 
@@ -117,6 +121,9 @@ public class MainActivity extends AppCompatActivity {
         } else {
             wm = null;
         }
+
+        bt = (BluetoothManager) getSystemService(Context.BLUETOOTH_SERVICE);
+        ba = bt.getAdapter();
 
         rUpdateStatus = () -> {
             batteryStatus = registerReceiver(null, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
@@ -188,6 +195,12 @@ public class MainActivity extends AppCompatActivity {
                         break;
                 }
 
+            }
+
+            try {
+                binding.ivMainBtIcon.setVisibility(ba.isEnabled() ? View.VISIBLE : View.GONE);
+            } catch (Exception ignored) {
+                binding.ivMainBtIcon.setVisibility(View.GONE);
             }
 
             binding.tvMainTime.setText(DateFormat.getTimeFormat(this).format(new Date()));
