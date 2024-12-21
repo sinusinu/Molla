@@ -1,6 +1,9 @@
 package com.sinu.molla;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.WindowCompat;
+import androidx.core.view.WindowInsetsCompat;
+import androidx.core.view.WindowInsetsControllerCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.content.Context;
@@ -74,6 +77,11 @@ public class OrderActivity extends AppCompatActivity {
             finish();
             overridePendingTransition(R.anim.no_anim, R.anim.no_anim);
         });
+
+        // hide system bars
+        WindowInsetsControllerCompat windowInsetsController = WindowCompat.getInsetsController(getWindow(), getWindow().getDecorView());
+        windowInsetsController.setSystemBarsBehavior(WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE);
+        windowInsetsController.hide(WindowInsetsCompat.Type.systemBars());
     }
 
     @Override

@@ -8,6 +8,9 @@ import android.util.DisplayMetrics;
 import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.WindowCompat;
+import androidx.core.view.WindowInsetsCompat;
+import androidx.core.view.WindowInsetsControllerCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 
 import com.sinu.molla.databinding.ActivityAllAppsBinding;
@@ -70,6 +73,11 @@ public class AllAppsActivity extends AppCompatActivity {
             finish();
             overridePendingTransition(R.anim.no_anim, R.anim.no_anim);
         });
+
+        // hide system bars
+        WindowInsetsControllerCompat windowInsetsController = WindowCompat.getInsetsController(getWindow(), getWindow().getDecorView());
+        windowInsetsController.setSystemBarsBehavior(WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE);
+        windowInsetsController.hide(WindowInsetsCompat.Type.systemBars());
     }
 
     @Override
