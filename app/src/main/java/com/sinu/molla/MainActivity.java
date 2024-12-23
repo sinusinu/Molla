@@ -219,9 +219,10 @@ public class MainActivity extends AppCompatActivity {
         h = new Handler(getMainLooper());
     }
 
+    @SuppressLint("MissingSuperCall")
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
+        // do not add super call here
         if (isCloseable) finish();
     }
 
