@@ -4,17 +4,12 @@
 package com.sinu.molla;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.CheckBox;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -24,7 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
-public class AppItemListAdapter extends RecyclerView.Adapter<AppItemListAdapter.ViewHolder> {
+public class AppItemListSelectAdapter extends RecyclerView.Adapter<AppItemListSelectAdapter.ViewHolder> {
     private final Context context;
     private final RecyclerView.LayoutManager manager;
     private final ArrayList<AppItem> list;
@@ -34,7 +29,7 @@ public class AppItemListAdapter extends RecyclerView.Adapter<AppItemListAdapter.
 
     private final View.OnClickListener itemClickListener;
 
-    public AppItemListAdapter(Context context, RecyclerView.LayoutManager manager, ArrayList<AppItem> list, ArrayList<AppItem> selectedList, View.OnClickListener itemClickListener) {
+    public AppItemListSelectAdapter(Context context, RecyclerView.LayoutManager manager, ArrayList<AppItem> list, ArrayList<AppItem> selectedList, View.OnClickListener itemClickListener) {
         this.list = list;
         this.selectedList = selectedList;
         this.manager = manager;
@@ -57,10 +52,10 @@ public class AppItemListAdapter extends RecyclerView.Adapter<AppItemListAdapter.
         public ViewHolder(@NonNull View v) {
             super(v);
 
-            ivBanner = v.findViewById(R.id.iv_appitem_list_banner);
-            ivIcon = v.findViewById(R.id.iv_appitem_list_icon);
-            tvAppName = v.findViewById(R.id.tv_appitem_list_app_name);
-            cbCheck = v.findViewById(R.id.cb_appitem_list_check);
+            ivBanner = v.findViewById(R.id.iv_appitem_list_select_banner);
+            ivIcon = v.findViewById(R.id.iv_appitem_list_select_icon);
+            tvAppName = v.findViewById(R.id.tv_appitem_list_select_app_name);
+            cbCheck = v.findViewById(R.id.cb_appitem_list_select_check);
 
             v.setOnClickListener(itemClickListener);
         }
@@ -69,7 +64,7 @@ public class AppItemListAdapter extends RecyclerView.Adapter<AppItemListAdapter.
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_appitem_list, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_appitem_list_select, parent, false);
         return new ViewHolder(view);
     }
 

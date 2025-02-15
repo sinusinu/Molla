@@ -7,7 +7,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -34,7 +33,7 @@ public class EditActivity extends AppCompatActivity {
     ArrayList<AppItem> items;
     ArrayList<AppItem> selectedItems;
     LinearLayoutManager manager;
-    AppItemListAdapter adapter;
+    AppItemListSelectAdapter adapter;
 
     View.OnClickListener itemClickListener;
 
@@ -50,7 +49,7 @@ public class EditActivity extends AppCompatActivity {
         selectedItems = new ArrayList<>();
 
         manager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-        adapter = new AppItemListAdapter(this, manager, items, selectedItems, itemClickListener);
+        adapter = new AppItemListSelectAdapter(this, manager, items, selectedItems, itemClickListener);
         binding.rvEditList.setLayoutManager(manager);
         binding.rvEditList.setAdapter(adapter);
         binding.rvEditList.setItemAnimator(null);
@@ -117,7 +116,7 @@ public class EditActivity extends AppCompatActivity {
                 Collections.sort(items, AppItem::compareByDisplayName);
 
                 runOnUiThread(() -> {
-                    adapter = new AppItemListAdapter(this, manager, items, selectedItems, itemClickListener);
+                    adapter = new AppItemListSelectAdapter(this, manager, items, selectedItems, itemClickListener);
                     binding.rvEditList.setAdapter(adapter);
 
                     binding.rvEditList.setVisibility(View.VISIBLE);

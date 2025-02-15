@@ -86,5 +86,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/cl_settings_lpane"
         app:layout_constraintTop_toTopOf="parent"
-        tools:listitem="@layout/layout_appitem_list" />
+        tools:listitem="@layout/layout_appitem_list_select" />
 </androidx.constraintlayout.widget.ConstraintLayout>

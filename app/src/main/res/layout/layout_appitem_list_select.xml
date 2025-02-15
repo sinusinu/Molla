@@ -20,7 +20,7 @@
         android:focusable="false">
 
         <ImageView
-            android:id="@+id/iv_appitem_list_banner"
+            android:id="@+id/iv_appitem_list_select_banner"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:clickable="false"
@@ -34,7 +34,7 @@
             app:srcCompat="@drawable/generic" />
 
         <ImageView
-            android:id="@+id/iv_appitem_list_icon"
+            android:id="@+id/iv_appitem_list_select_icon"
             android:layout_width="@dimen/_20sdp"
             android:layout_height="@dimen/_20sdp"
             android:clickable="false"
@@ -47,7 +47,7 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView
-        android:id="@+id/tv_appitem_list_app_name"
+        android:id="@+id/tv_appitem_list_select_app_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
@@ -60,7 +60,7 @@
         android:textSize="@dimen/_16ssp" />
 
     <CheckBox
-        android:id="@+id/cb_appitem_list_check"
+        android:id="@+id/cb_appitem_list_select_check"
         android:layout_width="@dimen/_40sdp"
         android:layout_height="@dimen/_40sdp"
         android:layout_weight="0"
