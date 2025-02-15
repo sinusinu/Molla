@@ -21,7 +21,6 @@ import java.util.ArrayList;
 
 public class AppItemListSelectAdapter extends RecyclerView.Adapter<AppItemListSelectAdapter.ViewHolder> {
     private final Context context;
-    private final RecyclerView.LayoutManager manager;
     private final ArrayList<AppItem> list;
     private final ArrayList<AppItem> selectedList;
 
@@ -29,10 +28,9 @@ public class AppItemListSelectAdapter extends RecyclerView.Adapter<AppItemListSe
 
     private final View.OnClickListener itemClickListener;
 
-    public AppItemListSelectAdapter(Context context, RecyclerView.LayoutManager manager, ArrayList<AppItem> list, ArrayList<AppItem> selectedList, View.OnClickListener itemClickListener) {
+    public AppItemListSelectAdapter(Context context, ArrayList<AppItem> list, ArrayList<AppItem> selectedList, View.OnClickListener itemClickListener) {
         this.list = list;
         this.selectedList = selectedList;
-        this.manager = manager;
         this.context = context;
 
         IconCache.kick();

@@ -21,21 +21,19 @@ import java.util.ArrayList;
 
 public class AppItemListAdapter extends RecyclerView.Adapter<AppItemListAdapter.ViewHolder> {
     private final Context context;
-    private final RecyclerView.LayoutManager manager;
     private final ArrayList<AppItem> list;
 
     private final Drawable drawableGeneric;
 
-    public AppItemListAdapter(Context context, RecyclerView.LayoutManager manager, ArrayList<AppItem> list) {
+    public AppItemListAdapter(Context context, ArrayList<AppItem> list) {
         this.list = list;
-        this.manager = manager;
         this.context = context;
 
         IconCache.kick();
         drawableGeneric = ContextCompat.getDrawable(context, R.drawable.generic);
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
         public final ImageView ivBanner;
         public final ImageView ivIcon;
         public final TextView tvAppName;

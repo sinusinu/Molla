@@ -4,14 +4,12 @@
 package com.sinu.molla;
 
 import android.os.Bundle;
-import android.util.DisplayMetrics;
 import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.WindowCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.core.view.WindowInsetsControllerCompat;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.sinu.molla.databinding.ActivityAllAppsBinding;
@@ -38,7 +36,7 @@ public class AllAppsActivity extends AppCompatActivity {
 
                 runOnUiThread(() -> {
                     LinearLayoutManager manager = new LinearLayoutManager(this);
-                    adapter = new AppItemListAdapter(this, manager, items);
+                    adapter = new AppItemListAdapter(this, items);
 
                     binding.rvAllAllapps.setLayoutManager(manager);
                     binding.rvAllAllapps.setAdapter(adapter);

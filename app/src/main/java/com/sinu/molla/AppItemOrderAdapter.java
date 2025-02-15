@@ -51,8 +51,6 @@ public class AppItemOrderAdapter extends RecyclerView.Adapter<AppItemOrderAdapte
         public final ImageView ivUp;
         public final ImageView ivDown;
 
-        public boolean focused = false;
-
         public ViewHolder(@NonNull View v) {
             super(v);
 

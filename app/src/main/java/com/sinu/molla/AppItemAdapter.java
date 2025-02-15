@@ -35,7 +35,7 @@ public class AppItemAdapter extends RecyclerView.Adapter<AppItemAdapter.ViewHold
 
     private OnAppItemFocusChangedListener focusChangedListener;
 
-    private boolean shouldAddEditButton;
+    private final boolean shouldAddEditButton;
 
     public int selectedItem = -1;
 

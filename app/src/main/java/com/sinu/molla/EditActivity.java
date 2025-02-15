@@ -49,7 +49,7 @@ public class EditActivity extends AppCompatActivity {
         selectedItems = new ArrayList<>();
 
         manager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-        adapter = new AppItemListSelectAdapter(this, manager, items, selectedItems, itemClickListener);
+        adapter = new AppItemListSelectAdapter(this, items, selectedItems, itemClickListener);
         binding.rvEditList.setLayoutManager(manager);
         binding.rvEditList.setAdapter(adapter);
         binding.rvEditList.setItemAnimator(null);
@@ -116,7 +116,7 @@ public class EditActivity extends AppCompatActivity {
                 Collections.sort(items, AppItem::compareByDisplayName);
 
                 runOnUiThread(() -> {
-                    adapter = new AppItemListSelectAdapter(this, manager, items, selectedItems, itemClickListener);
+                    adapter = new AppItemListSelectAdapter(this, items, selectedItems, itemClickListener);
                     binding.rvEditList.setAdapter(adapter);
 
                     binding.rvEditList.setVisibility(View.VISIBLE);
