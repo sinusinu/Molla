@@ -12,6 +12,7 @@ import androidx.core.view.WindowCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.core.view.WindowInsetsControllerCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.sinu.molla.databinding.ActivityAllAppsBinding;
 
@@ -22,9 +23,7 @@ public class AllAppsActivity extends AppCompatActivity {
     ActivityAllAppsBinding binding;
 
     ArrayList<AppItem> items;
-    AppItemGridAdapter adapter;
-
-    int gridRowCount = 4;
+    AppItemListAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,28 +31,14 @@ public class AllAppsActivity extends AppCompatActivity {
         binding = ActivityAllAppsBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        // get screen aspect ratio, use 3-row if aspect ratio is shorter than 16:9
-        DisplayMetrics metrics = new DisplayMetrics();
-        getWindowManager().getDefaultDisplay().getRealMetrics(metrics);
-        float longy = metrics.heightPixels;
-        float shorty = metrics.widthPixels;
-        if (longy < shorty) { float temp = longy; longy = shorty; shorty = temp; }
-        float ratio = longy / shorty;
-        if (ratio < 1.7f) gridRowCount = 3;
-
         new Thread(() -> {
             AppItem.fetchAllAppsAsync(this, (items) -> {
                 this.items = items;
                 Collections.sort(items, AppItem::compareByDisplayName);
 
                 runOnUiThread(() -> {
-                    // TODO: do the thing done with HorizontallyFocusedLinearLayoutManager. for some reason GridLayoutManager won't cooperate.
-                    GridLayoutManager manager = new GridLayoutManager(this, gridRowCount);
-                    adapter = new AppItemGridAdapter(this, manager, items);
-
-                    adapter.setOnAppItemFocusChangedListener((i, n) -> {
-                        binding.tvAllName.setText(n);
-                    });
+                    LinearLayoutManager manager = new LinearLayoutManager(this);
+                    adapter = new AppItemListAdapter(this, manager, items);
 
                     binding.rvAllAllapps.setLayoutManager(manager);
                     binding.rvAllAllapps.setAdapter(adapter);
@@ -63,7 +48,6 @@ public class AllAppsActivity extends AppCompatActivity {
                 });
             });
         }).start();
-
 
         binding.ivAllBack.setOnFocusChangeListener((view, hasFocus) -> {
             binding.ivAllBack.setBackgroundColor(getColor(hasFocus ? R.color.transparent_white : R.color.transparent));
