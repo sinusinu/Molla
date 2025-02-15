@@ -45,7 +45,6 @@ public class AppItemGridAdapter extends RecyclerView.Adapter<AppItemGridAdapter.
         animScaleDown = AnimationUtils.loadAnimation(context, R.anim.scale_down);
         animScaleUp.setFillAfter(true);
 
-        IconCache.kick();
         drawableGeneric = ContextCompat.getDrawable(context, R.drawable.generic);
     }
 

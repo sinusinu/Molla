@@ -37,7 +37,6 @@ public class AppItemOrderAdapter extends RecyclerView.Adapter<AppItemOrderAdapte
         this.manager = manager;
         this.context = context;
 
-        IconCache.kick();
         drawableGeneric = ContextCompat.getDrawable(context, R.drawable.generic);
 
         this.upClickListener = upClickListener;

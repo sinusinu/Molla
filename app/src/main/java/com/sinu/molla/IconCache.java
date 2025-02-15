@@ -8,22 +8,18 @@ import java.util.HashMap;
 public class IconCache {
     private static HashMap<String, AppItemCache> iconCache;
 
-    public static void kick() {
-        if (iconCache == null) iconCache = new HashMap<>();
-    }
-
     public static AppItemCache get(String key) {
-        kick();
+        if (iconCache == null) iconCache = new HashMap<>();
         return iconCache.get(key);
     }
 
     public static boolean containsKey(String key) {
-        kick();
+        if (iconCache == null) iconCache = new HashMap<>();
         return iconCache.containsKey(key);
     }
 
     public static void put(String key, AppItemCache value) {
-        kick();
+        if (iconCache == null) iconCache = new HashMap<>();
         iconCache.put(key, value);
     }
 }

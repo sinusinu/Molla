@@ -47,7 +47,6 @@ public class AppItemAdapter extends RecyclerView.Adapter<AppItemAdapter.ViewHold
         animScaleDown = AnimationUtils.loadAnimation(context, R.anim.scale_down);
         animScaleUp.setFillAfter(true);
 
-        IconCache.kick();
         drawableGeneric = ContextCompat.getDrawable(context, R.drawable.generic);
 
         this.shouldAddEditButton = shouldAddEditButton;

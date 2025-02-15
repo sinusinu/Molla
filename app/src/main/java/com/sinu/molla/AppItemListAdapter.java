@@ -29,7 +29,6 @@ public class AppItemListAdapter extends RecyclerView.Adapter<AppItemListAdapter.
         this.list = list;
         this.context = context;
 
-        IconCache.kick();
         drawableGeneric = ContextCompat.getDrawable(context, R.drawable.generic);
     }
 
