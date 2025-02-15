@@ -28,7 +28,7 @@
     <string name="settings_closeable_title">Allow Close</string>
     <string name="settings_closeable_desc">Make Molla closeable by pressing Back on main screen. Useful if using Molla as an auxiliary launcher.</string>
     <string name="settings_about_title" translatable="false">Molla %s</string>
-    <string name="settings_about_desc" translatable="false">© 2022‐2024 sinu</string>
+    <string name="settings_about_desc" translatable="false">© 2022‐2025 sinu</string>
     <string name="settings_category_system_settings">Quick Access to System Settings</string>
     <string name="settings_open_system_settings">System Settings</string>
     <string name="settings_open_system_settings_desc">Open the Settings app.</string>
