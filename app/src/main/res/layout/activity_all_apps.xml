@@ -38,10 +38,8 @@
         android:layout_height="0dp"
         android:layout_marginStart="@dimen/_24sdp"
         android:layout_marginTop="@dimen/_12sdp"
-        android:layout_marginEnd="@dimen/_12sdp"
         android:layout_marginBottom="@dimen/_12sdp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/rv_all_allapps"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -90,6 +88,7 @@
         android:layout_height="0dp"
         android:layout_marginTop="@dimen/_12sdp"
         android:layout_marginEnd="@dimen/_24sdp"
+        android:layout_marginStart="@dimen/_12sdp"
         android:layout_marginBottom="@dimen/_12sdp"
         android:clipChildren="false"
         android:clipToPadding="false"

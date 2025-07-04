@@ -38,7 +38,7 @@ public class AllAppsActivity extends AppCompatActivity {
                 Collections.sort(items, AppItem::compareByDisplayName);
 
                 runOnUiThread(() -> {
-                    LinearLayoutManager manager = new LinearLayoutManager(this);
+                    LinearLayoutManager manager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
                     adapter = new AppItemListAdapter(this, items);
 
                     binding.rvAllAllapps.setLayoutManager(manager);
