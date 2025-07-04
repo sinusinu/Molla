@@ -6,6 +6,7 @@ package com.sinu.molla;
 import android.os.Bundle;
 import android.view.View;
 
+import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.WindowCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -26,6 +27,8 @@ public class AllAppsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        EdgeToEdge.enable(this);
+
         binding = ActivityAllAppsBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
