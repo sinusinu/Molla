@@ -4,12 +4,12 @@ plugins {
 
 android {
     namespace 'com.sinu.molla'
-    compileSdk 35
+    compileSdk 36
 
     defaultConfig {
         applicationId "com.sinu.molla"
         minSdk 23
-        targetSdk 35
+        targetSdk 36
         versionCode 10
         versionName "1.1.3"
         resourceConfigurations += ['en', 'ko']
