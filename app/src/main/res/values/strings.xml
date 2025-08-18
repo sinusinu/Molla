@@ -45,7 +45,7 @@
     <string name="settings_open_system_apps">Apps Settings</string>
     <string name="settings_open_system_apps_desc">Open the Apps settings.</string>
     <string name="settings_autostart_at_boot_perm_title">Permission required</string>
-    <string name="settings_autostart_at_boot_perm_content">This feature requires a special permission. Please read the following carefully.\n\nThe "OK" button will take you to a screen where you can grant specific apps permission to display over other apps. Find Molla in the list, open it, and grant the permission. Once the permission is granted, you can enable this feature.\n\nTo continue, press "OK".</string>
+    <string name="settings_autostart_at_boot_perm_content">This feature requires a special permission. Please read the following carefully.\n\nPressing \"OK\" button will take you to a screen where you can grant specific apps permission to display over other apps.\n\nFind Molla in the list, and grant the permission. Once the permission is granted, you can enable this feature.\n\nTo continue, press \"OK\".</string>
     <string name="settings_error_wallpaper">Wallpaper is not supported on this device</string>
     <string name="settings_error_wallpaper_no_picker">You need an Image viewer app to perform this action!</string>
     <string name="settings_error_settings_no_activity">This setting is not available on this device!</string>

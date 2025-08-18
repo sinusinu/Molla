@@ -42,7 +42,7 @@
     <string name="settings_open_system_apps">앱 설정</string>
     <string name="settings_open_system_apps_desc">설정 앱의 앱 설정을 실행합니다.</string>
     <string name="settings_autostart_at_boot_perm_title">권한 필요</string>
-    <string name="settings_autostart_at_boot_perm_content">이 기능을 사용하려면 특별한 권한이 필요합니다. 계속하려면 다음 내용을 주의깊게 읽어주세요.\n\n"확인" 버튼을 누르면 특정한 앱에게 다른 앱 위에 그릴 수 있는 권한을 부여할 수 있는 화면으로 이동합니다. 목록에서 Molla를 찾아 선택한 뒤, 권한을 부여해주세요. 권한이 부여되면 이 설정을 사용할 수 있게 됩니다.\n\n계속하려면 "확인" 버튼을 눌러주세요.</string>
+    <string name="settings_autostart_at_boot_perm_content">이 기능을 사용하려면 특별한 권한이 필요합니다. 계속하려면 다음 내용을 주의깊게 읽어주세요.\n\n\"확인\" 버튼을 누르면 특정한 앱에게 다른 앱 위에 그릴 수 있는 권한을 부여할 수 있는 화면으로 이동합니다.\n\n목록에서 Molla를 찾아 선택한 뒤, 권한을 부여해주세요. 권한이 부여되면 이 설정을 사용할 수 있게 됩니다.\n\n계속하려면 \"확인\" 버튼을 눌러주세요.</string>
     <string name="settings_error_wallpaper">이 기기에서는 배경화면을 사용할 수 없습니다</string>
     <string name="settings_error_wallpaper_no_picker">배경화면을 변경하려면 갤러리 앱이 필요합니다!</string>
     <string name="settings_error_settings_no_activity">이 설정은 이 장치에서는 사용할 수 없습니다!</string>
