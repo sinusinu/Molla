@@ -23,7 +23,6 @@
             android:id="@+id/tv_settings_category"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/_2sdp"
             android:background="@drawable/back_settings_category"
             android:fontFamily="sans-serif-condensed"
             android:paddingStart="@dimen/_4sdp"
