@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.WindowCompat;
@@ -98,6 +99,15 @@ public class EditActivity extends AppCompatActivity {
         WindowInsetsControllerCompat windowInsetsController = WindowCompat.getInsetsController(getWindow(), getWindow().getDecorView());
         windowInsetsController.setSystemBarsBehavior(WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE);
         windowInsetsController.hide(WindowInsetsCompat.Type.systemBars());
+
+        var backCallback = new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                finish();
+                overridePendingTransition(R.anim.no_anim, R.anim.no_anim);
+            }
+        };
+        getOnBackPressedDispatcher().addCallback(this, backCallback);
     }
 
     @Override
@@ -132,13 +142,6 @@ public class EditActivity extends AppCompatActivity {
             });
         });
     }
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        overridePendingTransition(R.anim.no_anim, R.anim.no_anim);
-    }
-
     @Override
     protected void onResume() {
         super.onResume();
