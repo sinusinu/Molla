@@ -30,7 +30,7 @@
             android:paddingTop="@dimen/_2sdp"
             android:paddingEnd="@dimen/_4sdp"
             android:paddingBottom="@dimen/_2sdp"
-            android:text="@string/settings_category_general"
+            android:text="@string/settings_category_appearance"
             android:textSize="@dimen/_12sdp"/>
     </LinearLayout>
 

@@ -32,7 +32,7 @@ public class SettingsAdapter extends RecyclerView.Adapter<SettingsAdapter.ViewHo
 
         settings = new MollaSetting[] {
                 new MollaSetting(
-                        context.getString(R.string.settings_category_general),
+                        context.getString(R.string.settings_category_appearance),
                         null,
                         MollaSetting.TYPE_CATEGORY, null
                 ),
@@ -40,6 +40,16 @@ public class SettingsAdapter extends RecyclerView.Adapter<SettingsAdapter.ViewHo
                         context.getString(R.string.settings_wallpaper_title),
                         context.getString(R.string.settings_wallpaper_desc),
                         MollaSetting.TYPE_BUTTON, "wallpaper"
+                ),
+                new MollaSetting(
+                        context.getString(R.string.settings_customize_indicator_title),
+                        context.getString(R.string.settings_customize_indicator_desc),
+                        MollaSetting.TYPE_BUTTON, "indicator"
+                ),
+                new MollaSetting(
+                        context.getString(R.string.settings_category_behavior),
+                        null,
+                        MollaSetting.TYPE_CATEGORY, null
                 ),
                 new MollaSetting(
                         context.getString(R.string.settings_hide_non_tv_apps_title),
@@ -52,9 +62,9 @@ public class SettingsAdapter extends RecyclerView.Adapter<SettingsAdapter.ViewHo
                         MollaSetting.TYPE_CHECKBOX, "closeable"
                 ),
                 new MollaSetting(
-                        context.getString(R.string.settings_customize_indicator_title),
-                        context.getString(R.string.settings_customize_indicator_desc),
-                        MollaSetting.TYPE_BUTTON, "indicator"
+                        context.getString(R.string.settings_category_about),
+                        null,
+                        MollaSetting.TYPE_CATEGORY, null
                 ),
                 new MollaSetting(
                         String.format(context.getString(R.string.settings_about_title), BuildConfig.VERSION_NAME),

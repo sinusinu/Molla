@@ -20,7 +20,9 @@
     <string name="order_subtitle">Change the order of Quick Access icons.</string>
 
     <string name="settings_title">Settings</string>
-    <string name="settings_category_general">General</string>
+    <string name="settings_category_appearance">Appearance</string>
+    <string name="settings_category_behavior">Behavior</string>
+    <string name="settings_category_about">About</string>
     <string name="settings_wallpaper_title">Set Custom Wallpaper</string>
     <string name="settings_wallpaper_desc">Set the wallpaper used within Molla. This will *not* change the system wallpaper. Long-press this menu to remove the wallpaper.</string>
     <string name="settings_hide_non_tv_apps_title">Hide Non-TV Apps</string>
