@@ -37,8 +37,8 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_12sdp"
-        android:layout_marginEnd="@dimen/_12sdp"
         android:layout_marginTop="@dimen/_12sdp"
+        android:layout_marginEnd="@dimen/_12sdp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -79,10 +79,10 @@
             android:layout_marginStart="@dimen/_6sdp"
             android:fontFamily="sans-serif-condensed"
             android:textSize="@dimen/_10ssp"
+            android:visibility="gone"
             app:layout_constraintBottom_toTopOf="@+id/tv_all_title"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            android:visibility="gone"/>
+            app:layout_constraintStart_toStartOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -108,10 +108,8 @@
         style="?android:attr/progressBarStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_24sdp"
-        android:layout_marginEnd="@dimen/_36sdp"
-        app:layout_constraintBottom_toBottomOf="@+id/iv_all_wallpaper"
-        app:layout_constraintEnd_toEndOf="@+id/iv_all_wallpaper"
-        app:layout_constraintStart_toEndOf="@+id/cl_all_lpane"
-        app:layout_constraintTop_toTopOf="@+id/iv_all_wallpaper" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cl_all_lpane" />
 </androidx.constraintlayout.widget.ConstraintLayout>
