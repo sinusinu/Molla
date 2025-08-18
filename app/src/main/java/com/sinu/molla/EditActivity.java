@@ -17,6 +17,7 @@ import androidx.core.view.WindowCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.core.view.WindowInsetsControllerCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.SimpleItemAnimator;
 
 import com.sinu.molla.databinding.ActivityEditBinding;
 
@@ -56,6 +57,9 @@ public class EditActivity extends AppCompatActivity {
         binding.rvEditList.setLayoutManager(manager);
         binding.rvEditList.setAdapter(adapter);
         binding.rvEditList.setItemAnimator(null);
+        if (binding.rvEditList.getItemAnimator() != null) {
+            ((SimpleItemAnimator)binding.rvEditList.getItemAnimator()).setSupportsChangeAnimations(false);
+        }
 
         itemClickListener = view -> {
             int idx = manager.getPosition(view);

@@ -9,6 +9,7 @@ import androidx.core.view.WindowCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.core.view.WindowInsetsControllerCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.SimpleItemAnimator;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -68,7 +69,9 @@ public class OrderActivity extends AppCompatActivity {
 
                 binding.rvOrdList.setLayoutManager(manager);
                 binding.rvOrdList.setAdapter(adapter);
-                binding.rvOrdList.setItemAnimator(null);
+                if (binding.rvOrdList.getItemAnimator() != null) {
+                    ((SimpleItemAnimator)binding.rvOrdList.getItemAnimator()).setSupportsChangeAnimations(false);
+                }
 
                 binding.rvOrdList.setVisibility(View.VISIBLE);
                 binding.pbrOrdLoading.setVisibility(View.GONE);

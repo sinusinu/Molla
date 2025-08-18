@@ -25,6 +25,7 @@ import androidx.core.view.WindowCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.core.view.WindowInsetsControllerCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.SimpleItemAnimator;
 
 import com.sinu.molla.databinding.ActivitySettingsBinding;
 
@@ -53,6 +54,9 @@ public class SettingsActivity extends AppCompatActivity {
         SettingsAdapter adapter = new SettingsAdapter(this, pref, manager);
         binding.rvSettingsAllapps.setLayoutManager(manager);
         binding.rvSettingsAllapps.setAdapter(adapter);
+        if (binding.rvSettingsAllapps.getItemAnimator() != null) {
+            ((SimpleItemAnimator)binding.rvSettingsAllapps.getItemAnimator()).setSupportsChangeAnimations(false);
+        }
 
         adapter.setOnSettingsClickedListener((idx, key) -> {
             switch (key) {
