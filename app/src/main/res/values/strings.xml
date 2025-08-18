@@ -27,6 +27,8 @@
     <string name="settings_hide_non_tv_apps_desc">Only show apps that can be run on Android TV.</string>
     <string name="settings_closeable_title">Allow Close</string>
     <string name="settings_closeable_desc">Make Molla closeable by pressing Back on main screen. Useful if using Molla as an auxiliary launcher.</string>
+    <string name="settings_customize_indicator_title">Customize Indicators</string>
+    <string name="settings_customize_indicator_desc">Set which indicator to show on main screen.</string>
     <string name="settings_about_title" translatable="false">Molla %s</string>
     <string name="settings_about_desc" translatable="false">© 2022‐2025 sinu</string>
     <string name="settings_category_system_settings">Quick Access to System Settings</string>
@@ -39,5 +41,15 @@
     <string name="settings_error_wallpaper">Wallpaper is not supported on this device</string>
     <string name="settings_error_wallpaper_no_picker">You need an Image viewer app to perform this action!</string>
     <string name="settings_error_settings_no_activity">This setting is not available on this device!</string>
+
+    <string name="dialog_customize_indicators_title">Customize Indicators</string>
+    <string name="dialog_customize_indicators_subtitle">Selected indicators will show up on main screen.</string>
+    <string name="dialog_customize_indicators_toggle_bt">Bluetooth</string>
+    <string name="dialog_customize_indicators_toggle_net">Network</string>
+    <string name="dialog_customize_indicators_toggle_bat">Battery</string>
+    <string name="dialog_customize_indicators_toggle_time">Time</string>
+
+    <string name="common_ok">OK</string>
+    <string name="common_cancel">Cancel</string>
 </resources>
 

@@ -136,6 +136,12 @@ public class MainActivity extends AppCompatActivity {
         bt = (BluetoothManager) getSystemService(Context.BLUETOOTH_SERVICE);
 
         rUpdateStatus = () -> {
+            binding.ivMainBtIcon.setVisibility(View.VISIBLE);
+            binding.ivMainConnIcon.setVisibility(View.VISIBLE);
+            binding.ivMainBatIcon.setVisibility(View.VISIBLE);
+            binding.tvMainBatPercentage.setVisibility(View.VISIBLE);
+            binding.tvMainTime.setVisibility(View.VISIBLE);
+
             batteryStatus = registerReceiver(null, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
 
             if (batteryExist) {
@@ -215,6 +221,16 @@ public class MainActivity extends AppCompatActivity {
             }
 
             binding.tvMainTime.setText(DateFormat.getTimeFormat(this).format(new Date()));
+
+            boolean showBt = pref.getBoolean("indicator_show_bt", true);
+            boolean showNet = pref.getBoolean("indicator_show_net", true);
+            boolean showBat = pref.getBoolean("indicator_show_bat", true);
+            boolean showTime = pref.getBoolean("indicator_show_time", true);
+
+            if (!showBt) binding.ivMainBtIcon.setVisibility(View.GONE);
+            if (!showNet) binding.ivMainConnIcon.setVisibility(View.GONE);
+            if (!showBat) { binding.ivMainBatIcon.setVisibility(View.GONE); binding.tvMainBatPercentage.setVisibility(View.GONE); }
+            if (!showTime) binding.tvMainTime.setVisibility(View.GONE);
 
             h.postDelayed(rUpdateStatus, 2000);
         };

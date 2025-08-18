@@ -13,10 +13,13 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.util.DisplayMetrics;
+import android.view.View;
+import android.widget.CheckBox;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.WindowCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -68,6 +71,52 @@ public class SettingsActivity extends AppCompatActivity {
                     if (adapter.settings[idx].value == 0) adapter.settings[idx].set(pref, 1);
                     else adapter.settings[idx].set(pref, 0);
                     adapter.notifyItemChanged(idx);
+                    break;
+                case "indicator":
+                    final var dialogCustomizeIndicators = getLayoutInflater().inflate(R.layout.dialog_customize_indicators, null);
+                    var ad = new AlertDialog.Builder(this)
+                            .setView(dialogCustomizeIndicators)
+                            .setPositiveButton(R.string.common_ok, (d, i) -> {
+                                boolean showBt = ((CheckBox)dialogCustomizeIndicators.findViewById(R.id.cb_dialog_bt)).isChecked();
+                                boolean showNet = ((CheckBox)dialogCustomizeIndicators.findViewById(R.id.cb_dialog_net)).isChecked();
+                                boolean showBat = ((CheckBox)dialogCustomizeIndicators.findViewById(R.id.cb_dialog_bat)).isChecked();
+                                boolean showTime = ((CheckBox)dialogCustomizeIndicators.findViewById(R.id.cb_dialog_time)).isChecked();
+                                pref.edit()
+                                        .putBoolean("indicator_show_bt", showBt)
+                                        .putBoolean("indicator_show_net", showNet)
+                                        .putBoolean("indicator_show_bat", showBat)
+                                        .putBoolean("indicator_show_time", showTime)
+                                        .apply();
+                            })
+                            .setNegativeButton(R.string.common_cancel, (d, i) -> {})
+                            .create();
+                    ad.show();
+                    boolean showBt = pref.getBoolean("indicator_show_bt", true);
+                    boolean showNet = pref.getBoolean("indicator_show_net", true);
+                    boolean showBat = pref.getBoolean("indicator_show_bat", true);
+                    boolean showTime = pref.getBoolean("indicator_show_time", true);
+                    ((CheckBox)dialogCustomizeIndicators.findViewById(R.id.cb_dialog_bt)).setOnCheckedChangeListener((b, v) -> {
+                        dialogCustomizeIndicators.findViewById(R.id.iv_dialog_ci_preview_bt).setVisibility(v ? View.VISIBLE : View.GONE);
+                    });
+                    ((CheckBox)dialogCustomizeIndicators.findViewById(R.id.cb_dialog_bt)).setChecked(showBt);
+                    dialogCustomizeIndicators.findViewById(R.id.iv_dialog_ci_preview_bt).setVisibility(showBt ? View.VISIBLE : View.GONE);
+                    ((CheckBox)dialogCustomizeIndicators.findViewById(R.id.cb_dialog_net)).setOnCheckedChangeListener((b, v) -> {
+                        dialogCustomizeIndicators.findViewById(R.id.iv_dialog_ci_preview_net).setVisibility(v ? View.VISIBLE : View.GONE);
+                    });
+                    ((CheckBox)dialogCustomizeIndicators.findViewById(R.id.cb_dialog_net)).setChecked(showNet);
+                    dialogCustomizeIndicators.findViewById(R.id.iv_dialog_ci_preview_net).setVisibility(showNet ? View.VISIBLE : View.GONE);
+                    ((CheckBox)dialogCustomizeIndicators.findViewById(R.id.cb_dialog_bat)).setOnCheckedChangeListener((b, v) -> {
+                        dialogCustomizeIndicators.findViewById(R.id.iv_dialog_ci_preview_bat).setVisibility(v ? View.VISIBLE : View.GONE);
+                        dialogCustomizeIndicators.findViewById(R.id.tv_dialog_ci_preview_bat_perc).setVisibility(v ? View.VISIBLE : View.GONE);
+                    });
+                    ((CheckBox)dialogCustomizeIndicators.findViewById(R.id.cb_dialog_bat)).setChecked(showBat);
+                    dialogCustomizeIndicators.findViewById(R.id.iv_dialog_ci_preview_bat).setVisibility(showBat ? View.VISIBLE : View.GONE);
+                    dialogCustomizeIndicators.findViewById(R.id.tv_dialog_ci_preview_bat_perc).setVisibility(showBat ? View.VISIBLE : View.GONE);
+                    ((CheckBox)dialogCustomizeIndicators.findViewById(R.id.cb_dialog_time)).setOnCheckedChangeListener((b, v) -> {
+                        dialogCustomizeIndicators.findViewById(R.id.tv_dialog_ci_preview_time).setVisibility(v ? View.VISIBLE : View.GONE);
+                    });
+                    ((CheckBox)dialogCustomizeIndicators.findViewById(R.id.cb_dialog_time)).setChecked(showTime);
+                    dialogCustomizeIndicators.findViewById(R.id.tv_dialog_ci_preview_time).setVisibility(showTime ? View.VISIBLE : View.GONE);
                     break;
                 case "about":
                     break;

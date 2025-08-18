@@ -163,7 +163,6 @@
             android:id="@+id/iv_main_bt_icon"
             android:layout_width="@dimen/_16sdp"
             android:layout_height="@dimen/_16sdp"
-            android:layout_marginEnd="@dimen/_10sdp"
             android:layout_weight="1"
             android:visibility="visible"
             app:srcCompat="@drawable/ic_bluetooth" />
@@ -172,7 +171,7 @@
             android:id="@+id/iv_main_conn_icon"
             android:layout_width="@dimen/_16sdp"
             android:layout_height="@dimen/_16sdp"
-            android:layout_marginEnd="@dimen/_10sdp"
+            android:layout_marginStart="@dimen/_10sdp"
             android:layout_weight="1"
             app:srcCompat="@drawable/ic_conn_ethernet" />
 
@@ -180,13 +179,13 @@
             android:id="@+id/iv_main_bat_icon"
             android:layout_width="@dimen/_16sdp"
             android:layout_height="@dimen/_16sdp"
+            android:layout_marginStart="@dimen/_10sdp"
             app:srcCompat="@drawable/ic_battery_charging" />
 
         <TextView
             android:id="@+id/tv_main_bat_percentage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/_10sdp"
             android:textSize="@dimen/_12sdp"
             android:gravity="center_vertical"
             android:text="@string/main_placeholder_bat" />
@@ -195,6 +194,7 @@
             android:id="@+id/tv_main_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_10sdp"
             android:textSize="@dimen/_12sdp"
             android:layout_gravity="center_horizontal|center_vertical"
             android:gravity="center_vertical"

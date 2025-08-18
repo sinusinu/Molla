@@ -52,6 +52,11 @@ public class SettingsAdapter extends RecyclerView.Adapter<SettingsAdapter.ViewHo
                         MollaSetting.TYPE_CHECKBOX, "closeable"
                 ),
                 new MollaSetting(
+                        context.getString(R.string.settings_customize_indicator_title),
+                        context.getString(R.string.settings_customize_indicator_desc),
+                        MollaSetting.TYPE_BUTTON, "indicator"
+                ),
+                new MollaSetting(
                         String.format(context.getString(R.string.settings_about_title), BuildConfig.VERSION_NAME),
                         context.getString(R.string.settings_about_desc),
                         MollaSetting.TYPE_BUTTON, "about"

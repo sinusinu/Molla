@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingStart="@dimen/_16sdp"
+    android:paddingEnd="@dimen/_16sdp"
+    android:paddingTop="@dimen/_12sdp"
+    android:paddingBottom="@dimen/_12sdp"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_dialog_ci_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/dialog_customize_indicators_title"
+        android:textSize="@dimen/_16ssp" />
+
+    <TextView
+        android:id="@+id/tv_dialog_ci_subtitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/dialog_customize_indicators_subtitle"
+        android:textSize="@dimen/_12ssp" />
+
+    <LinearLayout
+        android:id="@+id/ll_dialog_ci_preview"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/_16sdp"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/iv_dialog_ci_preview_bt"
+            android:layout_width="@dimen/_16sdp"
+            android:layout_height="@dimen/_16sdp"
+            android:layout_weight="1"
+            app:srcCompat="@drawable/ic_bluetooth" />
+
+        <ImageView
+            android:id="@+id/iv_dialog_ci_preview_net"
+            android:layout_width="@dimen/_16sdp"
+            android:layout_height="@dimen/_16sdp"
+            android:layout_marginStart="@dimen/_6sdp"
+            android:layout_weight="1"
+            app:srcCompat="@drawable/ic_conn_wifi" />
+
+        <ImageView
+            android:id="@+id/iv_dialog_ci_preview_bat"
+            android:layout_width="@dimen/_16sdp"
+            android:layout_height="@dimen/_16sdp"
+            android:layout_marginStart="@dimen/_6sdp"
+            android:layout_weight="1"
+            app:srcCompat="@drawable/ic_battery_full" />
+
+        <TextView
+            android:id="@+id/tv_dialog_ci_preview_bat_perc"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/_16sdp"
+            android:layout_weight="1"
+            android:text="@string/main_placeholder_bat"
+            android:textSize="@dimen/_12sdp" />
+
+        <TextView
+            android:id="@+id/tv_dialog_ci_preview_time"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/_16sdp"
+            android:layout_marginStart="@dimen/_6sdp"
+            android:layout_weight="1"
+            android:text="@string/main_placeholder_time"
+            android:textSize="@dimen/_12sdp" />
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/_8sdp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <CheckBox
+                android:id="@+id/cb_dialog_bt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/_12sdp"
+                android:text="@string/dialog_customize_indicators_toggle_bt" />
+
+            <CheckBox
+                android:id="@+id/cb_dialog_net"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/_12sdp"
+                android:text="@string/dialog_customize_indicators_toggle_net" />
+
+            <CheckBox
+                android:id="@+id/cb_dialog_bat"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/_12sdp"
+                android:text="@string/dialog_customize_indicators_toggle_bat" />
+
+            <CheckBox
+                android:id="@+id/cb_dialog_time"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/_12sdp"
+                android:text="@string/dialog_customize_indicators_toggle_time" />
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

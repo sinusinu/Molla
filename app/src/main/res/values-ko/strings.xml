@@ -26,6 +26,8 @@
     <string name="settings_hide_non_tv_apps_desc">Android TV에서 실행될 수 없는 앱들을 숨깁니다.</string>
     <string name="settings_closeable_title">종료 허용</string>
     <string name="settings_closeable_desc">첫 화면에서 뒤로 버튼을 눌러 Molla를 종료할 수 있게 합니다. Molla를 보조 런처로 활용할 경우 유용합니다.</string>
+    <string name="settings_customize_indicator_title">표시할 알림 아이콘</string>
+    <string name="settings_customize_indicator_desc">첫 화면에 표시할 알림 아이콘을 설정합니다.</string>
     <string name="settings_category_system_settings">시스템 설정 바로가기</string>
     <string name="settings_open_system_settings">시스템 설정</string>
     <string name="settings_open_system_settings_desc">설정 앱을 실행합니다.</string>
@@ -36,4 +38,14 @@
     <string name="settings_error_wallpaper">이 기기에서는 배경화면을 사용할 수 없습니다</string>
     <string name="settings_error_wallpaper_no_picker">배경화면을 변경하려면 갤러리 앱이 필요합니다!</string>
     <string name="settings_error_settings_no_activity">이 설정은 이 장치에서는 사용할 수 없습니다!</string>
+
+    <string name="dialog_customize_indicators_title">표시할 알림 아이콘</string>
+    <string name="dialog_customize_indicators_subtitle">선택된 아이콘이 첫 화면에 표시됩니다.</string>
+    <string name="dialog_customize_indicators_toggle_bt">블루투스</string>
+    <string name="dialog_customize_indicators_toggle_net">네트워크</string>
+    <string name="dialog_customize_indicators_toggle_bat">배터리</string>
+    <string name="dialog_customize_indicators_toggle_time">시간</string>
+
+    <string name="common_ok">확인</string>
+    <string name="common_cancel">취소</string>
 </resources>
