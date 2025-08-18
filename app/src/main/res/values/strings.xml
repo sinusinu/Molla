@@ -31,6 +31,8 @@
     <string name="settings_closeable_desc">Make Molla closeable by pressing Back on main screen. Useful if using Molla as an auxiliary launcher.</string>
     <string name="settings_customize_indicator_title">Customize Indicators</string>
     <string name="settings_customize_indicator_desc">Set which indicator to show on main screen.</string>
+    <string name="settings_autostart_at_boot_title">Auto-start at Boot</string>
+    <string name="settings_autostart_at_boot_desc">Start Molla automatically after the device boots up. Useful if the device does not allow changing the default launcher.</string>
     <string name="settings_about_title" translatable="false">Molla %s</string>
     <string name="settings_about_desc" translatable="false">© 2022‐2025 sinu</string>
     <string name="settings_category_system_settings">Quick Access to System Settings</string>
@@ -40,6 +42,8 @@
     <string name="settings_open_system_display_desc">Open the Display settings.</string>
     <string name="settings_open_system_apps">Apps Settings</string>
     <string name="settings_open_system_apps_desc">Open the Apps settings.</string>
+    <string name="settings_autostart_at_boot_perm_title">Permission required</string>
+    <string name="settings_autostart_at_boot_perm_content">This feature requires a special permission. Please read the following carefully.\n\nThe "OK" button will take you to a screen where you can grant specific apps permission to display over other apps. Find Molla in the list, open it, and grant the permission. Once the permission is granted, you can enable this feature.\n\nTo continue, press "OK".</string>
     <string name="settings_error_wallpaper">Wallpaper is not supported on this device</string>
     <string name="settings_error_wallpaper_no_picker">You need an Image viewer app to perform this action!</string>
     <string name="settings_error_settings_no_activity">This setting is not available on this device!</string>

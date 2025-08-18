@@ -3,16 +3,21 @@
 
 package com.sinu.molla;
 
+import android.Manifest;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.content.pm.PermissionInfo;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.Toast;
@@ -21,6 +26,7 @@ import androidx.activity.EdgeToEdge;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.core.view.WindowCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.core.view.WindowInsetsControllerCompat;
@@ -36,6 +42,9 @@ import java.io.IOException;
 import java.io.InputStream;
 
 public class SettingsActivity extends AppCompatActivity {
+    private final int PICK_WALLPAPER = 1;
+    private final int AUTOSTART_PERM_REQUEST = 2;
+
     ActivitySettingsBinding binding;
 
     SharedPreferences pref;
@@ -64,7 +73,7 @@ public class SettingsActivity extends AppCompatActivity {
                     try {
                         Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
                         photoPickerIntent.setType("image/*");
-                        startActivityForResult(photoPickerIntent, 1);
+                        startActivityForResult(photoPickerIntent, PICK_WALLPAPER);
                     } catch (ActivityNotFoundException e) {
                         Toast.makeText(this, getString(R.string.settings_error_wallpaper_no_picker), Toast.LENGTH_LONG).show();
                     }
@@ -72,9 +81,34 @@ public class SettingsActivity extends AppCompatActivity {
                 case "hide_non_tv":
                 case "closeable":
                     adapter.settings[idx].fetch(pref);
-                    if (adapter.settings[idx].value == 0) adapter.settings[idx].set(pref, 1);
-                    else adapter.settings[idx].set(pref, 0);
+                    if (adapter.settings[idx].value == 0) {
+                        adapter.settings[idx].set(pref, 1);
+                    } else {
+                        adapter.settings[idx].set(pref, 0);
+                    }
                     adapter.notifyItemChanged(idx);
+                    break;
+                case "autostart":
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q && !Settings.canDrawOverlays(this)) {
+                        var adAutoStartPermNotify = new AlertDialog.Builder(this)
+                                .setTitle(R.string.settings_autostart_at_boot_perm_title)
+                                .setMessage(R.string.settings_autostart_at_boot_perm_content)
+                                .setPositiveButton(R.string.common_ok, (d, i) -> {
+                                    Intent overlayPermScreen = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION);
+                                    startActivity(overlayPermScreen);
+                                })
+                                .setNegativeButton(R.string.common_cancel, (d, i) -> {})
+                                .create();
+                        adAutoStartPermNotify.show();
+                    } else {
+                        adapter.settings[idx].fetch(pref);
+                        if (adapter.settings[idx].value == 0) {
+                            adapter.settings[idx].set(pref, 1);
+                        } else {
+                            adapter.settings[idx].set(pref, 0);
+                        }
+                        adapter.notifyItemChanged(idx);
+                    }
                     break;
                 case "indicator":
                     final var dialogCustomizeIndicators = getLayoutInflater().inflate(R.layout.dialog_customize_indicators, null);
@@ -195,7 +229,7 @@ public class SettingsActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == 1 && resultCode == RESULT_OK) {
+        if (requestCode == PICK_WALLPAPER && resultCode == RESULT_OK) {
             try {
                 final Uri imageUri = data.getData();
                 final InputStream imageStream = getContentResolver().openInputStream(imageUri);
@@ -237,6 +271,8 @@ public class SettingsActivity extends AppCompatActivity {
                 e.printStackTrace();
                 Toast.makeText(this, "Failed to set wallpaper", Toast.LENGTH_LONG).show();
             }
+        } else if (requestCode == AUTOSTART_PERM_REQUEST) {
+            Log.d("autostart", resultCode+"");
         }
     }
 
