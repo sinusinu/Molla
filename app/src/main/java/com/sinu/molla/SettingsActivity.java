@@ -43,7 +43,6 @@ import java.io.InputStream;
 
 public class SettingsActivity extends AppCompatActivity {
     private final int PICK_WALLPAPER = 1;
-    private final int AUTOSTART_PERM_REQUEST = 2;
 
     ActivitySettingsBinding binding;
 
@@ -272,8 +271,6 @@ public class SettingsActivity extends AppCompatActivity {
                 e.printStackTrace();
                 Toast.makeText(this, "Failed to set wallpaper", Toast.LENGTH_LONG).show();
             }
-        } else if (requestCode == AUTOSTART_PERM_REQUEST) {
-            Log.d("autostart", resultCode+"");
         }
     }
 
