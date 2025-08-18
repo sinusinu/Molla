@@ -23,7 +23,7 @@ public class AppItemOrderAdapter extends RecyclerView.Adapter<AppItemOrderAdapte
     private final RecyclerView.LayoutManager manager;
     private final ArrayList<AppItem> list;
 
-    private final Drawable drawableGeneric;
+    private Drawable drawableGeneric;
 
     private final OnOrderItemClickedListener upClickListener;
     private final OnOrderItemClickedListener downClickListener;
@@ -32,15 +32,19 @@ public class AppItemOrderAdapter extends RecyclerView.Adapter<AppItemOrderAdapte
         public void onOrderItemClicked(View v, int position);
     }
 
-    public AppItemOrderAdapter(Context context, RecyclerView.LayoutManager manager, ArrayList<AppItem> list, OnOrderItemClickedListener upClickListener, OnOrderItemClickedListener downClickListener) {
+    public AppItemOrderAdapter(Context context, RecyclerView.LayoutManager manager, ArrayList<AppItem> list, OnOrderItemClickedListener upClickListener, OnOrderItemClickedListener downClickListener, boolean simple) {
         this.list = list;
         this.manager = manager;
         this.context = context;
 
-        drawableGeneric = ContextCompat.getDrawable(context, R.drawable.generic);
+        drawableGeneric = ContextCompat.getDrawable(context, simple ? R.drawable.generic_simple : R.drawable.generic);
 
         this.upClickListener = upClickListener;
         this.downClickListener = downClickListener;
+    }
+
+    public void SetSimpleBackground(boolean simple) {
+        drawableGeneric = ContextCompat.getDrawable(context, simple ? R.drawable.generic_simple : R.drawable.generic);
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

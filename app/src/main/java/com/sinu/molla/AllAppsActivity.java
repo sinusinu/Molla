@@ -3,6 +3,8 @@
 
 package com.sinu.molla;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 
@@ -24,6 +26,8 @@ public class AllAppsActivity extends AppCompatActivity {
     ArrayList<AppItem> items;
     AppItemListAdapter adapter;
 
+    SharedPreferences pref;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,6 +36,8 @@ public class AllAppsActivity extends AppCompatActivity {
         binding = ActivityAllAppsBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        pref = getSharedPreferences("com.sinu.molla.settings", Context.MODE_PRIVATE);
+
         new Thread(() -> {
             AppItem.fetchAllAppsAsync(this, (items) -> {
                 this.items = items;
@@ -39,7 +45,7 @@ public class AllAppsActivity extends AppCompatActivity {
 
                 runOnUiThread(() -> {
                     LinearLayoutManager manager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-                    adapter = new AppItemListAdapter(this, items);
+                    adapter = new AppItemListAdapter(this, items, (pref.getInt("simple_icon_bg", 0) == 1));
 
                     binding.rvAllAllapps.setLayoutManager(manager);
                     binding.rvAllAllapps.setAdapter(adapter);
@@ -75,6 +81,7 @@ public class AllAppsActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
+        if (adapter != null) adapter.SetSimpleBackground(pref.getInt("simple_icon_bg", 0) == 1);
         WallpaperHandler.updateWallpaper(this, binding.ivAllWallpaper, false);
     }
 }

@@ -23,13 +23,17 @@ public class AppItemListAdapter extends RecyclerView.Adapter<AppItemListAdapter.
     private final Context context;
     private final ArrayList<AppItem> list;
 
-    private final Drawable drawableGeneric;
+    private Drawable drawableGeneric;
 
-    public AppItemListAdapter(Context context, ArrayList<AppItem> list) {
+    public AppItemListAdapter(Context context, ArrayList<AppItem> list, boolean simple) {
         this.list = list;
         this.context = context;
 
-        drawableGeneric = ContextCompat.getDrawable(context, R.drawable.generic);
+        drawableGeneric = ContextCompat.getDrawable(context, simple ? R.drawable.generic_simple : R.drawable.generic);
+    }
+
+    public void SetSimpleBackground(boolean simple) {
+        drawableGeneric = ContextCompat.getDrawable(context, simple ? R.drawable.generic_simple : R.drawable.generic);
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {

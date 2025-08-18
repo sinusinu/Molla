@@ -31,7 +31,7 @@ public class AppItemAdapter extends RecyclerView.Adapter<AppItemAdapter.ViewHold
     private final Animation animScaleUp;
     private final Animation animScaleDown;
 
-    private final Drawable drawableGeneric;
+    private Drawable drawableGeneric;
 
     private OnAppItemFocusChangedListener focusChangedListener;
 
@@ -39,7 +39,7 @@ public class AppItemAdapter extends RecyclerView.Adapter<AppItemAdapter.ViewHold
 
     public int selectedItem = -1;
 
-    public AppItemAdapter(Context context, RecyclerView.LayoutManager manager, ArrayList<AppItem> list, boolean shouldAddEditButton) {
+    public AppItemAdapter(Context context, RecyclerView.LayoutManager manager, ArrayList<AppItem> list, boolean shouldAddEditButton, boolean simple) {
         this.list = list;
         this.manager = manager;
         this.context = context;
@@ -47,9 +47,13 @@ public class AppItemAdapter extends RecyclerView.Adapter<AppItemAdapter.ViewHold
         animScaleDown = AnimationUtils.loadAnimation(context, R.anim.scale_down);
         animScaleUp.setFillAfter(true);
 
-        drawableGeneric = ContextCompat.getDrawable(context, R.drawable.generic);
+        drawableGeneric = ContextCompat.getDrawable(context, simple ? R.drawable.generic_simple : R.drawable.generic);
 
         this.shouldAddEditButton = shouldAddEditButton;
+    }
+
+    public void SetSimpleBackground(boolean simple) {
+        drawableGeneric = ContextCompat.getDrawable(context, simple ? R.drawable.generic_simple : R.drawable.generic);
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnHoverListener, View.OnFocusChangeListener {

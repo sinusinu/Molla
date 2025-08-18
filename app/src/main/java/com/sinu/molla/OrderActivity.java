@@ -65,7 +65,7 @@ public class OrderActivity extends AppCompatActivity {
             runOnUiThread(() -> {
                 LinearLayoutManager manager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
 
-                adapter = new AppItemOrderAdapter(this, manager, selectedItems, upClickListener, downClickListener);
+                adapter = new AppItemOrderAdapter(this, manager, selectedItems, upClickListener, downClickListener, (pref.getInt("simple_icon_bg", 0) == 1));
 
                 binding.rvOrdList.setLayoutManager(manager);
                 binding.rvOrdList.setAdapter(adapter);
@@ -110,6 +110,7 @@ public class OrderActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
+        if (adapter != null) adapter.SetSimpleBackground(pref.getInt("simple_icon_bg", 0) == 1);
         WallpaperHandler.updateWallpaper(this, binding.ivOrdWallpaper, false);
     }
 

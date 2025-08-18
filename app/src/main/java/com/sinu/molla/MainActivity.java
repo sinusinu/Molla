@@ -76,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
         items = new ArrayList<>();
 
         HorizontallyFocusedLinearLayoutManager manager = new HorizontallyFocusedLinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false, binding.rvMainFav);
-        adapter = new AppItemAdapter(this, manager, items, true);
+        adapter = new AppItemAdapter(this, manager, items, true, (pref.getInt("simple_icon_bg", 0) == 1));
 
         adapter.setOnAppItemFocusChangedListener((i, n) -> {
             binding.tvMainFavName.setText(n);
@@ -262,6 +262,8 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
         String favAppsRaw = pref.getString("fav_apps", "");
         ArrayList<String> favApps = new ArrayList<String>(Arrays.asList(favAppsRaw.split("\\?")));
+
+        if (adapter != null) adapter.SetSimpleBackground(pref.getInt("simple_icon_bg", 0) == 1);
 
         if (isFavListUpdateReserved) {
             binding.pbrMainLoading.setVisibility(View.VISIBLE);

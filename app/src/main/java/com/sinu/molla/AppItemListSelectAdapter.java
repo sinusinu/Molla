@@ -24,18 +24,22 @@ public class AppItemListSelectAdapter extends RecyclerView.Adapter<AppItemListSe
     private final ArrayList<AppItem> list;
     private final ArrayList<AppItem> selectedList;
 
-    private final Drawable drawableGeneric;
+    private Drawable drawableGeneric;
 
     private final View.OnClickListener itemClickListener;
 
-    public AppItemListSelectAdapter(Context context, ArrayList<AppItem> list, ArrayList<AppItem> selectedList, View.OnClickListener itemClickListener) {
+    public AppItemListSelectAdapter(Context context, ArrayList<AppItem> list, ArrayList<AppItem> selectedList, View.OnClickListener itemClickListener, boolean simple) {
         this.list = list;
         this.selectedList = selectedList;
         this.context = context;
 
-        drawableGeneric = ContextCompat.getDrawable(context, R.drawable.generic);
+        drawableGeneric = ContextCompat.getDrawable(context, simple ? R.drawable.generic_simple : R.drawable.generic);
 
         this.itemClickListener = itemClickListener;
+    }
+
+    public void SetSimpleBackground(boolean simple) {
+        drawableGeneric = ContextCompat.getDrawable(context, simple ? R.drawable.generic_simple : R.drawable.generic);
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
