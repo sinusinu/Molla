@@ -20,19 +20,19 @@
 
     <string name="settings_title">설정</string>
     <string name="settings_category_appearance">모양</string>
-    <string name="settings_category_behavior">동작</string>
-    <string name="settings_category_about">정보</string>
     <string name="settings_wallpaper_title">배경화면 변경</string>
     <string name="settings_wallpaper_desc">Molla 내에서 사용될 배경화면을 변경합니다. 시스템 배경화면은 변경되지 않습니다. 이 메뉴를 꾹 누르면 배경화면이 삭제됩니다.</string>
+    <string name="settings_customize_indicator_title">표시할 알림 아이콘</string>
+    <string name="settings_customize_indicator_desc">첫 화면에 표시할 알림 아이콘을 설정합니다.</string>
+    <string name="settings_category_behavior">동작</string>
     <string name="settings_hide_non_tv_apps_title">비 TV 앱 숨기기</string>
     <string name="settings_hide_non_tv_apps_desc">Android TV에서 실행될 수 없는 앱들을 숨깁니다.</string>
     <string name="settings_closeable_title">종료 허용</string>
     <string name="settings_closeable_desc">첫 화면에서 뒤로 버튼을 눌러 Molla를 종료할 수 있게 합니다. Molla를 보조 런처로 활용할 경우 유용합니다.</string>
-    <string name="settings_customize_indicator_title">표시할 알림 아이콘</string>
-    <string name="settings_customize_indicator_desc">첫 화면에 표시할 알림 아이콘을 설정합니다.</string>
-    <string name="settings_category_system_settings">시스템 설정 바로가기</string>
     <string name="settings_autostart_at_boot_title">부팅 후 자동 실행</string>
     <string name="settings_autostart_at_boot_desc">장치가 부팅을 완료하면 Molla를 자동으로 실행합니다. 장치가 기본 런처를 변경하는 기능을 제공하지 않을 경우 유용합니다.</string>
+    <string name="settings_category_about">정보</string>
+    <string name="settings_category_system_settings">시스템 설정 바로가기</string>
     <string name="settings_open_system_settings">시스템 설정</string>
     <string name="settings_open_system_settings_desc">설정 앱을 실행합니다.</string>
     <string name="settings_open_system_display">화면 설정</string>
