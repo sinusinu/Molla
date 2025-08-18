@@ -40,29 +40,24 @@
         <activity
             android:name=".OrderActivity"
             android:exported="false"
-            android:launchMode="singleTask"
-            android:screenOrientation="userLandscape"/>
+            android:launchMode="singleTask"/>
         <activity
             android:name=".SettingsActivity"
             android:exported="false"
-            android:launchMode="singleTask"
-            android:screenOrientation="userLandscape"/>
+            android:launchMode="singleTask"/>
         <activity
             android:name=".EditActivity"
             android:exported="false"
-            android:launchMode="singleTask"
-            android:screenOrientation="userLandscape"/>
+            android:launchMode="singleTask"/>
         <activity
             android:name=".AllAppsActivity"
             android:exported="false"
-            android:launchMode="singleTask"
-            android:screenOrientation="userLandscape"/>
+            android:launchMode="singleTask"/>
         <activity
             android:name=".MainActivity"
             android:clearTaskOnLaunch="true"
             android:exported="true"
-            android:launchMode="singleTask"
-            android:screenOrientation="userLandscape">
+            android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.HOME" />
