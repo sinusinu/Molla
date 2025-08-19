@@ -52,6 +52,8 @@ public class SettingsActivity extends AppCompatActivity {
 
     SharedPreferences pref;
 
+    int aboutPressCount = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -186,6 +188,18 @@ public class SettingsActivity extends AppCompatActivity {
                     ((RadioButton)dialogOrientation.findViewById(R.id.rb_dialog_orient_portrait)).setChecked("portrait".equals(currentOrient));
                     break;
                 case "about":
+                    aboutPressCount++;
+                    if (aboutPressCount == 7) {
+                        aboutPressCount = 0;
+                        var currentShowGoofy = pref.getInt("show_goofy", 0);
+                        if (currentShowGoofy == 0) {
+                            pref.edit().putInt("show_goofy", 1).apply();
+                            Toast.makeText(this, R.string.settings_about_secret_enabled, Toast.LENGTH_LONG).show();
+                        } else {
+                            pref.edit().putInt("show_goofy", 0).apply();
+                            Toast.makeText(this, R.string.settings_about_secret_disabled, Toast.LENGTH_LONG).show();
+                        }
+                    }
                     break;
                 case "open_set":
                     try {

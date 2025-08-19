@@ -36,6 +36,8 @@
     <string name="settings_orientation_title">방향 강제 설정</string>
     <string name="settings_orientation_desc">Molla의 방향을 강제로 설정하게 합니다. 문제가 발생할 수 있습니다. 일부 장치에서는 작동하지 않습니다.</string>
     <string name="settings_category_about">정보</string>
+    <string name="settings_about_secret_enabled">부실한 설정들이 활성화되었습니다. 변경 사항은 설정 화면을 재시작하면 적용됩니다.</string>
+    <string name="settings_about_secret_disabled">부실한 설정들이 비활성화되었습니다. 변경 사항은 설정 화면을 재시작하면 적용됩니다.</string>
     <string name="settings_category_system_settings">시스템 설정 바로가기</string>
     <string name="settings_open_system_settings">시스템 설정</string>
     <string name="settings_open_system_settings_desc">설정 앱을 실행합니다.</string>

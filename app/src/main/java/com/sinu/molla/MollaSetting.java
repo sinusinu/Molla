@@ -15,12 +15,14 @@ public class MollaSetting {
     public int type;
     public String key;
     public int value;
+    public boolean goofy;
 
-    public MollaSetting(String title, String desc, int type, String key) {
+    public MollaSetting(String title, String desc, int type, String key, boolean goofy) {
         this.title = title;
         this.desc = desc;
         this.type = type;
         this.key = key;
+        this.goofy = goofy;
     }
 
     public void fetch(SharedPreferences pref) {

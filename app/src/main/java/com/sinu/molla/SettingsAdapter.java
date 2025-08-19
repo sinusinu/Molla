@@ -25,86 +25,90 @@ public class SettingsAdapter extends RecyclerView.Adapter<SettingsAdapter.ViewHo
     private OnSettingsClickedListener clickListener;
     private OnSettingsLongClickedListener longClickListener;
 
+    private boolean showGoofy = false;
+
     public SettingsAdapter(Context context, SharedPreferences pref, RecyclerView.LayoutManager manager) {
         this.context = context;
         this.pref = pref;
         this.manager = manager;
 
+        showGoofy = pref.getInt("show_goofy", 0) == 1;
+
         settings = new MollaSetting[] {
                 new MollaSetting(
                         context.getString(R.string.settings_category_appearance),
                         null,
-                        MollaSetting.TYPE_CATEGORY, null
+                        MollaSetting.TYPE_CATEGORY, null, false
                 ),
                 new MollaSetting(
                         context.getString(R.string.settings_wallpaper_title),
                         context.getString(R.string.settings_wallpaper_desc),
-                        MollaSetting.TYPE_BUTTON, "wallpaper"
+                        MollaSetting.TYPE_BUTTON, "wallpaper", false
                 ),
                 new MollaSetting(
                         context.getString(R.string.settings_customize_indicator_title),
                         context.getString(R.string.settings_customize_indicator_desc),
-                        MollaSetting.TYPE_BUTTON, "indicator"
+                        MollaSetting.TYPE_BUTTON, "indicator", false
                 ),
                 new MollaSetting(
                         context.getString(R.string.settings_simple_background_title),
                         context.getString(R.string.settings_simple_background_desc),
-                        MollaSetting.TYPE_CHECKBOX, "simple_icon_bg"
+                        MollaSetting.TYPE_CHECKBOX, "simple_icon_bg", false
                 ),
                 new MollaSetting(
                         context.getString(R.string.settings_category_behavior),
                         null,
-                        MollaSetting.TYPE_CATEGORY, null
+                        MollaSetting.TYPE_CATEGORY, null, false
                 ),
                 new MollaSetting(
                         context.getString(R.string.settings_hide_non_tv_apps_title),
                         context.getString(R.string.settings_hide_non_tv_apps_desc),
-                        MollaSetting.TYPE_CHECKBOX, "hide_non_tv"
+                        MollaSetting.TYPE_CHECKBOX, "hide_non_tv", false
                 ),
                 new MollaSetting(
                         context.getString(R.string.settings_closeable_title),
                         context.getString(R.string.settings_closeable_desc),
-                        MollaSetting.TYPE_CHECKBOX, "closeable"
+                        MollaSetting.TYPE_CHECKBOX, "closeable", false
                 ),
                 new MollaSetting(
                         context.getString(R.string.settings_autostart_at_boot_title),
                         context.getString(R.string.settings_autostart_at_boot_desc),
-                        MollaSetting.TYPE_CHECKBOX, "autostart"
+                        MollaSetting.TYPE_CHECKBOX, "autostart", false
                 ),
                 new MollaSetting(
                         context.getString(R.string.settings_orientation_title),
                         context.getString(R.string.settings_orientation_desc),
-                        MollaSetting.TYPE_BUTTON, "orientation"
+                        MollaSetting.TYPE_BUTTON, "orientation", true
                 ),
                 new MollaSetting(
                         context.getString(R.string.settings_category_about),
                         null,
-                        MollaSetting.TYPE_CATEGORY, null
+                        MollaSetting.TYPE_CATEGORY, null, false
                 ),
                 new MollaSetting(
                         String.format(context.getString(R.string.settings_about_title), BuildConfig.VERSION_NAME),
                         context.getString(R.string.settings_about_desc),
-                        MollaSetting.TYPE_BUTTON, "about"
+                        MollaSetting.TYPE_BUTTON, "about", false
                 ),
                 new MollaSetting(
                         context.getString(R.string.settings_category_system_settings),
                         null,
-                        MollaSetting.TYPE_CATEGORY, null
+                        MollaSetting.TYPE_CATEGORY, null, false
                 ),
                 new MollaSetting(
                         context.getString(R.string.settings_open_system_settings),
                         context.getString(R.string.settings_open_system_settings_desc),
-                        MollaSetting.TYPE_BUTTON, "open_set"
+                        MollaSetting.TYPE_BUTTON, "open_set", false
                 ),
                 new MollaSetting(
                         context.getString(R.string.settings_open_system_display),
                         context.getString(R.string.settings_open_system_display_desc),
-                        MollaSetting.TYPE_BUTTON, "open_set_disp"
+                        MollaSetting.TYPE_BUTTON, "open_set_disp", false
                 ),
                 new MollaSetting(
                         context.getString(R.string.settings_open_system_apps),
                         context.getString(R.string.settings_open_system_apps_desc),
-                        MollaSetting.TYPE_BUTTON, "open_set_apps"
+                        MollaSetting.TYPE_BUTTON, "open_set_apps", false
                 ),
         };
         for (MollaSetting s : settings) s.fetch(pref);
@@ -168,10 +172,10 @@ public class SettingsAdapter extends RecyclerView.Adapter<SettingsAdapter.ViewHo
             holder.tvCategory.setText(settings[position].title);
             holder.isClickable = false;
         } else {
-            holder.itemView.setClickable(true);
-            holder.itemView.setFocusable(true);
+            holder.itemView.setClickable(!settings[position].goofy || (showGoofy));
+            holder.itemView.setFocusable(!settings[position].goofy || (showGoofy));
             holder.llCategory.setVisibility(View.GONE);
-            holder.llProperty.setVisibility(View.VISIBLE);
+            holder.llProperty.setVisibility(settings[position].goofy ? (showGoofy ? View.VISIBLE : View.GONE) : View.VISIBLE);
             holder.tvPropertyTitle.setText(settings[position].title);
             holder.tvPropertyDesc.setText(settings[position].desc);
             if (settings[position].type == MollaSetting.TYPE_CHECKBOX) {
