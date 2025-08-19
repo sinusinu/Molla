@@ -11,6 +11,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -261,10 +262,16 @@ public class MainActivity extends AppCompatActivity {
         h.removeCallbacks(rUpdateStatus);
     }
 
-    @SuppressLint("NotifyDataSetChanged")
+    @SuppressLint({"SourceLockedOrientationActivity", "NotifyDataSetChanged"})
     @Override
     protected void onResume() {
         super.onResume();
+
+        String orient = pref.getString("forced_orientation", "disable");
+        if ("landscape".equals(orient)) setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_USER_LANDSCAPE);
+        else if ("portrait".equals(orient)) setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_USER_PORTRAIT);
+        else setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
+
         String favAppsRaw = pref.getString("fav_apps", "");
         ArrayList<String> favApps = new ArrayList<String>(Arrays.asList(favAppsRaw.split("\\?")));
 

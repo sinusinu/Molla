@@ -72,6 +72,11 @@ public class SettingsAdapter extends RecyclerView.Adapter<SettingsAdapter.ViewHo
                         MollaSetting.TYPE_CHECKBOX, "autostart"
                 ),
                 new MollaSetting(
+                        context.getString(R.string.settings_orientation_title),
+                        context.getString(R.string.settings_orientation_desc),
+                        MollaSetting.TYPE_BUTTON, "orientation"
+                ),
+                new MollaSetting(
                         context.getString(R.string.settings_category_about),
                         null,
                         MollaSetting.TYPE_CATEGORY, null

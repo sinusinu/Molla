@@ -12,8 +12,10 @@ import androidx.core.view.WindowInsetsControllerCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.SimpleItemAnimator;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -110,9 +112,15 @@ public class OrderActivity extends AppCompatActivity {
         updatePref();
     }
 
+    @SuppressLint("SourceLockedOrientationActivity")
     @Override
     protected void onResume() {
         super.onResume();
+
+        String orient = pref.getString("forced_orientation", "disable");
+        if ("landscape".equals(orient)) setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_USER_LANDSCAPE);
+        else if ("portrait".equals(orient)) setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_USER_PORTRAIT);
+        else setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
 
         if (adapter != null) adapter.SetSimpleBackground(pref.getInt("simple_icon_bg", 0) == 1);
         WallpaperHandler.updateWallpaper(this, binding.ivOrdWallpaper, false);

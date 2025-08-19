@@ -3,9 +3,11 @@
 
 package com.sinu.molla;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
@@ -142,9 +144,16 @@ public class EditActivity extends AppCompatActivity {
             });
         });
     }
+
+    @SuppressLint("SourceLockedOrientationActivity")
     @Override
     protected void onResume() {
         super.onResume();
+
+        String orient = pref.getString("forced_orientation", "disable");
+        if ("landscape".equals(orient)) setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_USER_LANDSCAPE);
+        else if ("portrait".equals(orient)) setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_USER_PORTRAIT);
+        else setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
 
         if (adapter != null) adapter.SetSimpleBackground(pref.getInt("simple_icon_bg", 0) == 1);
         WallpaperHandler.updateWallpaper(this, binding.ivEditWallpaper, false);

@@ -4,10 +4,12 @@
 package com.sinu.molla;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PermissionInfo;
 import android.graphics.Bitmap;
@@ -20,6 +22,7 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
+import android.widget.RadioButton;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -113,7 +116,7 @@ public class SettingsActivity extends AppCompatActivity {
                     break;
                 case "indicator":
                     final var dialogCustomizeIndicators = getLayoutInflater().inflate(R.layout.dialog_customize_indicators, null);
-                    var ad = new AlertDialog.Builder(this)
+                    var adCustomizeIndicator = new AlertDialog.Builder(this)
                             .setView(dialogCustomizeIndicators)
                             .setPositiveButton(R.string.common_ok, (d, i) -> {
                                 boolean showBt = ((CheckBox)dialogCustomizeIndicators.findViewById(R.id.cb_dialog_bt)).isChecked();
@@ -129,7 +132,7 @@ public class SettingsActivity extends AppCompatActivity {
                             })
                             .setNegativeButton(R.string.common_cancel, (d, i) -> {})
                             .create();
-                    ad.show();
+                    adCustomizeIndicator.show();
                     boolean showBt = pref.getBoolean("indicator_show_bt", true);
                     boolean showNet = pref.getBoolean("indicator_show_net", true);
                     boolean showBat = pref.getBoolean("indicator_show_bat", true);
@@ -156,6 +159,31 @@ public class SettingsActivity extends AppCompatActivity {
                     });
                     ((CheckBox)dialogCustomizeIndicators.findViewById(R.id.cb_dialog_time)).setChecked(showTime);
                     dialogCustomizeIndicators.findViewById(R.id.tv_dialog_ci_preview_time).setVisibility(showTime ? View.VISIBLE : View.GONE);
+                    break;
+                case "orientation":
+                    final var dialogOrientation = getLayoutInflater().inflate(R.layout.dialog_orientation, null);
+                    @SuppressLint("SourceLockedOrientationActivity")
+                    var adOrientation = new AlertDialog.Builder(this)
+                            .setView(dialogOrientation)
+                            .setPositiveButton(R.string.common_ok, (d, i) -> {
+                                boolean orientDisable = ((RadioButton)dialogOrientation.findViewById(R.id.rb_dialog_orient_disable)).isChecked();
+                                boolean orientLandscape = ((RadioButton)dialogOrientation.findViewById(R.id.rb_dialog_orient_landscape)).isChecked();
+                                boolean orientPortrait = ((RadioButton)dialogOrientation.findViewById(R.id.rb_dialog_orient_portrait)).isChecked();
+                                String newOrient = orientLandscape ? "landscape" : (orientPortrait ? "portrait" : "disable");
+                                pref.edit()
+                                        .putString("forced_orientation", newOrient)
+                                        .apply();
+                                if (orientLandscape) setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_USER_LANDSCAPE);
+                                else if (orientPortrait) setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_USER_PORTRAIT);
+                                else setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
+                            })
+                            .setNegativeButton(R.string.common_cancel, (d, i) -> {})
+                            .create();
+                    adOrientation.show();
+                    String currentOrient = pref.getString("forced_orientation", "disable");
+                    ((RadioButton)dialogOrientation.findViewById(R.id.rb_dialog_orient_disable)).setChecked("disable".equals(currentOrient));
+                    ((RadioButton)dialogOrientation.findViewById(R.id.rb_dialog_orient_landscape)).setChecked("landscape".equals(currentOrient));
+                    ((RadioButton)dialogOrientation.findViewById(R.id.rb_dialog_orient_portrait)).setChecked("portrait".equals(currentOrient));
                     break;
                 case "about":
                     break;
@@ -278,9 +306,15 @@ public class SettingsActivity extends AppCompatActivity {
         }
     }
 
+    @SuppressLint("SourceLockedOrientationActivity")
     @Override
     protected void onResume() {
         super.onResume();
+
+        String orient = pref.getString("forced_orientation", "disable");
+        if ("landscape".equals(orient)) setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_USER_LANDSCAPE);
+        else if ("portrait".equals(orient)) setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_USER_PORTRAIT);
+        else setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
 
         WallpaperHandler.updateWallpaper(this, binding.ivSettingsWallpaper, false);
     }

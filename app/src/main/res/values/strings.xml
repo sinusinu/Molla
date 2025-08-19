@@ -34,6 +34,8 @@
     <string name="settings_closeable_desc">Make Molla closeable by pressing Back on main screen. Useful if using Molla as an auxiliary launcher.</string>
     <string name="settings_autostart_at_boot_title">Auto-start at Boot</string>
     <string name="settings_autostart_at_boot_desc">Start Molla automatically after the device boots up. Useful if the device does not allow changing the default launcher.</string>
+    <string name="settings_orientation_title">Forced Orientation</string>
+    <string name="settings_orientation_desc">Set forced orientation of Molla. May cause problems. May not work on some devices.</string>
     <string name="settings_category_about">About</string>
     <string name="settings_about_title" translatable="false">Molla %s</string>
     <string name="settings_about_desc" translatable="false">© 2022‐2025 sinu</string>
@@ -56,6 +58,12 @@
     <string name="dialog_customize_indicators_toggle_net">Network</string>
     <string name="dialog_customize_indicators_toggle_bat">Battery</string>
     <string name="dialog_customize_indicators_toggle_time">Time</string>
+
+    <string name="dialog_orientation_title">Forced Orientation</string>
+    <string name="dialog_orientation_subtitle">May cause problems. May not work on some devices. If unsure, set to \"Disable\".</string>
+    <string name="dialog_orientation_disable">Disable</string>
+    <string name="dialog_orientation_landscape">Landscape</string>
+    <string name="dialog_orientation_portrait">Portrait</string>
 
     <string name="common_ok">OK</string>
     <string name="common_cancel">Cancel</string>

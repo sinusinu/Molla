@@ -33,6 +33,8 @@
     <string name="settings_closeable_desc">첫 화면에서 뒤로 버튼을 눌러 Molla를 종료할 수 있게 합니다. Molla를 보조 런처로 활용할 경우 유용합니다.</string>
     <string name="settings_autostart_at_boot_title">부팅 후 자동 실행</string>
     <string name="settings_autostart_at_boot_desc">장치가 부팅을 완료하면 Molla를 자동으로 실행합니다. 장치가 기본 런처를 변경하는 기능을 제공하지 않을 경우 유용합니다.</string>
+    <string name="settings_orientation_title">방향 강제 설정</string>
+    <string name="settings_orientation_desc">Molla의 방향을 강제로 설정하게 합니다. 문제가 발생할 수 있습니다. 일부 장치에서는 작동하지 않습니다.</string>
     <string name="settings_category_about">정보</string>
     <string name="settings_category_system_settings">시스템 설정 바로가기</string>
     <string name="settings_open_system_settings">시스템 설정</string>
@@ -53,6 +55,12 @@
     <string name="dialog_customize_indicators_toggle_net">네트워크</string>
     <string name="dialog_customize_indicators_toggle_bat">배터리</string>
     <string name="dialog_customize_indicators_toggle_time">시간</string>
+
+    <string name="dialog_orientation_title">방향 강제 설정</string>
+    <string name="dialog_orientation_subtitle">문제가 발생할 수 있습니다. 일부 장치에서는 무시됩니다. 잘 모르겠다면, \"사용 안 함\"으로 설정하세요.</string>
+    <string name="dialog_orientation_disable">사용 안 함</string>
+    <string name="dialog_orientation_landscape">가로</string>
+    <string name="dialog_orientation_portrait">세로</string>
 
     <string name="common_ok">확인</string>
     <string name="common_cancel">취소</string>
