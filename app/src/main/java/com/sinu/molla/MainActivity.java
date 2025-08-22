@@ -25,15 +25,12 @@ import android.text.format.DateFormat;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.window.OnBackInvokedDispatcher;
 
 import androidx.activity.EdgeToEdge;
 import androidx.activity.OnBackPressedCallback;
-import androidx.activity.OnBackPressedDispatcher;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.content.res.AppCompatResources;
 import androidx.core.content.ContextCompat;
-import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.core.view.WindowInsetsControllerCompat;
@@ -60,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
     Handler h;
     Runnable rUpdateStatus;
 
-    Intent batteryStatus;
+    BatteryManager bm;
     boolean batteryExist;
     ConnectivityManager cm;
     WifiManager wm;
@@ -118,10 +115,17 @@ public class MainActivity extends AppCompatActivity {
         windowInsetsController.setSystemBarsBehavior(WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE);
         windowInsetsController.hide(WindowInsetsCompat.Type.systemBars());
 
-        batteryStatus = registerReceiver(null, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
+        var batteryIntent = registerReceiver(null, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
 
-        int bstatus = batteryStatus.getIntExtra(BatteryManager.EXTRA_STATUS, -1);
-        batteryExist = bstatus != BatteryManager.BATTERY_STATUS_UNKNOWN;
+        if (batteryIntent == null) {
+            batteryExist = false;
+            bm = null;
+        } else {
+            int batteryStatus = batteryIntent.getIntExtra(BatteryManager.EXTRA_STATUS, -1);
+            batteryExist = batteryStatus != BatteryManager.BATTERY_STATUS_UNKNOWN;
+            bm = (BatteryManager)getSystemService(Context.BATTERY_SERVICE);
+        }
+
         if (!batteryExist) {
             binding.ivMainBatIcon.setVisibility(View.GONE);
             binding.tvMainBatPercentage.setVisibility(View.GONE);
@@ -147,43 +151,51 @@ public class MainActivity extends AppCompatActivity {
             binding.tvMainBatPercentage.setVisibility(View.VISIBLE);
             binding.tvMainTime.setVisibility(View.VISIBLE);
 
-            batteryStatus = registerReceiver(null, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
-
-            if (batteryExist) {
-                int status = batteryStatus.getIntExtra(BatteryManager.EXTRA_STATUS, -1);
-                int level = batteryStatus.getIntExtra(BatteryManager.EXTRA_LEVEL, -1);
-                int scale = batteryStatus.getIntExtra(BatteryManager.EXTRA_SCALE, -1);
-                float batteryPct = level * 100 / (float) scale;
+            if (batteryExist && bm != null) {
+                int batteryStatus = 0;
+                int batteryPercent = 0;
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    batteryStatus = bm.getIntProperty(BatteryManager.BATTERY_PROPERTY_STATUS);
+                    batteryPercent = bm.getIntProperty(BatteryManager.BATTERY_PROPERTY_CAPACITY);
+                } else {
+                    var bi = registerReceiver(null, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
+                    if (bi != null) {
+                        batteryStatus = bi.getIntExtra(BatteryManager.EXTRA_STATUS, -1);
+                        int level = bi.getIntExtra(BatteryManager.EXTRA_LEVEL, -1);
+                        int scale = bi.getIntExtra(BatteryManager.EXTRA_SCALE, -1);
+                        batteryPercent = (int)Math.ceil(level * 100 / (float)scale);
+                    }
+                }
 
                 binding.ivMainBatIcon.setVisibility(View.VISIBLE);
                 binding.tvMainBatPercentage.setVisibility(View.VISIBLE);
-                if (status == BatteryManager.BATTERY_STATUS_CHARGING) {
+                if (batteryStatus == BatteryManager.BATTERY_STATUS_CHARGING) {
                     binding.ivMainBatIcon.setImageDrawable(AppCompatResources.getDrawable(this, R.drawable.ic_battery_charging));
-                } else if (status == BatteryManager.BATTERY_STATUS_FULL) {
+                } else if (batteryStatus == BatteryManager.BATTERY_STATUS_FULL) {
                     binding.ivMainBatIcon.setImageDrawable(AppCompatResources.getDrawable(this, R.drawable.ic_battery_full));
                 } else {
-                    if (batteryPct > 95f) {
+                    if (batteryPercent > 95f) {
                         binding.ivMainBatIcon.setImageDrawable(AppCompatResources.getDrawable(this, R.drawable.ic_battery_full));
-                    } else if (batteryPct > 80f) {
+                    } else if (batteryPercent > 80f) {
                         binding.ivMainBatIcon.setImageDrawable(AppCompatResources.getDrawable(this, R.drawable.ic_battery_6));
-                    } else if (batteryPct > 68f) {
+                    } else if (batteryPercent > 68f) {
                         binding.ivMainBatIcon.setImageDrawable(AppCompatResources.getDrawable(this, R.drawable.ic_battery_5));
-                    } else if (batteryPct > 56f) {
+                    } else if (batteryPercent > 56f) {
                         binding.ivMainBatIcon.setImageDrawable(AppCompatResources.getDrawable(this, R.drawable.ic_battery_4));
-                    } else if (batteryPct > 44f) {
+                    } else if (batteryPercent > 44f) {
                         binding.ivMainBatIcon.setImageDrawable(AppCompatResources.getDrawable(this, R.drawable.ic_battery_3));
-                    } else if (batteryPct > 32f) {
+                    } else if (batteryPercent > 32f) {
                         binding.ivMainBatIcon.setImageDrawable(AppCompatResources.getDrawable(this, R.drawable.ic_battery_2));
-                    } else if (batteryPct > 20f) {
+                    } else if (batteryPercent > 20f) {
                         binding.ivMainBatIcon.setImageDrawable(AppCompatResources.getDrawable(this, R.drawable.ic_battery_1));
-                    } else if (batteryPct > 10f) {
+                    } else if (batteryPercent > 10f) {
                         binding.ivMainBatIcon.setImageDrawable(AppCompatResources.getDrawable(this, R.drawable.ic_battery_0));
                     } else {
                         binding.ivMainBatIcon.setImageDrawable(AppCompatResources.getDrawable(this, R.drawable.ic_battery_alert));
                     }
                 }
 
-                binding.tvMainBatPercentage.setText(String.format(getString(R.string.main_bat), (int) Math.ceil(batteryPct)));
+                binding.tvMainBatPercentage.setText(String.format(getString(R.string.main_bat), batteryPercent));
             }
 
             NetworkInfo ni = cm.getActiveNetworkInfo();
