@@ -56,6 +56,11 @@ public class SettingsAdapter extends RecyclerView.Adapter<SettingsAdapter.ViewHo
                         MollaSetting.TYPE_CHECKBOX, "simple_icon_bg", false
                 ),
                 new MollaSetting(
+                        context.getString(R.string.settings_use_system_bar_title),
+                        context.getString(R.string.settings_use_system_bar_desc),
+                        MollaSetting.TYPE_CHECKBOX, "use_system_bar", true
+                ),
+                new MollaSetting(
                         context.getString(R.string.settings_category_behavior),
                         null,
                         MollaSetting.TYPE_CATEGORY, null, false

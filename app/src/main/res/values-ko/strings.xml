@@ -26,6 +26,8 @@
     <string name="settings_customize_indicator_desc">첫 화면에 표시할 알림 아이콘을 설정합니다.</string>
     <string name="settings_simple_background_title">단순한 아이콘 배경</string>
     <string name="settings_simple_background_desc">아이콘 배경으로 단순한 회색 사각형을 사용합니다.</string>
+    <string name="settings_use_system_bar_title">시스템 표시줄 보이기</string>
+    <string name="settings_use_system_bar_desc">첫 화면에서 시스템 표시줄을 표시합니다.</string>
     <string name="settings_category_behavior">동작</string>
     <string name="settings_hide_non_tv_apps_title">비 TV 앱 숨기기</string>
     <string name="settings_hide_non_tv_apps_desc">Android TV에서 실행될 수 없는 앱들을 숨깁니다.</string>
