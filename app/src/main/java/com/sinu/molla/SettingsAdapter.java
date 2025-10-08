@@ -86,6 +86,21 @@ public class SettingsAdapter extends RecyclerView.Adapter<SettingsAdapter.ViewHo
                         MollaSetting.TYPE_BUTTON, "orientation", true
                 ),
                 new MollaSetting(
+                        context.getString(R.string.settings_category_autolaunch),
+                        null,
+                        MollaSetting.TYPE_CATEGORY, null, false
+                ),
+                new MollaSetting(
+                        context.getString(R.string.settings_autolaunch_app_title),
+                        context.getString(R.string.settings_autolaunch_app_desc),
+                        MollaSetting.TYPE_BUTTON, "autolaunch_app", false
+                ),
+                new MollaSetting(
+                        context.getString(R.string.settings_autolaunch_delay_title),
+                        context.getString(R.string.settings_autolaunch_delay_desc),
+                        MollaSetting.TYPE_BUTTON, "autolaunch_delay", false
+                ),
+                new MollaSetting(
                         context.getString(R.string.settings_category_about),
                         null,
                         MollaSetting.TYPE_CATEGORY, null, false

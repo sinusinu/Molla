@@ -201,4 +201,43 @@
             android:text="@string/main_placeholder_time" />
     </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/ll_main_autolaunch_overlay"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/transparent_black"
+        android:gravity="center_horizontal|center_vertical"
+        android:orientation="vertical"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/tv_main_autolaunch_overlay_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-condensed"
+            android:text="@string/main_autolaunch_overlay_title"
+            android:textSize="@dimen/_24ssp" />
+
+        <TextView
+            android:id="@+id/tv_main_autolaunch_overlay_seconds"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_14sdp"
+            android:fontFamily="sans-serif-condensed"
+            android:text="0"
+            android:textSize="@dimen/_36ssp" />
+
+        <TextView
+            android:id="@+id/tv_main_autolaunch_overlay_cancel_help"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-condensed"
+            android:text="@string/main_autolaunch_overlay_cancel_help"
+            android:textSize="@dimen/_16ssp" />
+    </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

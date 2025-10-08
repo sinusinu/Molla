@@ -6,6 +6,8 @@
     <string name="main_placeholder_bat">100%</string>
     <string name="main_bat">%d%%</string>
     <string name="main_edit_fav">바로가기 편집</string>
+    <string name="main_autolaunch_overlay_title">%s 실행까지…</string>
+    <string name="main_autolaunch_overlay_cancel_help">취소하려면 \"뒤로\" 버튼을 누르세요.</string>
 
     <string name="all_title">모든 앱</string>
     <string name="all_back">뒤로</string>
@@ -37,6 +39,11 @@
     <string name="settings_autostart_at_boot_desc">장치가 부팅을 완료하면 Molla를 자동으로 실행합니다. 장치가 기본 런처를 변경하는 기능을 제공하지 않을 경우 유용합니다.</string>
     <string name="settings_orientation_title">방향 강제 설정</string>
     <string name="settings_orientation_desc">Molla의 방향을 강제로 설정하게 합니다. 문제가 발생할 수 있습니다. 일부 장치에서는 작동하지 않습니다.</string>
+    <string name="settings_category_autolaunch">자동 실행</string>
+    <string name="settings_autolaunch_app_title">자동 실행할 앱</string>
+    <string name="settings_autolaunch_app_desc">선택한 앱을 장치 재부팅 후 Molla 첫 실행 시 바로 실행합니다. 일부 장치에서는 작동하지 않습니다.</string>
+    <string name="settings_autolaunch_delay_title">실행 전 기다리기</string>
+    <string name="settings_autolaunch_delay_desc">자동 실행 전에 지정된 초만큼 기다립니다. 기다리는 동안 자동 실행을 취소할 수 있습니다.</string>
     <string name="settings_category_about">정보</string>
     <string name="settings_about_secret_enabled">부실한 설정들이 활성화되었습니다. 변경 사항은 설정 화면을 재시작하면 적용됩니다.</string>
     <string name="settings_about_secret_disabled">부실한 설정들이 비활성화되었습니다. 변경 사항은 설정 화면을 재시작하면 적용됩니다.</string>
@@ -65,6 +72,17 @@
     <string name="dialog_orientation_disable">사용 안 함</string>
     <string name="dialog_orientation_landscape">가로</string>
     <string name="dialog_orientation_portrait">세로</string>
+
+    <string name="dialog_autolaunch_select_title">자동 실행할 앱</string>
+    <string name="dialog_autolaunch_select_subtitle">기능을 비활성화하려면 \"없음\"을 선택하세요.</string>
+    <string name="dialog_autolaunch_select_disable">없음</string>
+
+    <string name="dialog_autolaunch_delay_title">실행 전 기다리기</string>
+    <string name="dialog_autolaunch_delay_subtitle">기다리는 동안 자동 실행을 취소할 수 있습니다.</string>
+    <string name="dialog_autolaunch_delay_immediate">즉시 실행</string>
+    <string name="dialog_autolaunch_delay_3s">3초</string>
+    <string name="dialog_autolaunch_delay_5s">5초</string>
+    <string name="dialog_autolaunch_delay_10s">10초</string>
 
     <string name="common_ok">확인</string>
     <string name="common_cancel">취소</string>

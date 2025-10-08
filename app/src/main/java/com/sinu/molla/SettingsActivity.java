@@ -21,6 +21,7 @@ import android.provider.Settings;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.RadioButton;
 import android.widget.Toast;
@@ -35,6 +36,7 @@ import androidx.core.view.WindowCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.core.view.WindowInsetsControllerCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.SimpleItemAnimator;
 
 import com.sinu.molla.databinding.ActivitySettingsBinding;
@@ -44,6 +46,9 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Objects;
 
 public class SettingsActivity extends AppCompatActivity {
     private final int PICK_WALLPAPER = 1;
@@ -54,6 +59,7 @@ public class SettingsActivity extends AppCompatActivity {
 
     int aboutPressCount = 0;
 
+    @SuppressLint("NotifyDataSetChanged")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -187,6 +193,71 @@ public class SettingsActivity extends AppCompatActivity {
                     ((RadioButton)dialogOrientation.findViewById(R.id.rb_dialog_orient_disable)).setChecked("disable".equals(currentOrient));
                     ((RadioButton)dialogOrientation.findViewById(R.id.rb_dialog_orient_landscape)).setChecked("landscape".equals(currentOrient));
                     ((RadioButton)dialogOrientation.findViewById(R.id.rb_dialog_orient_portrait)).setChecked("portrait".equals(currentOrient));
+                    break;
+                case "autolaunch_app":
+                    final var dialogAutolaunchSelect = getLayoutInflater().inflate(R.layout.dialog_autolaunch_select, null);
+                    var adAutolaunchSelect = new AlertDialog.Builder(this)
+                            .setView(dialogAutolaunchSelect)
+                            .create();
+                    adAutolaunchSelect.show();
+                    var rvAutolaunchSelectList = (RecyclerView)adAutolaunchSelect.findViewById(R.id.rv_dialog_autolaunch_select_list);
+                    if (rvAutolaunchSelectList == null) {
+                        adAutolaunchSelect.dismiss();
+                    } else {
+                        ArrayList<AppItem> autolaunchItems = new ArrayList<>();
+                        var autolaunchSelectListManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+                        var adapterAutolaunchSelectList = new AppItemSingleSelectAdapter(this, autolaunchItems, (v) -> {
+                            int autolaunchSelectListIdx = manager.getPosition(v);
+                            AppItem si = autolaunchItems.get(autolaunchSelectListIdx);
+                            if (si == null) {
+                                pref.edit().remove("autolaunch_package").apply();
+                            } else {
+                                pref.edit().putString("autolaunch_package", si.packageName).apply();
+                            }
+                            adAutolaunchSelect.dismiss();
+                        }, (pref.getInt("simple_icon_bg", 0) == 1));
+                        String currentAutolaunch = pref.getString("autolaunch_package", null);
+                        adapterAutolaunchSelectList.setSelectedItem(null);
+                        rvAutolaunchSelectList.setLayoutManager(autolaunchSelectListManager);
+                        rvAutolaunchSelectList.setAdapter(adapterAutolaunchSelectList);
+                        new Thread(() -> {
+                            AppItem.fetchAllAppsAsync(this, (items) -> {
+                                runOnUiThread(() -> {
+                                    Collections.sort(items, AppItem::compareByDisplayName);
+                                    Objects.requireNonNull((View)adAutolaunchSelect.findViewById(R.id.pbr_dialog_autolaunch_select_loading)).setVisibility(View.GONE);
+                                    rvAutolaunchSelectList.setVisibility(View.VISIBLE);
+                                    autolaunchItems.add(null);
+                                    autolaunchItems.addAll(items);
+                                    for (int i = 0; i < items.size(); i++) {
+                                        if (items.get(i).packageName.equals(currentAutolaunch)) {
+                                            adapterAutolaunchSelectList.setSelectedItem(items.get(i));
+                                            break;
+                                        }
+                                    }
+                                    adapterAutolaunchSelectList.notifyDataSetChanged();
+                                    Objects.requireNonNull(adAutolaunchSelect.getWindow()).setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                                });
+                            });
+                        }).start();
+                    }
+                    break;
+                case "autolaunch_delay":
+                    final String[] delayItems = {
+                            getString(R.string.dialog_autolaunch_delay_immediate),
+                            getString(R.string.dialog_autolaunch_delay_3s),
+                            getString(R.string.dialog_autolaunch_delay_5s),
+                            getString(R.string.dialog_autolaunch_delay_10s),
+                    };
+                    final int delaySelected = pref.getInt("autolaunch_delay", 0);
+                    @SuppressLint("InflateParams")
+                    var adAutolaunchDelay = new AlertDialog.Builder(this)
+                            .setCustomTitle(getLayoutInflater().inflate(R.layout.dialog_autolaunch_delay, null))
+                            .setSingleChoiceItems(delayItems, delaySelected, (d, i) -> {
+                                pref.edit().putInt("autolaunch_delay", i).apply();
+                                d.dismiss();
+                            })
+                            .create();
+                    adAutolaunchDelay.show();
                     break;
                 case "about":
                     aboutPressCount++;

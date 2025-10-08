@@ -7,6 +7,8 @@
     <string name="main_placeholder_bat">100%</string>
     <string name="main_bat">%d%%</string>
     <string name="main_edit_fav">Edit Quick Access</string>
+    <string name="main_autolaunch_overlay_title">Launching %s in…</string>
+    <string name="main_autolaunch_overlay_cancel_help">Press \"Back\" now to cancel.</string>
 
     <string name="all_title">All apps</string>
     <string name="all_back">Back</string>
@@ -34,10 +36,15 @@
     <string name="settings_hide_non_tv_apps_desc">Only show apps that can be run on Android TV.</string>
     <string name="settings_closeable_title">Allow Close</string>
     <string name="settings_closeable_desc">Make Molla closeable by pressing Back on main screen. Useful if using Molla as an auxiliary launcher.</string>
-    <string name="settings_autostart_at_boot_title">Auto-start at Boot</string>
+    <string name="settings_autostart_at_boot_title">Autostart Molla at Boot</string>
     <string name="settings_autostart_at_boot_desc">Start Molla automatically after the device boots up. Useful if the device does not allow changing the default launcher.</string>
     <string name="settings_orientation_title">Forced Orientation</string>
     <string name="settings_orientation_desc">Set forced orientation of Molla. May cause problems. May not work on some devices.</string>
+    <string name="settings_category_autolaunch">Auto-Launch</string>
+    <string name="settings_autolaunch_app_title">Auto-Launch App</string>
+    <string name="settings_autolaunch_app_desc">When set, the selected app will automatically launch when Molla first launches after rebooting the device. May not work on some devices.</string>
+    <string name="settings_autolaunch_delay_title">Auto-Launch Delay</string>
+    <string name="settings_autolaunch_delay_desc">Delay Auto-Launch for set seconds. Auto-Launch can be cancelled during this delay.</string>
     <string name="settings_category_about">About</string>
     <string name="settings_about_title" translatable="false">Molla %s</string>
     <string name="settings_about_desc" translatable="false">© 2022‐2025 sinu</string>
@@ -68,6 +75,17 @@
     <string name="dialog_orientation_disable">Disable</string>
     <string name="dialog_orientation_landscape">Landscape</string>
     <string name="dialog_orientation_portrait">Portrait</string>
+
+    <string name="dialog_autolaunch_select_title">App to Auto-Launch</string>
+    <string name="dialog_autolaunch_select_subtitle">To disable the feature, select \"None\".</string>
+    <string name="dialog_autolaunch_select_disable">None</string>
+
+    <string name="dialog_autolaunch_delay_title">Auto-Launch Delay</string>
+    <string name="dialog_autolaunch_delay_subtitle">Auto-Launch can be cancelled during this delay.</string>
+    <string name="dialog_autolaunch_delay_immediate">Launch Immediately</string>
+    <string name="dialog_autolaunch_delay_3s">3 seconds</string>
+    <string name="dialog_autolaunch_delay_5s">5 seconds</string>
+    <string name="dialog_autolaunch_delay_10s">10 seconds</string>
 
     <string name="common_ok">OK</string>
     <string name="common_cancel">Cancel</string>

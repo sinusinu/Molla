@@ -21,8 +21,11 @@ import android.os.BatteryManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.SystemClock;
 import android.text.format.DateFormat;
+import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 
@@ -66,6 +69,10 @@ public class MainActivity extends AppCompatActivity {
     BluetoothManager bt;
 
     boolean isFavListUpdateReserved = true;
+
+    AppItem autoLaunchTarget = null;
+    boolean isWaitingForAutoLaunch = false;
+    int autoLaunchCountdown = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -221,7 +228,7 @@ public class MainActivity extends AppCompatActivity {
                                 binding.ivMainConnIcon.setImageDrawable(AppCompatResources.getDrawable(this, R.drawable.ic_conn_wifi_verylow));
                                 break;
                         }
-                        break;
+                         break;
                     case ConnectivityManager.TYPE_MOBILE:
                         binding.ivMainConnIcon.setImageDrawable(AppCompatResources.getDrawable(this, R.drawable.ic_conn_cellular_data));
                         break;
@@ -259,7 +266,12 @@ public class MainActivity extends AppCompatActivity {
         var backCallback = new OnBackPressedCallback(true) {
             @Override
             public void handleOnBackPressed() {
-                if (isCloseable) finish();
+                if (isWaitingForAutoLaunch) {
+                    isWaitingForAutoLaunch = false;
+                    setAutoLaunchOverlayVisibility(false);
+                } else {
+                    if (isCloseable) finish();
+                }
             }
         };
         getOnBackPressedDispatcher().addCallback(this, backCallback);
@@ -280,6 +292,27 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+
+        // check if device rebooted
+        long lastBootTimestamp = pref.getLong("last_boot_timestamp", 0L);
+        long currentBootTimestamp = System.currentTimeMillis() - SystemClock.elapsedRealtime();
+        long timestampDifference = Math.abs(currentBootTimestamp - lastBootTimestamp);
+        if (timestampDifference > 10000L) {
+            // timestamp difference is more than 10 seconds, looks like the device has been rebooted
+            //Log.d("Molla", "Device reboot detected");
+            pref.edit().putLong("last_boot_timestamp", currentBootTimestamp).apply();
+            String autolaunchTargetPackage = pref.getString("autolaunch_package", null);
+            if (autolaunchTargetPackage != null) {
+                ArrayList<String> pnAutoLaunchTarget = new ArrayList<>();
+                pnAutoLaunchTarget.add(autolaunchTargetPackage);
+                AppItem.fetchListOfAppsAsync(this, pnAutoLaunchTarget, (items) -> {
+                    if (items.size() == 1) runOnUiThread(() -> {
+                        autoLaunchTarget = items.get(0);
+                        if (!isWaitingForAutoLaunch) initiateAutoLaunch();
+                    });
+                });
+            }
+        }
 
         String orient = pref.getString("forced_orientation", "disable");
         if ("landscape".equals(orient)) setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_USER_LANDSCAPE);
@@ -336,5 +369,53 @@ public class MainActivity extends AppCompatActivity {
 
     public void reserveFavListUpdate() {
         isFavListUpdateReserved = true;
+    }
+
+    @SuppressLint("SetTextI18n")
+    private void initiateAutoLaunch() {
+        final int[] launchDelayResolve = { 0, 3, 5, 10 };
+        var launchDelay = pref.getInt("autolaunch_delay", 0);
+        if (launchDelay == 0) {
+            // launch immediately
+            startActivity(autoLaunchTarget.intent);
+        } else {
+            isWaitingForAutoLaunch = true;
+            autoLaunchCountdown = launchDelayResolve[launchDelay];
+            binding.tvMainAutolaunchOverlayTitle.setText(String.format(getString(R.string.main_autolaunch_overlay_title), autoLaunchTarget.displayName));
+            binding.tvMainAutolaunchOverlaySeconds.setText(autoLaunchCountdown+"");
+            setAutoLaunchOverlayVisibility(true);
+            h.postDelayed(this::countdownAutoLaunch, 1000);
+        }
+    }
+
+    @SuppressLint("SetTextI18n")
+    private void countdownAutoLaunch() {
+        if (!isWaitingForAutoLaunch) return;
+        autoLaunchCountdown--;
+        if (autoLaunchCountdown == 0) {
+            isWaitingForAutoLaunch = false;
+            setAutoLaunchOverlayVisibility(false);
+            startActivity(autoLaunchTarget.intent);
+        } else {
+            binding.tvMainAutolaunchOverlaySeconds.setText(autoLaunchCountdown+"");
+            h.postDelayed(this::countdownAutoLaunch, 1000);
+        }
+    }
+
+    private void setAutoLaunchOverlayVisibility(boolean visible) {
+        if (visible) {
+            binding.rvMainFav.setFocusable(false);
+            binding.rvMainFav.setDescendantFocusability(ViewGroup.FOCUS_BLOCK_DESCENDANTS);
+            binding.lvMainAll.setFocusable(false);
+            binding.lvMainSettings.setFocusable(false);
+            binding.llMainAutolaunchOverlay.setVisibility(View.VISIBLE);
+        } else {
+            binding.rvMainFav.setFocusable(true);
+            binding.rvMainFav.setDescendantFocusability(ViewGroup.FOCUS_AFTER_DESCENDANTS);
+            binding.lvMainAll.setFocusable(true);
+            binding.lvMainSettings.setFocusable(true);
+            binding.llMainAutolaunchOverlay.setVisibility(View.GONE);
+            binding.lvMainAll.requestFocus();
+        }
     }
 }
