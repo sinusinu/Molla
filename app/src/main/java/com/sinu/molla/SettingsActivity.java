@@ -17,6 +17,7 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.provider.Settings;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -77,6 +78,9 @@ public class SettingsActivity extends AppCompatActivity {
         if (binding.rvSettingsAllapps.getItemAnimator() != null) {
             ((SimpleItemAnimator)binding.rvSettingsAllapps.getItemAnimator()).setSupportsChangeAnimations(false);
         }
+
+        // update last boot timestamp so disabling alternative boot detection doesn't trigger the auto-launch
+        pref.edit().putLong("last_boot_timestamp", System.currentTimeMillis() - SystemClock.elapsedRealtime()).apply();
 
         adapter.setOnSettingsClickedListener((idx, key) -> {
             switch (key) {
