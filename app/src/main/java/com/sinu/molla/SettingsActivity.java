@@ -93,6 +93,7 @@ public class SettingsActivity extends AppCompatActivity {
                 case "closeable":
                 case "simple_icon_bg":
                 case "use_system_bar":
+                case "autolaunch_alt_detect":
                     adapter.settings[idx].fetch(pref);
                     if (adapter.settings[idx].value == 0) {
                         adapter.settings[idx].set(pref, 1);

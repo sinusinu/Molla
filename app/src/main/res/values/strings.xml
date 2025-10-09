@@ -45,6 +45,8 @@
     <string name="settings_autolaunch_app_desc">When set, the selected app will automatically launch when Molla first launches after rebooting the device. May not work on some devices.</string>
     <string name="settings_autolaunch_delay_title">Auto-Launch Delay</string>
     <string name="settings_autolaunch_delay_desc">Delay Auto-Launch for set seconds. Auto-Launch can be cancelled during this delay.</string>
+    <string name="settings_autolaunch_alt_detect_title">Use Alternative Detection</string>
+    <string name="settings_autolaunch_alt_detect_desc">For devices without a real-time clock, default reboot detection may not work properly. In that case, try enabling this option. Not recommended otherwise.</string>
     <string name="settings_category_about">About</string>
     <string name="settings_about_title" translatable="false">Molla %s</string>
     <string name="settings_about_desc" translatable="false">© 2022‐2025 sinu</string>

@@ -101,6 +101,11 @@ public class SettingsAdapter extends RecyclerView.Adapter<SettingsAdapter.ViewHo
                         MollaSetting.TYPE_BUTTON, "autolaunch_delay", false
                 ),
                 new MollaSetting(
+                        context.getString(R.string.settings_autolaunch_alt_detect_title),
+                        context.getString(R.string.settings_autolaunch_alt_detect_desc),
+                        MollaSetting.TYPE_CHECKBOX, "autolaunch_alt_detect", false
+                ),
+                new MollaSetting(
                         context.getString(R.string.settings_category_about),
                         null,
                         MollaSetting.TYPE_CATEGORY, null, false

@@ -39,6 +39,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.core.view.WindowInsetsControllerCompat;
+import androidx.lifecycle.Lifecycle;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.sinu.molla.databinding.ActivityMainBinding;
@@ -61,6 +62,7 @@ public class MainActivity extends AppCompatActivity {
 
     Handler h;
     Runnable rUpdateStatus;
+    Runnable rCountdownAutoLaunch;
 
     BatteryManager bm;
     boolean batteryExist;
@@ -74,6 +76,7 @@ public class MainActivity extends AppCompatActivity {
     boolean isWaitingForAutoLaunch = false;
     int autoLaunchCountdown = 0;
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -261,6 +264,24 @@ public class MainActivity extends AppCompatActivity {
             h.postDelayed(rUpdateStatus, 2000);
         };
 
+        rCountdownAutoLaunch = () -> {
+            if (!isWaitingForAutoLaunch) return;
+            if (!getLifecycle().getCurrentState().isAtLeast(Lifecycle.State.RESUMED)) {
+                isWaitingForAutoLaunch = false;
+                setAutoLaunchOverlayVisibility(false);
+                return;
+            }
+            autoLaunchCountdown--;
+            if (autoLaunchCountdown == 0) {
+                isWaitingForAutoLaunch = false;
+                setAutoLaunchOverlayVisibility(false);
+                startActivity(autoLaunchTarget.intent);
+            } else {
+                binding.tvMainAutolaunchOverlaySeconds.setText(autoLaunchCountdown+"");
+                h.postDelayed(rCountdownAutoLaunch, 1000);
+            }
+        };
+
         h = new Handler(getMainLooper());
 
         var backCallback = new OnBackPressedCallback(true) {
@@ -275,6 +296,44 @@ public class MainActivity extends AppCompatActivity {
             }
         };
         getOnBackPressedDispatcher().addCallback(this, backCallback);
+
+        // check if device is rebooted (alternative, not set as default launcher)
+        if (pref.getInt("autolaunch_alt_detect", 0) == 1 && (getIntent().getBooleanExtra("BOOT_COMPLETE_RECEIVED", false) || pref.getInt("boot_complete_alt_detect_hint", 0) == 1)) {
+            String autolaunchTargetPackage = pref.getString("autolaunch_package", null);
+            if (autolaunchTargetPackage != null) {
+                ArrayList<String> pnAutoLaunchTarget = new ArrayList<>();
+                pnAutoLaunchTarget.add(autolaunchTargetPackage);
+                AppItem.fetchListOfAppsAsync(this, pnAutoLaunchTarget, (items) -> {
+                    if (items.size() == 1) runOnUiThread(() -> {
+                        autoLaunchTarget = items.get(0);
+                        if (!isWaitingForAutoLaunch) initiateAutoLaunch();
+                    });
+                });
+            }
+        }
+        pref.edit().remove("boot_complete_alt_detect_hint").apply();
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+
+        // check if device rebooted (alternative, set as default launcher)
+        if (pref.getInt("autolaunch_alt_detect", 0) == 1 && intent.getBooleanExtra("BOOT_COMPLETE_RECEIVED", false)) {
+            intent.removeExtra("BOOT_COMPLETED_RECEIVED");
+            setIntent(intent);
+            String autolaunchTargetPackage = pref.getString("autolaunch_package", null);
+            if (autolaunchTargetPackage != null) {
+                ArrayList<String> pnAutoLaunchTarget = new ArrayList<>();
+                pnAutoLaunchTarget.add(autolaunchTargetPackage);
+                AppItem.fetchListOfAppsAsync(this, pnAutoLaunchTarget, (items) -> {
+                    if (items.size() == 1) runOnUiThread(() -> {
+                        autoLaunchTarget = items.get(0);
+                        if (!isWaitingForAutoLaunch) initiateAutoLaunch();
+                    });
+                });
+            }
+        }
     }
 
     @Override
@@ -293,24 +352,26 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-        // check if device rebooted
-        long lastBootTimestamp = pref.getLong("last_boot_timestamp", 0L);
-        long currentBootTimestamp = System.currentTimeMillis() - SystemClock.elapsedRealtime();
-        long timestampDifference = Math.abs(currentBootTimestamp - lastBootTimestamp);
-        if (timestampDifference > 10000L) {
-            // timestamp difference is more than 10 seconds, looks like the device has been rebooted
-            //Log.d("Molla", "Device reboot detected");
-            pref.edit().putLong("last_boot_timestamp", currentBootTimestamp).apply();
-            String autolaunchTargetPackage = pref.getString("autolaunch_package", null);
-            if (autolaunchTargetPackage != null) {
-                ArrayList<String> pnAutoLaunchTarget = new ArrayList<>();
-                pnAutoLaunchTarget.add(autolaunchTargetPackage);
-                AppItem.fetchListOfAppsAsync(this, pnAutoLaunchTarget, (items) -> {
-                    if (items.size() == 1) runOnUiThread(() -> {
-                        autoLaunchTarget = items.get(0);
-                        if (!isWaitingForAutoLaunch) initiateAutoLaunch();
+        // check if device rebooted (normal)
+        if (pref.getInt("autolaunch_alt_detect", 0) == 0) {
+            long lastBootTimestamp = pref.getLong("last_boot_timestamp", 0L);
+            long currentBootTimestamp = System.currentTimeMillis() - SystemClock.elapsedRealtime();
+            long timestampDifference = Math.abs(currentBootTimestamp - lastBootTimestamp);
+            if (timestampDifference > 10000L) {
+                // timestamp difference is more than 10 seconds, looks like the device has been rebooted
+                //Log.d("Molla", "Device reboot detected");
+                pref.edit().putLong("last_boot_timestamp", currentBootTimestamp).apply();
+                String autolaunchTargetPackage = pref.getString("autolaunch_package", null);
+                if (autolaunchTargetPackage != null) {
+                    ArrayList<String> pnAutoLaunchTarget = new ArrayList<>();
+                    pnAutoLaunchTarget.add(autolaunchTargetPackage);
+                    AppItem.fetchListOfAppsAsync(this, pnAutoLaunchTarget, (items) -> {
+                        if (items.size() == 1) runOnUiThread(() -> {
+                            autoLaunchTarget = items.get(0);
+                            if (!isWaitingForAutoLaunch) initiateAutoLaunch();
+                        });
                     });
-                });
+                }
             }
         }
 
@@ -384,21 +445,7 @@ public class MainActivity extends AppCompatActivity {
             binding.tvMainAutolaunchOverlayTitle.setText(String.format(getString(R.string.main_autolaunch_overlay_title), autoLaunchTarget.displayName));
             binding.tvMainAutolaunchOverlaySeconds.setText(autoLaunchCountdown+"");
             setAutoLaunchOverlayVisibility(true);
-            h.postDelayed(this::countdownAutoLaunch, 1000);
-        }
-    }
-
-    @SuppressLint("SetTextI18n")
-    private void countdownAutoLaunch() {
-        if (!isWaitingForAutoLaunch) return;
-        autoLaunchCountdown--;
-        if (autoLaunchCountdown == 0) {
-            isWaitingForAutoLaunch = false;
-            setAutoLaunchOverlayVisibility(false);
-            startActivity(autoLaunchTarget.intent);
-        } else {
-            binding.tvMainAutolaunchOverlaySeconds.setText(autoLaunchCountdown+"");
-            h.postDelayed(this::countdownAutoLaunch, 1000);
+            h.postDelayed(rCountdownAutoLaunch, 1000);
         }
     }
 
