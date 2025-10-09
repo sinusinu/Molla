@@ -45,7 +45,7 @@
     <string name="settings_autolaunch_delay_title">실행 전 기다리기</string>
     <string name="settings_autolaunch_delay_desc">자동 실행 전에 지정된 초만큼 기다립니다. 기다리는 동안 자동 실행을 취소할 수 있습니다.</string>
     <string name="settings_autolaunch_alt_detect_title">재부팅 감지 방식 변경</string>
-    <string name="settings_autolaunch_alt_detect_desc">장치가 현재 시간을 추적할 수 없는 경우, 재부팅 감지가 올바르게 작동하지 않을 수 있습니다. 이 옵션을 활성화하면 다른 방식으로 재부팅 감지를 시도합니다.</string>
+    <string name="settings_autolaunch_alt_detect_desc">장치가 시간을 추적할 수 없는 경우, 재부팅 감지가 제대로 작동하지 않을 수 있습니다. 이 옵션을 활성화하면 다른 방식으로 재부팅을 감지합니다.</string>
     <string name="settings_category_about">정보</string>
     <string name="settings_about_secret_enabled">부실한 설정들이 활성화되었습니다. 변경 사항은 설정 화면을 재시작하면 적용됩니다.</string>
     <string name="settings_about_secret_disabled">부실한 설정들이 비활성화되었습니다. 변경 사항은 설정 화면을 재시작하면 적용됩니다.</string>
