@@ -81,7 +81,7 @@ public class AppItemSingleSelectAdapter extends RecyclerView.Adapter<AppItemSing
                 try {
                     appIcon = context.getPackageManager().getApplicationIcon(list.get(position).packageName);
                 } catch (PackageManager.NameNotFoundException e) {
-                    appIcon = null;
+                    // appIcon = null;
                 }
             }
             holder.ivIcon.setImageDrawable(appIcon);

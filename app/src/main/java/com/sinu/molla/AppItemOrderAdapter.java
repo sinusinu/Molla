@@ -87,34 +87,12 @@ public class AppItemOrderAdapter extends RecyclerView.Adapter<AppItemOrderAdapte
         Drawable appBanner = null;
         Drawable appIcon = null;
 
-        var ci = ((MollaApplication)context).getCachedAppIcon(list.get(position).packageName);
-        if (ci != null) {
-            if (ci.type == AppItemIcon.IconType.LEANBACK) {
-                appBanner = ci.drawable;
-            } else if (ci.type == AppItemIcon.IconType.NORMAL) {
-                appBanner = drawableGeneric;
-                appIcon = ci.drawable;
-            }
+        var ci = AppItemIcon.getAppItemIcon((MollaApplication)context, list.get(position));
+        if (ci.type == AppItemIcon.IconType.LEANBACK) {
+            appBanner = ci.drawable;
         } else {
-            try {
-                appBanner = context.getPackageManager().getApplicationBanner(list.get(position).packageName);
-                if (appBanner == null) {
-                    appBanner = context.getPackageManager().getActivityBanner(list.get(position).intent);
-                    if (appBanner == null) {
-                        appBanner = drawableGeneric;
-                        appIcon = context.getPackageManager().getApplicationIcon(list.get(position).packageName);
-                        ((MollaApplication)context).cacheAppIcon(list.get(position).packageName, new AppItemIcon(AppItemIcon.IconType.NORMAL, appIcon));
-                    } else {
-                        ((MollaApplication)context).cacheAppIcon(list.get(position).packageName, new AppItemIcon(AppItemIcon.IconType.LEANBACK, appBanner));
-                    }
-                } else {
-                    ((MollaApplication)context).cacheAppIcon(list.get(position).packageName, new AppItemIcon(AppItemIcon.IconType.LEANBACK, appBanner));
-                }
-            } catch (PackageManager.NameNotFoundException e) {
-                appBanner = null;
-                appIcon = null;
-                ((MollaApplication)context).cacheAppIcon(list.get(position).packageName, new AppItemIcon(AppItemIcon.IconType.NORMAL, null));
-            }
+            appBanner = drawableGeneric;
+            appIcon = ci.drawable;
         }
         holder.ivBanner.setImageDrawable(appBanner);
         holder.ivIcon.setImageDrawable(appIcon);
