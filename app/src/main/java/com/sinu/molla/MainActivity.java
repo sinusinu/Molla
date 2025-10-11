@@ -89,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
         items = new ArrayList<>();
 
         HorizontallyFocusedLinearLayoutManager manager = new HorizontallyFocusedLinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false, binding.rvMainFav);
-        adapter = new AppItemAdapter(this, manager, items, true, (pref.getInt("simple_icon_bg", 0) == 1));
+        adapter = new AppItemAdapter(getApplicationContext(), this, manager, items, true, (pref.getInt("simple_icon_bg", 0) == 1));
 
         adapter.setOnAppItemFocusChangedListener((i, n) -> {
             binding.tvMainFavName.setText(n);

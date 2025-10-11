@@ -48,7 +48,7 @@ public class AllAppsActivity extends AppCompatActivity {
 
                 runOnUiThread(() -> {
                     LinearLayoutManager manager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-                    adapter = new AppItemListAdapter(this, items, (pref.getInt("simple_icon_bg", 0) == 1));
+                    adapter = new AppItemListAdapter(getApplicationContext(), this, items, (pref.getInt("simple_icon_bg", 0) == 1));
 
                     binding.rvAllAllapps.setLayoutManager(manager);
                     binding.rvAllAllapps.setAdapter(adapter);

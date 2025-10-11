@@ -56,7 +56,7 @@ public class EditActivity extends AppCompatActivity {
         selectedItems = new ArrayList<>();
 
         manager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-        adapter = new AppItemListSelectAdapter(this, items, selectedItems, itemClickListener, (pref.getInt("simple_icon_bg", 0) == 1));
+        adapter = new AppItemListSelectAdapter(getApplicationContext(), items, selectedItems, itemClickListener, (pref.getInt("simple_icon_bg", 0) == 1));
         binding.rvEditList.setLayoutManager(manager);
         binding.rvEditList.setAdapter(adapter);
         binding.rvEditList.setItemAnimator(null);
@@ -135,7 +135,7 @@ public class EditActivity extends AppCompatActivity {
                 Collections.sort(items, AppItem::compareByDisplayName);
 
                 runOnUiThread(() -> {
-                    adapter = new AppItemListSelectAdapter(this, items, selectedItems, itemClickListener, (pref.getInt("simple_icon_bg", 0) == 1));
+                    adapter = new AppItemListSelectAdapter(getApplicationContext(), items, selectedItems, itemClickListener, (pref.getInt("simple_icon_bg", 0) == 1));
                     binding.rvEditList.setAdapter(adapter);
 
                     binding.rvEditList.setVisibility(View.VISIBLE);

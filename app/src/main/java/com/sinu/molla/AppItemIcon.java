@@ -5,14 +5,13 @@ package com.sinu.molla;
 
 import android.graphics.drawable.Drawable;
 
-public class AppItemCache {
-    public static final int TYPE_LEANBACK = 0;
-    public static final int TYPE_NORMAL = 1;
+public class AppItemIcon {
+    public enum IconType { LEANBACK, NORMAL }
 
-    public int type;
+    public IconType type;
     public Drawable drawable;
 
-    public AppItemCache(int type, Drawable drawable) {
+    public AppItemIcon(IconType type, Drawable drawable) {
         this.type = type;
         this.drawable = drawable;
     }

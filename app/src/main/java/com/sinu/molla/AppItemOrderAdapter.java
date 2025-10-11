@@ -86,11 +86,12 @@ public class AppItemOrderAdapter extends RecyclerView.Adapter<AppItemOrderAdapte
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Drawable appBanner = null;
         Drawable appIcon = null;
-        if (IconCache.containsKey(list.get(position).packageName)) {
-            AppItemCache ci = IconCache.get(list.get(position).packageName);
-            if (ci.type == 0) {
+
+        var ci = ((MollaApplication)context).getCachedAppIcon(list.get(position).packageName);
+        if (ci != null) {
+            if (ci.type == AppItemIcon.IconType.LEANBACK) {
                 appBanner = ci.drawable;
-            } else if (ci.type == 1) {
+            } else if (ci.type == AppItemIcon.IconType.NORMAL) {
                 appBanner = drawableGeneric;
                 appIcon = ci.drawable;
             }
@@ -102,17 +103,17 @@ public class AppItemOrderAdapter extends RecyclerView.Adapter<AppItemOrderAdapte
                     if (appBanner == null) {
                         appBanner = drawableGeneric;
                         appIcon = context.getPackageManager().getApplicationIcon(list.get(position).packageName);
-                        IconCache.put(list.get(position).packageName, new AppItemCache(1, appIcon));
+                        ((MollaApplication)context).cacheAppIcon(list.get(position).packageName, new AppItemIcon(AppItemIcon.IconType.NORMAL, appIcon));
                     } else {
-                        IconCache.put(list.get(position).packageName, new AppItemCache(0, appBanner));
+                        ((MollaApplication)context).cacheAppIcon(list.get(position).packageName, new AppItemIcon(AppItemIcon.IconType.LEANBACK, appBanner));
                     }
                 } else {
-                    IconCache.put(list.get(position).packageName, new AppItemCache(0, appBanner));
+                    ((MollaApplication)context).cacheAppIcon(list.get(position).packageName, new AppItemIcon(AppItemIcon.IconType.LEANBACK, appBanner));
                 }
             } catch (PackageManager.NameNotFoundException e) {
                 appBanner = null;
                 appIcon = null;
-                IconCache.put(list.get(position).packageName, new AppItemCache(0, null));
+                ((MollaApplication)context).cacheAppIcon(list.get(position).packageName, new AppItemIcon(AppItemIcon.IconType.NORMAL, null));
             }
         }
         holder.ivBanner.setImageDrawable(appBanner);

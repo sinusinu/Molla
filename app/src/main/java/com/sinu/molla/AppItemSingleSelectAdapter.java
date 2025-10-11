@@ -9,7 +9,6 @@ import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.TextView;
@@ -75,8 +74,9 @@ public class AppItemSingleSelectAdapter extends RecyclerView.Adapter<AppItemSing
             holder.rbCheck.setChecked(selectedItem == null);
         } else {
             Drawable appIcon = null;
-            if (IconCache.containsKey(list.get(position).packageName) && IconCache.get(list.get(position).packageName).type == AppItemCache.TYPE_NORMAL) {
-                appIcon = IconCache.get(list.get(position).packageName).drawable;
+            var ci = ((MollaApplication)context).getCachedAppIcon(list.get(position).packageName);
+            if (ci != null && ci.type == AppItemIcon.IconType.NORMAL) {
+                appIcon = ci.drawable;
             } else {
                 try {
                     appIcon = context.getPackageManager().getApplicationIcon(list.get(position).packageName);

@@ -206,7 +206,7 @@ public class SettingsActivity extends AppCompatActivity {
                     } else {
                         ArrayList<AppItem> autolaunchItems = new ArrayList<>();
                         var autolaunchSelectListManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-                        var adapterAutolaunchSelectList = new AppItemSingleSelectAdapter(this, autolaunchItems, (v) -> {
+                        var adapterAutolaunchSelectList = new AppItemSingleSelectAdapter(getApplicationContext(), autolaunchItems, (v) -> {
                             int autolaunchSelectListIdx = manager.getPosition(v);
                             AppItem si = autolaunchItems.get(autolaunchSelectListIdx);
                             if (si == null) {

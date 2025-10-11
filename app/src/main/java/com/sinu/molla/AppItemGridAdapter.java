@@ -3,6 +3,7 @@
 
 package com.sinu.molla;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -25,6 +26,7 @@ import java.util.ArrayList;
 
 public class AppItemGridAdapter extends RecyclerView.Adapter<AppItemGridAdapter.ViewHolder> {
     private final Context context;
+    private final Activity activity;
     private final RecyclerView.LayoutManager manager;
     private final ArrayList<AppItem> list;
 
@@ -37,10 +39,11 @@ public class AppItemGridAdapter extends RecyclerView.Adapter<AppItemGridAdapter.
 
     public int selectedItem = -1;
 
-    public AppItemGridAdapter(Context context, RecyclerView.LayoutManager manager, ArrayList<AppItem> list, boolean simple) {
+    public AppItemGridAdapter(Context context, Activity activity, RecyclerView.LayoutManager manager, ArrayList<AppItem> list, boolean simple) {
         this.list = list;
         this.manager = manager;
         this.context = context;
+        this.activity = activity;
         animScaleUp = AnimationUtils.loadAnimation(context, R.anim.scale_up);
         animScaleDown = AnimationUtils.loadAnimation(context, R.anim.scale_down);
         animScaleUp.setFillAfter(true);
@@ -103,7 +106,7 @@ public class AppItemGridAdapter extends RecyclerView.Adapter<AppItemGridAdapter.
 
         @Override
         public void onClick(View view) {
-            if (intent != null) context.startActivity(intent);
+            if (intent != null) activity.startActivity(intent);
         }
     }
 
@@ -121,11 +124,11 @@ public class AppItemGridAdapter extends RecyclerView.Adapter<AppItemGridAdapter.
 
         holder.fvBody.setContentDescription(list.get(position).displayName);
 
-        if (IconCache.containsKey(list.get(position).packageName)) {
-            AppItemCache ci = IconCache.get(list.get(position).packageName);
-            if (ci.type == 0) {
+        var ci = ((MollaApplication)context).getCachedAppIcon(list.get(position).packageName);
+        if (ci != null) {
+            if (ci.type == AppItemIcon.IconType.LEANBACK) {
                 appBanner = ci.drawable;
-            } else if (ci.type == 1) {
+            } else if (ci.type == AppItemIcon.IconType.NORMAL) {
                 appBanner = drawableGeneric;
                 appIcon = ci.drawable;
             }
@@ -137,17 +140,17 @@ public class AppItemGridAdapter extends RecyclerView.Adapter<AppItemGridAdapter.
                     if (appBanner == null) {
                         appBanner = drawableGeneric;
                         appIcon = context.getPackageManager().getApplicationIcon(list.get(position).packageName);
-                        IconCache.put(list.get(position).packageName, new AppItemCache(1, appIcon));
+                        ((MollaApplication)context).cacheAppIcon(list.get(position).packageName, new AppItemIcon(AppItemIcon.IconType.NORMAL, appIcon));
                     } else {
-                        IconCache.put(list.get(position).packageName, new AppItemCache(0, appBanner));
+                        ((MollaApplication)context).cacheAppIcon(list.get(position).packageName, new AppItemIcon(AppItemIcon.IconType.LEANBACK, appBanner));
                     }
                 } else {
-                    IconCache.put(list.get(position).packageName, new AppItemCache(0, appBanner));
+                    ((MollaApplication)context).cacheAppIcon(list.get(position).packageName, new AppItemIcon(AppItemIcon.IconType.LEANBACK, appBanner));
                 }
             } catch (PackageManager.NameNotFoundException e) {
                 appBanner = null;
                 appIcon = null;
-                IconCache.put(list.get(position).packageName, new AppItemCache(0, null));
+                ((MollaApplication)context).cacheAppIcon(list.get(position).packageName, new AppItemIcon(AppItemIcon.IconType.NORMAL, null));
             }
         }
         holder.ivBanner.setImageDrawable(appBanner);

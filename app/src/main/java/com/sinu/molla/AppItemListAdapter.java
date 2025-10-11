@@ -3,13 +3,13 @@
 
 package com.sinu.molla;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -21,13 +21,15 @@ import java.util.ArrayList;
 
 public class AppItemListAdapter extends RecyclerView.Adapter<AppItemListAdapter.ViewHolder> {
     private final Context context;
+    private final Activity activity;
     private final ArrayList<AppItem> list;
 
     private Drawable drawableGeneric;
 
-    public AppItemListAdapter(Context context, ArrayList<AppItem> list, boolean simple) {
+    public AppItemListAdapter(Context context, Activity activity, ArrayList<AppItem> list, boolean simple) {
         this.list = list;
         this.context = context;
+        this.activity = activity;
 
         drawableGeneric = ContextCompat.getDrawable(context, simple ? R.drawable.generic_simple : R.drawable.generic);
     }
@@ -61,11 +63,12 @@ public class AppItemListAdapter extends RecyclerView.Adapter<AppItemListAdapter.
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Drawable appBanner = null;
         Drawable appIcon = null;
-        if (IconCache.containsKey(list.get(position).packageName)) {
-            AppItemCache ci = IconCache.get(list.get(position).packageName);
-            if (ci.type == AppItemCache.TYPE_LEANBACK) {
+
+        var ci = ((MollaApplication)context).getCachedAppIcon(list.get(position).packageName);
+        if (ci != null) {
+            if (ci.type == AppItemIcon.IconType.LEANBACK) {
                 appBanner = ci.drawable;
-            } else if (ci.type == AppItemCache.TYPE_NORMAL) {
+            } else if (ci.type == AppItemIcon.IconType.NORMAL) {
                 appBanner = drawableGeneric;
                 appIcon = ci.drawable;
             }
@@ -77,24 +80,24 @@ public class AppItemListAdapter extends RecyclerView.Adapter<AppItemListAdapter.
                     if (appBanner == null) {
                         appBanner = drawableGeneric;
                         appIcon = context.getPackageManager().getApplicationIcon(list.get(position).packageName);
-                        IconCache.put(list.get(position).packageName, new AppItemCache(AppItemCache.TYPE_NORMAL, appIcon));
+                        ((MollaApplication)context).cacheAppIcon(list.get(position).packageName, new AppItemIcon(AppItemIcon.IconType.NORMAL, appIcon));
                     } else {
-                        IconCache.put(list.get(position).packageName, new AppItemCache(AppItemCache.TYPE_LEANBACK, appBanner));
+                        ((MollaApplication)context).cacheAppIcon(list.get(position).packageName, new AppItemIcon(AppItemIcon.IconType.LEANBACK, appBanner));
                     }
                 } else {
-                    IconCache.put(list.get(position).packageName, new AppItemCache(AppItemCache.TYPE_LEANBACK, appBanner));
+                    ((MollaApplication)context).cacheAppIcon(list.get(position).packageName, new AppItemIcon(AppItemIcon.IconType.LEANBACK, appBanner));
                 }
             } catch (PackageManager.NameNotFoundException e) {
                 appBanner = null;
                 appIcon = null;
-                IconCache.put(list.get(position).packageName, new AppItemCache(AppItemCache.TYPE_LEANBACK, null));
+                ((MollaApplication)context).cacheAppIcon(list.get(position).packageName, new AppItemIcon(AppItemIcon.IconType.LEANBACK, null));
             }
         }
         holder.ivBanner.setImageDrawable(appBanner);
         holder.ivIcon.setImageDrawable(appIcon);
         holder.tvAppName.setText(list.get(position).displayName);
         holder.itemView.setOnClickListener(view -> {
-            if (list.get(position).intent != null) context.startActivity(list.get(position).intent);
+            if (list.get(position).intent != null) activity.startActivity(list.get(position).intent);
         });
     }
 
