@@ -45,26 +45,6 @@ public class AppItem {
         return o1.displayName.compareTo(o2.displayName);
     }
 
-    public static ArrayList<AppItem> fetchApps(Context context) {
-        ArrayList<AppItem> ret = new ArrayList<>();
-
-        PackageManager pm = context.getPackageManager();
-
-        Intent i = new Intent(Intent.ACTION_MAIN, null);
-        i.addCategory(Intent.CATEGORY_LAUNCHER);
-
-        List<ResolveInfo> allApps = pm.queryIntentActivities(i, 0);
-        for(ResolveInfo ri : allApps) {
-            if (ri.activityInfo.packageName.equals("com.sinu.molla")) continue;
-            Intent intentForThisActivity = new Intent();
-            intentForThisActivity.setClassName(ri.activityInfo.applicationInfo.packageName, ri.activityInfo.name);
-            AppItem n = new AppItem(ri.activityInfo.applicationInfo.packageName, ri.activityInfo.name, ri.activityInfo.loadLabel(pm).toString(), intentForThisActivity);
-            ret.add(n);
-        }
-
-        return ret;
-    }
-
     public static void fetchAppsAsync(Context context, AppItemLoadCompletedCallback callback) {
         Thread thread = new Thread(() -> {
             ArrayList<AppItem> ret = new ArrayList<>();
@@ -86,26 +66,6 @@ public class AppItem {
             callback.OnAppItemLoadCompleted(ret);
         });
         thread.start();
-    }
-
-    public static ArrayList<AppItem> fetchTvApps(Context context) {
-        ArrayList<AppItem> ret = new ArrayList<>();
-
-        PackageManager pm = context.getPackageManager();
-
-        Intent i = new Intent(Intent.ACTION_MAIN, null);
-        i.addCategory(Intent.CATEGORY_LEANBACK_LAUNCHER);
-
-        List<ResolveInfo> allApps = pm.queryIntentActivities(i, 0);
-        for(ResolveInfo ri : allApps) {
-            if (ri.activityInfo.packageName.equals("com.sinu.molla")) continue;
-            Intent intentForThisActivity = new Intent();
-            intentForThisActivity.setClassName(ri.activityInfo.applicationInfo.packageName, ri.activityInfo.name);
-            AppItem n = new AppItem(ri.activityInfo.applicationInfo.packageName, ri.activityInfo.name, ri.loadLabel(pm).toString(), intentForThisActivity);
-            ret.add(n);
-        }
-
-        return ret;
     }
 
     public static void fetchTvAppsAsync(Context context, AppItemLoadCompletedCallback callback) {
@@ -131,29 +91,6 @@ public class AppItem {
         thread.start();
     }
 
-    public static ArrayList<AppItem> fetchAllApps(Context context) {
-        ArrayList<AppItem> ret = new ArrayList<>();
-
-        ArrayList<AppItem> apps = fetchApps(context);
-        ArrayList<AppItem> tvApps = fetchTvApps(context);
-
-        SharedPreferences pref = context.getSharedPreferences("com.sinu.molla.settings", Context.MODE_PRIVATE);
-        if (pref.getInt("hide_non_tv", 0) == 0) {
-            HashSet<String> addedApps = new HashSet<>();
-
-            for (AppItem item : tvApps) {
-                addedApps.add(item.packageName);
-                ret.add(item);
-            }
-
-            for (AppItem item : apps) if (!addedApps.contains(item.packageName)) ret.add(item);
-        } else {
-            ret.addAll(tvApps);
-        }
-
-        return ret;
-    }
-
     public static void fetchAllAppsAsync(Context context, AppItemLoadCompletedCallback callback) {
         Thread thread = new Thread(() -> {
             ArrayList<AppItem> ret = new ArrayList<>();
@@ -177,36 +114,14 @@ public class AppItem {
                     callback.OnAppItemLoadCompleted(ret);
                 });
             });
-            ArrayList<AppItem> apps = fetchApps(context);
-            ArrayList<AppItem> tvApps = fetchTvApps(context);
         });
         thread.start();
-    }
-
-    public static ArrayList<AppItem> fetchListOfApps(Context context, List<String> packageNames) {
-        ArrayList<AppItem> ret = new ArrayList<>();
-
-        ArrayList<AppItem> allApps = fetchAllApps(context);
-
-        ArrayList<String> pnames = new ArrayList<>();
-
-        for (int i = 0; i < allApps.size(); i++) {
-            pnames.add(allApps.get(i).packageName);
-        }
-
-        for (int i = 0; i < packageNames.size(); i++) {
-            int idx = pnames.indexOf(packageNames.get(i));
-            if (idx != -1) ret.add(allApps.get(idx));
-        }
-
-        return ret;
     }
 
     public static void fetchListOfAppsAsync(Context context, List<String> packageNames, AppItemLoadCompletedCallback callback) {
         Thread thread = new Thread(() -> {
             fetchAllAppsAsync(context, (allApps) -> {
                 ArrayList<AppItem> ret = new ArrayList<>();
-
                 ArrayList<String> pnames = new ArrayList<>();
 
                 for (int i = 0; i < allApps.size(); i++) {
