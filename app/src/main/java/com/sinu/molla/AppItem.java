@@ -8,7 +8,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
-import android.util.Log;
 
 import androidx.annotation.Nullable;
 
@@ -45,8 +44,8 @@ public class AppItem {
         return o1.displayName.compareTo(o2.displayName);
     }
 
-    public static void fetchAppsAsync(Context context, AppItemLoadCompletedCallback callback) {
-        Thread thread = new Thread(() -> {
+    private static Thread getFetchAppsRunner(Context context, AppItemLoadCompletedCallback callback) {
+        return new Thread(() -> {
             ArrayList<AppItem> ret = new ArrayList<>();
 
             PackageManager pm = context.getPackageManager();
@@ -65,11 +64,10 @@ public class AppItem {
 
             callback.OnAppItemLoadCompleted(ret);
         });
-        thread.start();
     }
 
-    public static void fetchTvAppsAsync(Context context, AppItemLoadCompletedCallback callback) {
-        Thread thread = new Thread(() -> {
+    private static Thread getFetchTvAppsRunner(Context context, AppItemLoadCompletedCallback callback) {
+        return new Thread(() -> {
             ArrayList<AppItem> ret = new ArrayList<>();
 
             PackageManager pm = context.getPackageManager();
@@ -88,32 +86,42 @@ public class AppItem {
 
             callback.OnAppItemLoadCompleted(ret);
         });
-        thread.start();
     }
 
     public static void fetchAllAppsAsync(Context context, AppItemLoadCompletedCallback callback) {
         Thread thread = new Thread(() -> {
-            ArrayList<AppItem> ret = new ArrayList<>();
+            SharedPreferences pref = context.getSharedPreferences("com.sinu.molla.settings", Context.MODE_PRIVATE);
+            if (pref.getInt("hide_non_tv", 0) == 0) {
+                final ArrayList<AppItem> apps = new ArrayList<>();
+                final ArrayList<AppItem> tvApps = new ArrayList<>();
+                var fetchAppsRunner = getFetchAppsRunner(context, apps::addAll);
+                var fetchTvAppsRunner = getFetchTvAppsRunner(context, tvApps::addAll);
+                fetchAppsRunner.start();
+                fetchTvAppsRunner.start();
+                try {
+                    fetchAppsRunner.join();
+                    fetchTvAppsRunner.join();
+                } catch (InterruptedException e) {
+                    // let's hope we don't reach here
+                    throw new RuntimeException(e);
+                }
+                ArrayList<AppItem> ret = new ArrayList<>();
+                HashSet<String> appsWithTvIcon = new HashSet<>();
 
-            fetchAppsAsync(context, (ra) -> {
-                fetchTvAppsAsync(context, (rta) -> {
-                    SharedPreferences pref = context.getSharedPreferences("com.sinu.molla.settings", Context.MODE_PRIVATE);
-                    if (pref.getInt("hide_non_tv", 0) == 0) {
-                        HashSet<String> addedApps = new HashSet<>();
+                for (AppItem item : tvApps) {
+                    appsWithTvIcon.add(item.packageName);
+                    ret.add(item);
+                }
 
-                        for (AppItem item : rta) {
-                            addedApps.add(item.packageName);
-                            ret.add(item);
-                        }
+                for (AppItem item : apps) if (!appsWithTvIcon.contains(item.packageName)) ret.add(item);
 
-                        for (AppItem item : ra) if (!addedApps.contains(item.packageName)) ret.add(item);
-                    } else {
-                        ret.addAll(rta);
-                    }
-
+                callback.OnAppItemLoadCompleted(ret);
+            } else {
+                getFetchTvAppsRunner(context, (tvApps) -> {
+                    ArrayList<AppItem> ret = new ArrayList<>(tvApps);
                     callback.OnAppItemLoadCompleted(ret);
                 });
-            });
+            }
         });
         thread.start();
     }
