@@ -94,6 +94,6 @@ public class AllAppsActivity extends AppCompatActivity {
         else setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
 
         if (adapter != null) adapter.SetSimpleBackground(pref.getInt("simple_icon_bg", 0) == 1);
-        WallpaperHandler.updateWallpaper(this, binding.ivAllWallpaper, false);
+        ((MollaApplication)getApplication()).getWallpaperCache().setWallpaperOnImageView(binding.ivAllWallpaper, false);
     }
 }

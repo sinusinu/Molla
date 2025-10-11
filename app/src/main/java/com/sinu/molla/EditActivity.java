@@ -156,7 +156,7 @@ public class EditActivity extends AppCompatActivity {
         else setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
 
         if (adapter != null) adapter.SetSimpleBackground(pref.getInt("simple_icon_bg", 0) == 1);
-        WallpaperHandler.updateWallpaper(this, binding.ivEditWallpaper, false);
+        ((MollaApplication)getApplication()).getWallpaperCache().setWallpaperOnImageView(binding.ivEditWallpaper, false);
     }
 
     private void updatePref() {

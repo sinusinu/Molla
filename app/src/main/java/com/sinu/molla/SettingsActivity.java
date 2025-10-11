@@ -3,15 +3,12 @@
 
 package com.sinu.molla;
 
-import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
-import android.content.pm.PackageManager;
-import android.content.pm.PermissionInfo;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -20,7 +17,6 @@ import android.os.Bundle;
 import android.os.SystemClock;
 import android.provider.Settings;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
@@ -32,7 +28,6 @@ import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
 import androidx.core.view.WindowCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.core.view.WindowInsetsControllerCompat;
@@ -320,7 +315,7 @@ public class SettingsActivity extends AppCompatActivity {
                     wpFileJ.delete();
                 }
 
-                WallpaperHandler.updateWallpaper(this, binding.ivSettingsWallpaper, true);
+                ((MollaApplication)getApplication()).getWallpaperCache().setWallpaperOnImageView(binding.ivSettingsWallpaper, true);
             }
         });
 
@@ -387,7 +382,7 @@ public class SettingsActivity extends AppCompatActivity {
                     new File(getFilesDir(), "wallpaper.webp").delete();
                 }
 
-                WallpaperHandler.updateWallpaper(this, binding.ivSettingsWallpaper, true);
+                ((MollaApplication)getApplication()).getWallpaperCache().setWallpaperOnImageView(binding.ivSettingsWallpaper, true);
 
                 selectedImage.recycle();
             } catch (FileNotFoundException e) {
@@ -407,6 +402,6 @@ public class SettingsActivity extends AppCompatActivity {
         else if ("portrait".equals(orient)) setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_USER_PORTRAIT);
         else setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
 
-        WallpaperHandler.updateWallpaper(this, binding.ivSettingsWallpaper, false);
+        ((MollaApplication)getApplication()).getWallpaperCache().setWallpaperOnImageView(binding.ivSettingsWallpaper, false);
     }
 }

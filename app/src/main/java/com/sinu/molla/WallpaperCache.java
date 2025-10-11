@@ -10,15 +10,18 @@ import android.graphics.drawable.BitmapDrawable;
 import android.widget.ImageView;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.IOException;
 
-public class WallpaperHandler {
-    public static BitmapDrawable wallpaper = null;
-    public static boolean isWallpaperCached = false; // this will reset to false if static variables go boom...right?
+public class WallpaperCache {
+    private final Context context;
+    private BitmapDrawable wallpaper = null;
+    private boolean isWallpaperCached = false;
 
-    public static void updateWallpaper(Context context, ImageView wallpaperTarget, boolean shouldInvalidateCache) {
+    public WallpaperCache(Context context) {
+        this.context = context;
+    }
+
+    public void setWallpaperOnImageView(ImageView wallpaperTarget, boolean shouldInvalidateCache) {
         if (shouldInvalidateCache || !isWallpaperCached) {
             if (wallpaper != null) {
                 wallpaperTarget.setImageDrawable(null);

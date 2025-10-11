@@ -23,7 +23,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
 import android.text.format.DateFormat;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
@@ -421,7 +420,7 @@ public class MainActivity extends AppCompatActivity {
             isFavListUpdateReserved = false;
         }
 
-        WallpaperHandler.updateWallpaper(this, binding.ivMainWallpaper, false);
+        ((MollaApplication)getApplication()).getWallpaperCache().setWallpaperOnImageView(binding.ivMainWallpaper, false);
 
         rUpdateStatus.run();
 
