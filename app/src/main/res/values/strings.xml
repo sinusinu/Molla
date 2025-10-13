@@ -10,7 +10,7 @@
     <string name="main_autolaunch_overlay_title">Launching %s in…</string>
     <string name="main_autolaunch_overlay_cancel_help">Press \"Back\" now to cancel.</string>
 
-    <string name="all_title">All apps</string>
+    <string name="all_title">All Apps</string>
     <string name="all_back">Back</string>
     <string name="all_manage_custom_shortcuts">Manage Custom Shortcuts</string>
 
