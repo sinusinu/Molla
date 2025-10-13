@@ -18,7 +18,8 @@ public class AppItemIcon {
     }
 
     public static AppItemIcon getAppItemIcon(MollaApplication context, AppItem appItem) {
-        var ci = context.getCachedAppIcon(appItem.packageName);
+        AppItemIcon ci;
+        ci = context.getCachedAppIcon(appItem.packageName);
         if (ci != null) {
             return ci;
         } else {

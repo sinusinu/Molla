@@ -21,17 +21,15 @@ import java.util.List;
 import java.util.UUID;
 
 public class AppItem {
-    // for standard items - null in custom items
+    // for standard items (also used in custom items)
     public String packageName;
     public String activityName;
     public String displayName;
     public Intent intent;
 
-    // for custom items - null in standard items
+    // for custom items (null on standard items)
     public boolean isCustomItem = false;
     public String customItemIdentifier;
-    public String customItemLaunchPackage;
-    public String customItemLaunchActivity;
     public ArrayList<AppItemCustomIntentExtra> customItemIntentExtras;
 
     private AppItem(String packageName, String activityName, String displayName, Intent intent) {
@@ -42,8 +40,6 @@ public class AppItem {
 
         isCustomItem = false;
         customItemIdentifier = null;
-        customItemLaunchPackage = null;
-        customItemLaunchActivity = null;
         customItemIntentExtras = null;
     }
 
@@ -52,17 +48,15 @@ public class AppItem {
      * @param targetPackage only used for setting a fallback icon, not used for launching.
      * @param targetActivity must be a full class path (e.g., <code>com.sinu.molla.MainActivity</code>)
      */
-    private AppItem(String identifier, String targetPackage, String targetActivity, ArrayList<AppItemCustomIntentExtra> intentExtras) {
-        packageName = null;
-        activityName = null;
-        displayName = null;
+    public AppItem(String identifier, String displayName, String targetPackage, String targetActivity, ArrayList<AppItemCustomIntentExtra> intentExtras) {
+        packageName = targetPackage;
+        activityName = targetActivity;
+        this.displayName = displayName;
         intent = null;
 
         isCustomItem = true;
         customItemIdentifier = (identifier != null ? identifier : UUID.randomUUID().toString());
-        customItemLaunchPackage = targetPackage;
-        customItemLaunchActivity = targetActivity;
-        customItemIntentExtras = intentExtras;
+        customItemIntentExtras = (intentExtras == null ? new ArrayList<>() : intentExtras);
     }
 
     @Override
@@ -188,8 +182,9 @@ public class AppItem {
         if (!item.isCustomItem) return null;
         JSONObject j = new JSONObject();
         j.put("id", item.customItemIdentifier);
-        j.put("package", item.customItemLaunchPackage);
-        j.put("target", item.customItemLaunchActivity);
+        j.put("display_name", item.displayName);
+        j.put("package", item.packageName);
+        j.put("target", item.activityName);
         JSONObject extras = new JSONObject();
         for (int i = 0; i < item.customItemIntentExtras.size(); i++) {
             var extra = item.customItemIntentExtras.get(i);
@@ -229,9 +224,9 @@ public class AppItem {
         return j;
     }
 
-    public static AppItem jsonToCustomItem(String json) throws JSONException {
-        JSONObject j = new JSONObject(json);
+    public static AppItem jsonToCustomItem(JSONObject j) throws JSONException {
         var id = j.getString("id");
+        var displayName = j.getString("display_name");
         var launchPackage = j.getString("package");
         var launchTarget = j.getString("target");
         var ext = j.getJSONObject("extras");
@@ -261,6 +256,6 @@ public class AppItem {
                     break;
             }
         }
-        return new AppItem(id, launchPackage, launchTarget, extras);
+        return new AppItem(id, displayName, launchPackage, launchTarget, extras);
     }
 }

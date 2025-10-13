@@ -22,6 +22,12 @@
     <string name="order_title">Reorder Icons</string>
     <string name="order_subtitle">Change the order of Quick Access icons.</string>
 
+    <string name="manage_custom_shortcuts_title">Custom Shortcuts</string>
+    <string name="manage_custom_shortcuts_back">Back</string>
+    <string name="manage_custom_shortcuts_add">Add</string>
+    <string name="manage_custom_shortcuts_edit">Edit</string>
+    <string name="manage_custom_shortcuts_delete">Delete</string>
+
     <string name="settings_title">Settings</string>
     <string name="settings_category_appearance">Appearance</string>
     <string name="settings_wallpaper_title">Set Custom Wallpaper</string>
@@ -89,6 +95,28 @@
     <string name="dialog_autolaunch_delay_3s">3 seconds</string>
     <string name="dialog_autolaunch_delay_5s">5 seconds</string>
     <string name="dialog_autolaunch_delay_10s">10 seconds</string>
+
+    <string name="dialog_custom_item_title_create">New</string>
+    <string name="dialog_custom_item_title_edit">Edit</string>
+    <string name="dialog_custom_item_subtitle_create">A new Custom Shortcut will be created.</string>
+    <string name="dialog_custom_item_subtitle_edit">An existing Custom Shortcut will be edited.</string>
+    <string name="dialog_custom_item_app">App</string>
+    <string name="dialog_custom_item_title">Title</string>
+    <string name="dialog_custom_item_custom_banner">Custom Banner</string>
+    <string name="dialog_custom_item_advanced">Show Advanced Options</string>
+    <string name="dialog_custom_item_activity">Activity</string>
+    <string name="dialog_custom_item_extras">Intent Extras</string>
+    <string name="dialog_custom_item_extras_name">Name</string>
+    <string name="dialog_custom_item_extras_type">Type</string>
+    <string name="dialog_custom_item_extras_value">Value</string>
+    <string name="dialog_custom_item_select">Select</string>
+    <string name="dialog_custom_item_clear">Clear</string>
+    <string name="dialog_custom_item_edit">Edit</string>
+    <string name="dialog_custom_item_add">Add</string>
+    <string name="dialog_custom_item_save">Save</string>
+    <string name="dialog_custom_item_default">Use Default</string>
+    <string name="dialog_custom_item_not_set">Not set</string>
+    <string name="dialog_custom_item_none">Not selected</string>
 
     <string name="common_ok">OK</string>
     <string name="common_cancel">Cancel</string>

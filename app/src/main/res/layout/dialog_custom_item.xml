@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingStart="@dimen/_16sdp"
+    android:paddingEnd="@dimen/_16sdp"
+    android:paddingTop="@dimen/_12sdp"
+    android:paddingBottom="@dimen/_12sdp"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_dialog_custom_item_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/dialog_custom_item_title_create"
+        android:textSize="@dimen/_16ssp" />
+
+    <TextView
+        android:id="@+id/tv_dialog_custom_item_subtitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/dialog_custom_item_subtitle_create"
+        android:paddingBottom="@dimen/_4sdp"
+        android:textSize="@dimen/_12ssp" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="@dimen/_8sdp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/dialog_custom_item_app"
+                        android:textSize="@dimen/_14ssp" />
+
+                    <TextView
+                        android:id="@+id/tv_dialog_custom_item_app_name_value"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/dialog_custom_item_none"
+                        android:textSize="@dimen/_12ssp" />
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/iv_dialog_custom_item_app_select"
+                    android:layout_width="@dimen/_36sdp"
+                    android:layout_height="@dimen/_36sdp"
+                    android:layout_weight="0"
+                    android:clickable="true"
+                    android:contentDescription="@string/dialog_custom_item_select"
+                    android:focusable="true"
+                    android:focusableInTouchMode="false"
+                    android:padding="@dimen/_8sdp"
+                    app:srcCompat="@drawable/ic_settings"
+                    tools:ignore="TouchTargetSizeCheck" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="@dimen/_8sdp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/dialog_custom_item_title"
+                        android:textSize="@dimen/_14ssp" />
+
+                    <TextView
+                        android:id="@+id/tv_dialog_custom_item_title_value"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/dialog_custom_item_not_set"
+                        android:textSize="@dimen/_12ssp" />
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/iv_dialog_custom_item_title_edit"
+                    android:layout_width="@dimen/_36sdp"
+                    android:layout_height="@dimen/_36sdp"
+                    android:layout_weight="0"
+                    android:clickable="true"
+                    android:contentDescription="@string/dialog_custom_item_edit"
+                    android:focusable="true"
+                    android:focusableInTouchMode="false"
+                    android:padding="@dimen/_8sdp"
+                    app:srcCompat="@drawable/ic_edit"
+                    tools:ignore="TouchTargetSizeCheck" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="@dimen/_8sdp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingBottom="@dimen/_4sdp"
+                        android:text="@string/dialog_custom_item_custom_banner"
+                        android:textSize="@dimen/_14ssp" />
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="@dimen/_80sdp"
+                        android:layout_height="wrap_content"
+                        android:clickable="false"
+                        android:focusable="false">
+
+                        <ImageView
+                            android:id="@+id/iv_dialog_custom_item_banner"
+                            android:layout_width="0dp"
+                            android:layout_height="0dp"
+                            android:clickable="false"
+                            android:focusable="false"
+                            android:scaleType="centerCrop"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintDimensionRatio="H,16:9"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:srcCompat="@drawable/generic" />
+
+                        <ImageView
+                            android:id="@+id/iv_dialog_custom_item_icon"
+                            android:layout_width="@dimen/_20sdp"
+                            android:layout_height="@dimen/_20sdp"
+                            android:clickable="false"
+                            android:focusable="false"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:srcCompat="@drawable/ic_apps" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/iv_dialog_custom_item_banner_add"
+                    android:layout_width="@dimen/_36sdp"
+                    android:layout_height="@dimen/_36sdp"
+                    android:layout_weight="0"
+                    android:clickable="true"
+                    android:contentDescription="@string/dialog_custom_item_edit"
+                    android:focusable="true"
+                    android:focusableInTouchMode="false"
+                    android:padding="@dimen/_8sdp"
+                    app:srcCompat="@drawable/ic_add"
+                    tools:ignore="TouchTargetSizeCheck" />
+
+                <ImageView
+                    android:id="@+id/iv_dialog_custom_item_banner_clear"
+                    android:layout_width="@dimen/_36sdp"
+                    android:layout_height="@dimen/_36sdp"
+                    android:layout_weight="0"
+                    android:clickable="true"
+                    android:contentDescription="@string/dialog_custom_item_clear"
+                    android:focusable="true"
+                    android:focusableInTouchMode="false"
+                    android:padding="@dimen/_8sdp"
+                    app:srcCompat="@drawable/ic_delete"
+                    tools:ignore="TouchTargetSizeCheck" />
+
+            </LinearLayout>
+
+            <CheckBox
+                android:id="@+id/cbx_dialog_custom_item_show_advanced"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/dialog_custom_item_advanced"
+                android:textSize="@dimen/_13ssp" />
+
+            <LinearLayout
+                android:id="@+id/ll_dialog_custom_item_advanced"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/_8sdp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/dialog_custom_item_activity"
+                            android:textSize="@dimen/_14ssp" />
+
+                        <TextView
+                            android:id="@+id/tv_dialog_custom_item_activity_value"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/dialog_custom_item_default"
+                            android:textSize="@dimen/_12ssp" />
+                    </LinearLayout>
+
+                    <ImageView
+                        android:id="@+id/iv_dialog_custom_item_activity_edit"
+                        android:layout_width="@dimen/_36sdp"
+                        android:layout_height="@dimen/_36sdp"
+                        android:layout_weight="0"
+                        android:clickable="true"
+                        android:contentDescription="@string/dialog_custom_item_select"
+                        android:focusable="true"
+                        android:focusableInTouchMode="false"
+                        android:padding="@dimen/_8sdp"
+                        app:srcCompat="@drawable/ic_settings"
+                        tools:ignore="TouchTargetSizeCheck" />
+
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

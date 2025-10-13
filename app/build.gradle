@@ -38,4 +38,5 @@ dependencies {
     implementation 'com.intuit.sdp:sdp-android:1.1.1'
     implementation 'com.intuit.ssp:ssp-android:1.1.1'
     implementation 'androidx.recyclerview:recyclerview:1.4.0'
+    implementation 'androidx.activity:activity:1.8.0'
 }

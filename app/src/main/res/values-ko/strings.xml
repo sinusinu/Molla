@@ -21,6 +21,12 @@
     <string name="order_title">순서 변경</string>
     <string name="order_subtitle">바로가기의 순서를 변경합니다.</string>
 
+    <string name="manage_custom_shortcuts_title">커스텀 바로가기</string>
+    <string name="manage_custom_shortcuts_back">뒤로</string>
+    <string name="manage_custom_shortcuts_add">추가</string>
+    <string name="manage_custom_shortcuts_edit">편집</string>
+    <string name="manage_custom_shortcuts_delete">삭제</string>
+
     <string name="settings_title">설정</string>
     <string name="settings_category_appearance">모양</string>
     <string name="settings_wallpaper_title">배경화면 변경</string>
@@ -86,6 +92,28 @@
     <string name="dialog_autolaunch_delay_3s">3초</string>
     <string name="dialog_autolaunch_delay_5s">5초</string>
     <string name="dialog_autolaunch_delay_10s">10초</string>
+
+    <string name="dialog_custom_item_title_create">새로운 바로가기</string>
+    <string name="dialog_custom_item_title_edit">바로가기 편집</string>
+    <string name="dialog_custom_item_subtitle_create">새로운 커스텀 바로가기를 생성합니다.</string>
+    <string name="dialog_custom_item_subtitle_edit">기존 커스텀 바로가기를 편집합니다.</string>
+    <string name="dialog_custom_item_app">앱</string>
+    <string name="dialog_custom_item_title">제목</string>
+    <string name="dialog_custom_item_custom_banner">배너</string>
+    <string name="dialog_custom_item_advanced">고급 설정 표시</string>
+    <string name="dialog_custom_item_activity">액티비티</string>
+    <string name="dialog_custom_item_extras">인텐트 엑스트라</string>
+    <string name="dialog_custom_item_extras_name">이름</string>
+    <string name="dialog_custom_item_extras_type">형식</string>
+    <string name="dialog_custom_item_extras_value">값</string>
+    <string name="dialog_custom_item_select">선택</string>
+    <string name="dialog_custom_item_clear">제거</string>
+    <string name="dialog_custom_item_edit">편집</string>
+    <string name="dialog_custom_item_add">추가</string>
+    <string name="dialog_custom_item_save">저장</string>
+    <string name="dialog_custom_item_default">기본값 사용</string>
+    <string name="dialog_custom_item_not_set">없음</string>
+    <string name="dialog_custom_item_none">선택 안 됨</string>
 
     <string name="common_ok">확인</string>
     <string name="common_cancel">취소</string>

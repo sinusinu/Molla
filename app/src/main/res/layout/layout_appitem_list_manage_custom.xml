@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/_40sdp"
+    android:background="?attr/selectableItemBackground"
+    android:clickable="true"
+    android:descendantFocusability="afterDescendants"
+    android:focusable="true"
+    android:gravity="center_vertical"
+    android:paddingStart="@dimen/_16sdp"
+    android:paddingEnd="@dimen/_8sdp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="@dimen/_65sdp"
+        android:layout_height="wrap_content"
+        android:layout_weight="0"
+        android:clickable="false"
+        android:focusable="false">
+
+        <ImageView
+            android:id="@+id/iv_appitem_list_manage_custom_banner"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:clickable="false"
+            android:focusable="false"
+            android:scaleType="centerCrop"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintDimensionRatio="H,16:9"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/generic" />
+
+        <ImageView
+            android:id="@+id/iv_appitem_list_manage_custom_icon"
+            android:layout_width="@dimen/_20sdp"
+            android:layout_height="@dimen/_20sdp"
+            android:clickable="false"
+            android:focusable="false"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_apps" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/tv_appitem_list_manage_custom_app_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:ellipsize="end"
+        android:fontFamily="sans-serif-condensed"
+        android:maxLines="1"
+        android:paddingStart="@dimen/_12sdp"
+        android:paddingEnd="@dimen/_12sdp"
+        android:text="@string/edit_title"
+        android:textSize="@dimen/_16ssp" />
+
+    <ImageView
+        android:id="@+id/iv_appitem_list_manage_custom_edit"
+        android:layout_width="@dimen/_36sdp"
+        android:layout_height="@dimen/_36sdp"
+        android:layout_weight="0"
+        android:clickable="true"
+        android:contentDescription="@string/manage_custom_shortcuts_edit"
+        android:focusable="true"
+        android:focusableInTouchMode="false"
+        android:padding="@dimen/_8sdp"
+        app:srcCompat="@drawable/ic_edit"
+        tools:ignore="TouchTargetSizeCheck" />
+
+    <ImageView
+        android:id="@+id/iv_appitem_list_manage_custom_delete"
+        android:layout_width="@dimen/_36sdp"
+        android:layout_height="@dimen/_36sdp"
+        android:layout_weight="0"
+        android:clickable="true"
+        android:contentDescription="@string/manage_custom_shortcuts_delete"
+        android:focusable="true"
+        android:focusableInTouchMode="false"
+        android:padding="@dimen/_8sdp"
+        app:srcCompat="@drawable/ic_delete"
+        tools:ignore="TouchTargetSizeCheck" />
+
+</LinearLayout>

@@ -5,6 +5,7 @@ package com.sinu.molla;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
@@ -76,7 +77,8 @@ public class AllAppsActivity extends AppCompatActivity {
         });
 
         binding.ivAllManageCustom.setOnClickListener((v) -> {
-
+            startActivity(new Intent(this, ManageCustomShortcutsActivity.class));
+            overridePendingTransition(R.anim.no_anim, R.anim.no_anim);
         });
 
         // hide system bars
