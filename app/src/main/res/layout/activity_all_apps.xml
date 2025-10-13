@@ -69,6 +69,20 @@
             app:srcCompat="@drawable/ic_arrow_back"
             tools:ignore="TouchTargetSizeCheck" />
 
+        <ImageView
+            android:id="@+id/iv_all_manage_custom"
+            android:layout_width="@dimen/_36sdp"
+            android:layout_height="@dimen/_36sdp"
+            android:clickable="true"
+            android:contentDescription="@string/all_manage_custom_shortcuts"
+            android:focusable="true"
+            android:focusableInTouchMode="false"
+            android:padding="@dimen/_8sdp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/iv_all_back"
+            app:srcCompat="@drawable/ic_manage_custom"
+            tools:ignore="TouchTargetSizeCheck" />
+
         <TextView
             android:id="@+id/tv_all_name"
             android:layout_width="0dp"

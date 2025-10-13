@@ -12,6 +12,7 @@
 
     <string name="all_title">All apps</string>
     <string name="all_back">Back</string>
+    <string name="all_manage_custom_shortcuts">Manage Custom Shortcuts</string>
 
     <string name="edit_title">Quick Access</string>
     <string name="edit_subtitle">Selected items will be shown on main screen.</string>

@@ -11,6 +11,7 @@
 
     <string name="all_title">모든 앱</string>
     <string name="all_back">뒤로</string>
+    <string name="all_manage_custom_shortcuts">커스텀 바로가기 관리</string>
 
     <string name="edit_title">바로가기</string>
     <string name="edit_subtitle">첫 화면에 표시할 앱을 선택합니다.</string>

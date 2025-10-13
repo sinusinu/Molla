@@ -11,21 +11,58 @@ import android.content.pm.ResolveInfo;
 
 import androidx.annotation.Nullable;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
+import java.util.UUID;
 
 public class AppItem {
+    // for standard items - null in custom items
     public String packageName;
     public String activityName;
     public String displayName;
     public Intent intent;
+
+    // for custom items - null in standard items
+    public boolean isCustomItem = false;
+    public String customItemIdentifier;
+    public String customItemLaunchPackage;
+    public String customItemLaunchActivity;
+    public ArrayList<AppItemCustomIntentExtra> customItemIntentExtras;
 
     private AppItem(String packageName, String activityName, String displayName, Intent intent) {
         this.packageName = packageName;
         this.activityName = activityName;
         this.displayName = displayName;
         this.intent = intent;
+
+        isCustomItem = false;
+        customItemIdentifier = null;
+        customItemLaunchPackage = null;
+        customItemLaunchActivity = null;
+        customItemIntentExtras = null;
+    }
+
+    /**
+     * @param identifier must be null when creating new custom AppItem, must be set when restoring previously created AppItem.
+     * @param targetPackage only used for setting a fallback icon, not used for launching.
+     * @param targetActivity must be a full class path (e.g., <code>com.sinu.molla.MainActivity</code>)
+     */
+    private AppItem(String identifier, String targetPackage, String targetActivity, ArrayList<AppItemCustomIntentExtra> intentExtras) {
+        packageName = null;
+        activityName = null;
+        displayName = null;
+        intent = null;
+
+        isCustomItem = true;
+        customItemIdentifier = (identifier != null ? identifier : UUID.randomUUID().toString());
+        customItemLaunchPackage = targetPackage;
+        customItemLaunchActivity = targetActivity;
+        customItemIntentExtras = intentExtras;
     }
 
     @Override
@@ -145,5 +182,85 @@ public class AppItem {
             });
         });
         thread.start();
+    }
+
+    public static JSONObject customItemToJson(AppItem item) throws JSONException {
+        if (!item.isCustomItem) return null;
+        JSONObject j = new JSONObject();
+        j.put("id", item.customItemIdentifier);
+        j.put("package", item.customItemLaunchPackage);
+        j.put("target", item.customItemLaunchActivity);
+        JSONObject extras = new JSONObject();
+        for (int i = 0; i < item.customItemIntentExtras.size(); i++) {
+            var extra = item.customItemIntentExtras.get(i);
+            if (extra.getValueType() == String.class) {
+                JSONObject ext = new JSONObject();
+                ext.put("type", "string");
+                ext.put("value", extra.getValueAs(String.class));
+                extras.put(extra.getName(), ext);
+            } else if (extra.getValueType() == Integer.class) {
+                JSONObject ext = new JSONObject();
+                ext.put("type", "int");
+                ext.put("value", extra.getValueAs(Integer.class).toString());
+                extras.put(extra.getName(), ext);
+            } else if (extra.getValueType() == Long.class) {
+                JSONObject ext = new JSONObject();
+                ext.put("type", "long");
+                ext.put("value", extra.getValueAs(Long.class).toString());
+                extras.put(extra.getName(), ext);
+            } else if (extra.getValueType() == Float.class) {
+                JSONObject ext = new JSONObject();
+                ext.put("type", "float");
+                ext.put("value", extra.getValueAs(Float.class).toString());
+                extras.put(extra.getName(), ext);
+            } else if (extra.getValueType() == Double.class) {
+                JSONObject ext = new JSONObject();
+                ext.put("type", "double");
+                ext.put("value", extra.getValueAs(Double.class).toString());
+                extras.put(extra.getName(), ext);
+            } else if (extra.getValueType() == Boolean.class) {
+                JSONObject ext = new JSONObject();
+                ext.put("type", "boolean");
+                ext.put("value", extra.getValueAs(Boolean.class).toString());
+                extras.put(extra.getName(), ext);
+            }
+        }
+        j.put("extras", extras);
+        return j;
+    }
+
+    public static AppItem jsonToCustomItem(String json) throws JSONException {
+        JSONObject j = new JSONObject(json);
+        var id = j.getString("id");
+        var launchPackage = j.getString("package");
+        var launchTarget = j.getString("target");
+        var ext = j.getJSONObject("extras");
+        ArrayList<AppItemCustomIntentExtra> extras = new ArrayList<>();
+        for (Iterator<String> it = ext.keys(); it.hasNext(); ) {
+            var extKey = it.next();
+            var extCont = ext.getJSONObject(extKey);
+            var extType = extCont.getString("type");
+            switch (extType) {
+                case "string":
+                    extras.add(new AppItemCustomIntentExtra(extKey, extCont.getString("value")));
+                    break;
+                case "int":
+                    extras.add(new AppItemCustomIntentExtra(extKey, extCont.getInt("value")));
+                    break;
+                case "long":
+                    extras.add(new AppItemCustomIntentExtra(extKey, extCont.getLong("value")));
+                    break;
+                case "float":
+                    extras.add(new AppItemCustomIntentExtra(extKey, (float)extCont.getDouble("value")));
+                    break;
+                case "double":
+                    extras.add(new AppItemCustomIntentExtra(extKey, extCont.getDouble("value")));
+                    break;
+                case "boolean":
+                    extras.add(new AppItemCustomIntentExtra(extKey, extCont.getBoolean("value")));
+                    break;
+            }
+        }
+        return new AppItem(id, launchPackage, launchTarget, extras);
     }
 }

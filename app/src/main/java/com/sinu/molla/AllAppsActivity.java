@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import androidx.activity.EdgeToEdge;
@@ -19,6 +20,8 @@ import androidx.core.view.WindowInsetsControllerCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.sinu.molla.databinding.ActivityAllAppsBinding;
+
+import org.json.JSONException;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -66,6 +69,14 @@ public class AllAppsActivity extends AppCompatActivity {
         binding.ivAllBack.setOnClickListener((v) -> {
             finish();
             overridePendingTransition(R.anim.no_anim, R.anim.no_anim);
+        });
+
+        binding.ivAllManageCustom.setOnFocusChangeListener((view, hasFocus) -> {
+            binding.ivAllManageCustom.setBackgroundColor(getColor(hasFocus ? R.color.transparent_white : R.color.transparent));
+        });
+
+        binding.ivAllManageCustom.setOnClickListener((v) -> {
+
         });
 
         // hide system bars
