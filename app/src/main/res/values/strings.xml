@@ -102,7 +102,7 @@
     <string name="dialog_custom_item_subtitle_edit">An existing Custom Shortcut will be edited.</string>
     <string name="dialog_custom_item_app">App</string>
     <string name="dialog_custom_item_title">Title</string>
-    <string name="dialog_custom_item_custom_banner">Custom Banner</string>
+    <string name="dialog_custom_item_custom_banner">Banner</string>
     <string name="dialog_custom_item_advanced">Show Advanced Options</string>
     <string name="dialog_custom_item_activity">Activity</string>
     <string name="dialog_custom_item_extras">Intent Extras</string>
@@ -117,6 +117,11 @@
     <string name="dialog_custom_item_default">Use Default</string>
     <string name="dialog_custom_item_not_set">Not set</string>
     <string name="dialog_custom_item_none">Not selected</string>
+    <string name="dialog_custom_item_select_app_title">App to Launch</string>
+    <string name="dialog_custom_item_edit_title_title">Shortcut Title</string>
+    <string name="dialog_custom_item_edit_title_subtitle">Set it empty to use the default title.</string>
+    <string name="dialog_custom_item_error_invalid_banner">Failed to load image!</string>
+    <string name="dialog_custom_item_error_app_not_set">App must be set!</string>
 
     <string name="common_ok">OK</string>
     <string name="common_cancel">Cancel</string>

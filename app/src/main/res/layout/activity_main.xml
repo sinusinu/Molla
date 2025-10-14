@@ -139,14 +139,18 @@
 
     <TextView
         android:id="@+id/tv_main_fav_name"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_36sdp"
+        android:layout_marginEnd="@dimen/_36sdp"
         android:layout_marginBottom="@dimen/_8sdp"
+        android:ellipsize="end"
         android:fontFamily="sans-serif-condensed"
+        android:maxLines="1"
         android:textSize="@dimen/_20ssp"
         android:visibility="invisible"
         app:layout_constraintBottom_toTopOf="@+id/rv_main_fav"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <LinearLayout

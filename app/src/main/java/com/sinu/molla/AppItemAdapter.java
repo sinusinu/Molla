@@ -92,7 +92,7 @@ public class AppItemAdapter extends RecyclerView.Adapter<AppItemAdapter.ViewHold
                 focused = true;
                 selectedItem = manager.getPosition(view);
                 if (focusChangedListener != null) {
-                    String dispName = selectedItem == list.size() ? context.getString(R.string.main_edit_fav) : list.get(selectedItem).displayName;
+                    String dispName = selectedItem == list.size() ? context.getString(R.string.main_edit_fav) : ((list.get(selectedItem).isCustomItem && list.get(selectedItem).customItemDisplayName != null) ? list.get(selectedItem).customItemDisplayName : list.get(selectedItem).displayName);
                     focusChangedListener.onAppItemFocusChanged(selectedItem, dispName);
                 }
             } else {
@@ -114,7 +114,7 @@ public class AppItemAdapter extends RecyclerView.Adapter<AppItemAdapter.ViewHold
             if (isEdit) {
                 activity.startActivity(intent);
                 activity.overridePendingTransition(R.anim.no_anim, R.anim.no_anim);
-                ((MainActivity)activity).reserveFavListUpdate();
+                ((MainActivity)activity).isFavListUpdateReserved = true;
             } else {
                 if (intent != null) activity.startActivity(intent);
             }

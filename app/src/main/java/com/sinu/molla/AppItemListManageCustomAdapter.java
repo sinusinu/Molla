@@ -85,7 +85,7 @@ public class AppItemListManageCustomAdapter extends RecyclerView.Adapter<AppItem
         }
         holder.ivBanner.setImageDrawable(appBanner);
         holder.ivIcon.setImageDrawable(appIcon);
-        holder.tvAppName.setText(list.get(position).displayName);
+        holder.tvAppName.setText(list.get(position).customItemDisplayName == null ? list.get(position).displayName : list.get(position).customItemDisplayName);
         holder.itemView.setOnClickListener(view -> {
 
         });

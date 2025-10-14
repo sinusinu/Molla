@@ -73,7 +73,7 @@ public class AppItemListAdapter extends RecyclerView.Adapter<AppItemListAdapter.
         }
         holder.ivBanner.setImageDrawable(appBanner);
         holder.ivIcon.setImageDrawable(appIcon);
-        holder.tvAppName.setText(list.get(position).displayName);
+        holder.tvAppName.setText(list.get(position).customItemDisplayName == null ? list.get(position).displayName : list.get(position).customItemDisplayName);
         holder.itemView.setOnClickListener(view -> {
             if (list.get(position).intent != null) activity.startActivity(list.get(position).intent);
         });

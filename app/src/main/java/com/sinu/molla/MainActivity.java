@@ -69,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
     WifiManager wm;
     BluetoothManager bt;
 
-    boolean isFavListUpdateReserved = true;
+    public boolean isFavListUpdateReserved = true;
 
     AppItem autoLaunchTarget = null;
     boolean isWaitingForAutoLaunch = false;
@@ -101,11 +101,12 @@ public class MainActivity extends AppCompatActivity {
         binding.lvMainAll.setOnClickListener((v) -> {
             startActivity(new Intent(this, AllAppsActivity.class));
             overridePendingTransition(R.anim.no_anim, R.anim.no_anim);
+            isFavListUpdateReserved = true;
         });
         binding.lvMainSettings.setOnClickListener((v) -> {
             startActivity(new Intent(this, SettingsActivity.class));
             overridePendingTransition(R.anim.no_anim, R.anim.no_anim);
-            reserveFavListUpdate();
+            isFavListUpdateReserved = true;
         });
 
         animScaleUp = AnimationUtils.loadAnimation(this, R.anim.scale_up);
@@ -302,6 +303,8 @@ public class MainActivity extends AppCompatActivity {
             if (autolaunchTargetPackage != null) {
                 ArrayList<String> pnAutoLaunchTarget = new ArrayList<>();
                 pnAutoLaunchTarget.add(autolaunchTargetPackage);
+                var customItems = ((MollaApplication)getApplication()).getCustomItemManager().getCustomShortcuts();
+
                 AppItem.fetchListOfAppsAsync(this, pnAutoLaunchTarget, (items) -> {
                     if (items.size() == 1) runOnUiThread(() -> {
                         autoLaunchTarget = items.get(0);
@@ -403,11 +406,18 @@ public class MainActivity extends AppCompatActivity {
 
         if (isFavListUpdateReserved) {
             binding.pbrMainLoading.setVisibility(View.VISIBLE);
-            AppItem.fetchListOfAppsAsync(this, favApps, (nitems) -> {
-                if (!nitems.equals(items)) {
-                    items.clear();
-                    items.addAll(nitems);
+            AppItem.fetchAllAppsAsync(this, (r) -> {
+                var csm = ((MollaApplication)getApplication()).getCustomItemManager();
+                items.clear();
+                for (var favApp : favApps) {
+                    if (favApp.startsWith("custom:")) {
+                        var matchingCustomItem = csm.findCustomShortcutById(favApp.substring(7));
+                        if (matchingCustomItem != null) items.add(matchingCustomItem);
+                    } else {
+                        for (var i : r) if (i.packageName.equals(favApp)) items.add(i);
+                    }
                 }
+
                 runOnUiThread(() -> {
                     adapter.notifyDataSetChanged();
                     binding.pbrMainLoading.setVisibility(View.GONE);
@@ -425,10 +435,6 @@ public class MainActivity extends AppCompatActivity {
         rUpdateStatus.run();
 
         isCloseable = (pref.getInt("closeable", 0) == 1);
-    }
-
-    public void reserveFavListUpdate() {
-        isFavListUpdateReserved = true;
     }
 
     @SuppressLint("SetTextI18n")

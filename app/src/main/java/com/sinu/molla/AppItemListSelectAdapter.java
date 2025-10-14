@@ -83,7 +83,7 @@ public class AppItemListSelectAdapter extends RecyclerView.Adapter<AppItemListSe
         }
         holder.ivBanner.setImageDrawable(appBanner);
         holder.ivIcon.setImageDrawable(appIcon);
-        holder.tvAppName.setText(list.get(position).displayName);
+        holder.tvAppName.setText(list.get(position).customItemDisplayName == null ? list.get(position).displayName : list.get(position).customItemDisplayName);
         holder.cbCheck.setChecked(selectedList.contains(list.get(position)));
     }
 

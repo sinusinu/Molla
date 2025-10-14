@@ -183,7 +183,7 @@
                     android:focusable="true"
                     android:focusableInTouchMode="false"
                     android:padding="@dimen/_8sdp"
-                    app:srcCompat="@drawable/ic_add"
+                    app:srcCompat="@drawable/ic_folder"
                     tools:ignore="TouchTargetSizeCheck" />
 
                 <ImageView
@@ -202,7 +202,7 @@
             </LinearLayout>
 
             <CheckBox
-                android:id="@+id/cbx_dialog_custom_item_show_advanced"
+                android:id="@+id/cb_dialog_custom_item_show_advanced"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/dialog_custom_item_advanced"
@@ -212,7 +212,8 @@
                 android:id="@+id/ll_dialog_custom_item_advanced"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:visibility="gone">
 
                 <LinearLayout
                     android:layout_width="match_parent"

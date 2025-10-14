@@ -5,6 +5,9 @@ package com.sinu.molla;
 
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
+import android.util.Log;
+
+import java.io.File;
 
 public class AppItemIcon {
     public enum IconType { LEANBACK, NORMAL }
@@ -18,6 +21,14 @@ public class AppItemIcon {
     }
 
     public static AppItemIcon getAppItemIcon(MollaApplication context, AppItem appItem) {
+        if (appItem.isCustomItem) {
+            File customBanner = new File(context.getFilesDir(), appItem.customItemIdentifier + ".webp");
+            if (customBanner.exists()) {
+                var customBannerDrawable = Drawable.createFromPath(customBanner.getAbsolutePath());
+                return new AppItemIcon(IconType.LEANBACK, customBannerDrawable);
+            }
+        }
+
         AppItemIcon ci;
         ci = context.getCachedAppIcon(appItem.packageName);
         if (ci != null) {

@@ -96,7 +96,7 @@ public class AppItemOrderAdapter extends RecyclerView.Adapter<AppItemOrderAdapte
         }
         holder.ivBanner.setImageDrawable(appBanner);
         holder.ivIcon.setImageDrawable(appIcon);
-        holder.tvAppName.setText(list.get(position).displayName);
+        holder.tvAppName.setText(list.get(position).customItemDisplayName == null ? list.get(position).displayName : list.get(position).customItemDisplayName);
 
         if (position == 0) {
             holder.ivUp.setImageAlpha(64);

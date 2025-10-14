@@ -61,8 +61,18 @@ public class OrderActivity extends AppCompatActivity {
         String favAppsRaw = pref.getString("fav_apps", "");
         ArrayList<String> favApps = new ArrayList<String>(Arrays.asList(favAppsRaw.split("\\?")));
 
-        AppItem.fetchListOfAppsAsync(this, favApps, (r) -> {
-            selectedItems = r;
+        selectedItems = new ArrayList<>();
+        AppItem.fetchAllAppsAsync(this, (r) -> {
+            var csm = ((MollaApplication)getApplication()).getCustomItemManager();
+            selectedItems.clear();
+            for (var favApp : favApps) {
+                if (favApp.startsWith("custom:")) {
+                    var matchingCustomItem = csm.findCustomShortcutById(favApp.substring(7));
+                    if (matchingCustomItem != null) selectedItems.add(matchingCustomItem);
+                } else {
+                    for (var i : r) if (i.packageName.equals(favApp)) selectedItems.add(i);
+                }
+            }
 
             runOnUiThread(() -> {
                 LinearLayoutManager manager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
@@ -128,7 +138,8 @@ public class OrderActivity extends AppCompatActivity {
     private void updatePref() {
         StringBuilder sb = new StringBuilder();
         for (AppItem ai : selectedItems) {
-            sb.append(ai.packageName);
+            if (ai.isCustomItem) sb.append("custom:").append(ai.customItemIdentifier);
+            else sb.append(ai.packageName);
             sb.append("?");
         }
         if (sb.length() > 0) sb.setLength(sb.length() - 1);

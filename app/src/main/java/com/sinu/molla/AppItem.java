@@ -30,6 +30,7 @@ public class AppItem {
     // for custom items (null on standard items)
     public boolean isCustomItem = false;
     public String customItemIdentifier;
+    public String customItemDisplayName;
     public ArrayList<AppItemCustomIntentExtra> customItemIntentExtras;
 
     private AppItem(String packageName, String activityName, String displayName, Intent intent) {
@@ -40,6 +41,7 @@ public class AppItem {
 
         isCustomItem = false;
         customItemIdentifier = null;
+        customItemDisplayName = null;
         customItemIntentExtras = null;
     }
 
@@ -48,31 +50,46 @@ public class AppItem {
      * @param targetPackage only used for setting a fallback icon, not used for launching.
      * @param targetActivity must be a full class path (e.g., <code>com.sinu.molla.MainActivity</code>)
      */
-    public AppItem(String identifier, String displayName, String targetPackage, String targetActivity, ArrayList<AppItemCustomIntentExtra> intentExtras) {
+    public AppItem(String identifier, String appName, String displayName, String targetPackage, String targetActivity, ArrayList<AppItemCustomIntentExtra> intentExtras) {
         packageName = targetPackage;
         activityName = targetActivity;
-        this.displayName = displayName;
-        intent = null;
+        this.displayName = appName;
 
         isCustomItem = true;
         customItemIdentifier = (identifier != null ? identifier : UUID.randomUUID().toString());
+        customItemDisplayName = (displayName != null ? displayName : appName);
         customItemIntentExtras = (intentExtras == null ? new ArrayList<>() : intentExtras);
+
+        intent = new Intent();
+        intent.setClassName(packageName, activityName);
     }
 
     @Override
     public boolean equals(@Nullable Object obj) {
         if (!(obj instanceof AppItem)) return false;
         AppItem other = (AppItem)obj;
-        return packageName.equals(other.packageName) && activityName.equals(other.activityName);
+        if (isCustomItem != other.isCustomItem) return false;
+        if (isCustomItem) {
+            return customItemIdentifier.equals(other.customItemIdentifier);
+        } else {
+            return packageName.equals(other.packageName) && activityName.equals(other.activityName);
+        }
     }
 
     public static int compare(AppItem o1, AppItem o2) {
-        if (o1.packageName.equals(o2.packageName)) return o1.activityName.compareTo(o2.activityName);
-        return o1.packageName.compareTo(o2.packageName);
+        if (o1.isCustomItem != o2.isCustomItem) return 1;
+        if (o1.isCustomItem) {
+            return o1.customItemIdentifier.compareTo(o2.customItemIdentifier);
+        } else {
+            if (o1.packageName.equals(o2.packageName)) return o1.activityName.compareTo(o2.activityName);
+            return o1.packageName.compareTo(o2.packageName);
+        }
     }
 
     public static int compareByDisplayName(AppItem o1, AppItem o2) {
-        return o1.displayName.compareTo(o2.displayName);
+        var o1n = o1.customItemDisplayName != null ? o1.customItemDisplayName : o1.displayName;
+        var o2n = o2.customItemDisplayName != null ? o2.customItemDisplayName : o2.displayName;
+        return o1n.compareTo(o2n);
     }
 
     private static Thread getFetchAppsRunner(Context context, AppItemLoadCompletedCallback callback) {
@@ -157,6 +174,7 @@ public class AppItem {
         thread.start();
     }
 
+    @Deprecated
     public static void fetchListOfAppsAsync(Context context, List<String> packageNames, AppItemLoadCompletedCallback callback) {
         Thread thread = new Thread(() -> {
             fetchAllAppsAsync(context, (allApps) -> {
@@ -182,7 +200,8 @@ public class AppItem {
         if (!item.isCustomItem) return null;
         JSONObject j = new JSONObject();
         j.put("id", item.customItemIdentifier);
-        j.put("display_name", item.displayName);
+        j.put("app_name", item.displayName);
+        j.put("display_name", item.customItemDisplayName);
         j.put("package", item.packageName);
         j.put("target", item.activityName);
         JSONObject extras = new JSONObject();
@@ -226,6 +245,7 @@ public class AppItem {
 
     public static AppItem jsonToCustomItem(JSONObject j) throws JSONException {
         var id = j.getString("id");
+        var appName = j.getString("app_name");
         var displayName = j.getString("display_name");
         var launchPackage = j.getString("package");
         var launchTarget = j.getString("target");
@@ -256,6 +276,6 @@ public class AppItem {
                     break;
             }
         }
-        return new AppItem(id, displayName, launchPackage, launchTarget, extras);
+        return new AppItem(id, appName, displayName, launchPackage, launchTarget, extras);
     }
 }

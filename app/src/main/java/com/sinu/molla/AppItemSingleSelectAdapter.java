@@ -85,7 +85,7 @@ public class AppItemSingleSelectAdapter extends RecyclerView.Adapter<AppItemSing
                 }
             }
             holder.ivIcon.setImageDrawable(appIcon);
-            holder.tvAppName.setText(list.get(position).displayName);
+            holder.tvAppName.setText(list.get(position).customItemDisplayName == null ? list.get(position).displayName : list.get(position).customItemDisplayName);
             holder.rbCheck.setChecked(list.get(position).equals(selectedItem));
         }
     }

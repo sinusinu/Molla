@@ -122,25 +122,33 @@ public class EditActivity extends AppCompatActivity {
     }
 
     private void fetchItems() {
+        var csm = ((MollaApplication)getApplication()).getCustomItemManager();
+        var customItems = csm.getCustomShortcuts();
         String favAppsRaw = pref.getString("fav_apps", "");
-        ArrayList<String> favApps = new ArrayList<String>(Arrays.asList(favAppsRaw.split("\\?")));
+        ArrayList<String> favApps = new ArrayList<>(Arrays.asList(favAppsRaw.split("\\?")));
 
-        AppItem.fetchListOfAppsAsync(this, favApps, (r) -> {
+        AppItem.fetchAllAppsAsync(this, (rr) -> {
+            // this code is written in this way to preserve the order
             selectedItems.clear();
-            selectedItems.addAll(r);
+            for (var favApp : favApps) {
+                if (favApp.startsWith("custom:")) {
+                    var matchingCustomItem = csm.findCustomShortcutById(favApp.substring(7));
+                    if (matchingCustomItem != null) selectedItems.add(matchingCustomItem);
+                } else {
+                    for (var i : rr) if (i.packageName.equals(favApp)) selectedItems.add(i);
+                }
+            }
+            items.clear();
+            items.addAll(rr);
+            items.addAll(customItems);
+            Collections.sort(items, AppItem::compareByDisplayName);
 
-            AppItem.fetchAllAppsAsync(this, (rr) -> {
-                items.clear();
-                items.addAll(rr);
-                Collections.sort(items, AppItem::compareByDisplayName);
+            runOnUiThread(() -> {
+                adapter = new AppItemListSelectAdapter(getApplicationContext(), items, selectedItems, itemClickListener, (pref.getInt("simple_icon_bg", 0) == 1));
+                binding.rvEditList.setAdapter(adapter);
 
-                runOnUiThread(() -> {
-                    adapter = new AppItemListSelectAdapter(getApplicationContext(), items, selectedItems, itemClickListener, (pref.getInt("simple_icon_bg", 0) == 1));
-                    binding.rvEditList.setAdapter(adapter);
-
-                    binding.rvEditList.setVisibility(View.VISIBLE);
-                    binding.pbrEditLoading.setVisibility(View.GONE);
-                });
+                binding.rvEditList.setVisibility(View.VISIBLE);
+                binding.pbrEditLoading.setVisibility(View.GONE);
             });
         });
     }
@@ -162,7 +170,8 @@ public class EditActivity extends AppCompatActivity {
     private void updatePref() {
         StringBuilder sb = new StringBuilder();
         for (AppItem ai : selectedItems) {
-            sb.append(ai.packageName);
+            if (ai.isCustomItem) sb.append("custom:").append(ai.customItemIdentifier);
+            else sb.append(ai.packageName);
             sb.append("?");
         }
         if (sb.length() > 0) sb.setLength(sb.length() - 1);
