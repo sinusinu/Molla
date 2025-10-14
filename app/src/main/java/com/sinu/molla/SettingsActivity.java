@@ -235,7 +235,7 @@ public class SettingsActivity extends AppCompatActivity {
                                         }
                                     }
                                     adapterAutolaunchSelectList.notifyDataSetChanged();
-                                    Objects.requireNonNull(adAutolaunchSelect.getWindow()).setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                                    Objects.requireNonNull(adAutolaunchSelect.getWindow()).setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                                 });
                             });
                         }).start();
