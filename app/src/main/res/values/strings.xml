@@ -119,11 +119,15 @@
     <string name="dialog_custom_item_none">Not selected</string>
     <string name="dialog_custom_item_select_app_title">App to Launch</string>
     <string name="dialog_custom_item_edit_title_title">Shortcut Title</string>
+    <string name="dialog_custom_item_activity_list_title">Activity to Launch</string>
+    <string name="dialog_custom_item_activity_list_subtitle">WARNING: Setting this option might be dangerous. If unsure, select (Default).</string>
+    <string name="dialog_custom_item_activity_list_default">(Default)</string>
     <string name="dialog_custom_item_edit_title_subtitle">Set it empty to use the default title.</string>
     <string name="dialog_custom_item_error_invalid_banner">Failed to load image!</string>
     <string name="dialog_custom_item_error_app_not_set">App must be set!</string>
 
     <string name="common_ok">OK</string>
     <string name="common_cancel">Cancel</string>
+    <string name="common_error_app_launch_failed">Unable to launch this app!</string>
 </resources>
 

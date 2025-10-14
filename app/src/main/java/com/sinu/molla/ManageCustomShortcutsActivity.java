@@ -1,15 +1,19 @@
 package com.sinu.molla;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.InputType;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
@@ -23,6 +27,7 @@ import androidx.activity.OnBackPressedCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.PickVisualMediaRequest;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.content.res.AppCompatResources;
@@ -57,7 +62,7 @@ public class ManageCustomShortcutsActivity extends AppCompatActivity {
     View.OnClickListener itemEditListener;
     View.OnClickListener itemDeleteListener;
 
-    ActivityResultLauncher<PickVisualMediaRequest> pickMedia;
+    ActivityResultLauncher<Intent> pickMedia;
     CustomShortcutDialog activeCsd = null;
 
     @SuppressLint("NotifyDataSetChanged")
@@ -74,9 +79,13 @@ public class ManageCustomShortcutsActivity extends AppCompatActivity {
 
         items = new ArrayList<>();
 
-        pickMedia = registerForActivityResult(new ActivityResultContracts.PickVisualMedia(), (uri) -> {
-            if (uri != null) {
-                if (activeCsd != null) activeCsd.setCustomBannerImage(uri);
+        pickMedia = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), (result) -> {
+            if (result.getResultCode() == Activity.RESULT_OK) {
+                var data = result.getData();
+                if (data != null) {
+                    var uri = data.getData();
+                    if (activeCsd != null) activeCsd.setCustomBannerImage(uri);
+                }
             }
         });
 
@@ -167,9 +176,10 @@ public class ManageCustomShortcutsActivity extends AppCompatActivity {
     }
 
     private void callBannerImagePicker() {
-        pickMedia.launch(new PickVisualMediaRequest.Builder()
-                .setMediaType(ActivityResultContracts.PickVisualMedia.ImageOnly.INSTANCE)
-                .build());
+        Intent intentPickMedia = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+        intentPickMedia.addCategory(Intent.CATEGORY_OPENABLE);
+        intentPickMedia.setType("image/*");
+        pickMedia.launch(intentPickMedia);
     }
 
     private interface AppItemCustomizationFinishedListener {
@@ -193,12 +203,17 @@ public class ManageCustomShortcutsActivity extends AppCompatActivity {
         View viewSetCustomTitleTitle;
         EditText edtCustomTitle;
 
+        AlertDialog adSetCustomActivity;
+        View viewSetCustomActivity;
+        ArrayList<String> activityList;
+
         final AppItem editingItem;
         String uuid;
         AppItem targetApp;
         String customTitle;
         AppItemIcon targetAppIcon;
         Drawable customBanner;
+        String customActivity;
 
         AppItemCustomizationFinishedListener finishedListener;
 
@@ -292,6 +307,33 @@ public class ManageCustomShortcutsActivity extends AppCompatActivity {
                 dialogView.findViewById(R.id.ll_dialog_custom_item_advanced).setVisibility(v ? View.VISIBLE : View.GONE);
                 Objects.requireNonNull(alertDialog.getWindow()).setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
             });
+            dialogView.findViewById(R.id.iv_dialog_custom_item_activity_edit).setOnClickListener((v) -> {
+                if (targetApp == null) return;
+                activityList = new ArrayList<>();
+                activityList.add(activity.getString(R.string.dialog_custom_item_activity_list_default));
+                try {
+                    var pm = activity.getPackageManager();
+                    var pi = pm.getPackageInfo(targetApp.packageName, PackageManager.GET_ACTIVITIES);
+                    if (pi.activities == null) return;
+                    for (var a : pi.activities) {
+                        if (a.exported) activityList.add(a.name);
+                    }
+                } catch (Exception ignored) { return; }
+                viewSetCustomActivity = activity.getLayoutInflater().inflate(R.layout.dialog_custom_item_activity_list, null, false);
+                adSetCustomActivity = new AlertDialog.Builder(activity)
+                        .setCustomTitle(viewSetCustomActivity)
+                        .setItems(activityList.toArray(new String[0]), (d, i) -> {
+                            if (i == 0) {
+                                customActivity = null;
+                                ((TextView)dialogView.findViewById(R.id.tv_dialog_custom_item_activity_value)).setText(R.string.dialog_custom_item_default);
+                            } else {
+                                customActivity = activityList.get(i);
+                                ((TextView)dialogView.findViewById(R.id.tv_dialog_custom_item_activity_value)).setText(customActivity);
+                            }
+                        })
+                        .create();
+                adSetCustomActivity.show();
+            });
 
             alertDialog = new AlertDialog.Builder(activity)
                     .setView(dialogView)
@@ -309,6 +351,7 @@ public class ManageCustomShortcutsActivity extends AppCompatActivity {
                                 customTitle,
                                 targetApp.packageName,
                                 targetApp.activityName,
+                                customActivity,
                                 null
                         );
                         finishedListener.onAppItemCustomizationFinished(newItem);
@@ -328,6 +371,9 @@ public class ManageCustomShortcutsActivity extends AppCompatActivity {
                 targetApp = editingItem;
                 targetAppIcon = AppItemIcon.getAppItemIcon((MollaApplication)activity.getApplicationContext(), editingItem);
                 customTitle = targetApp.customItemDisplayName;
+                customActivity = targetApp.customItemActivityName;
+                File customBannerFile = new File(activity.getFilesDir(), uuid + ".webp");
+                customBanner = Drawable.createFromPath(customBannerFile.getAbsolutePath());
                 ((TextView)dialogView.findViewById(R.id.tv_dialog_custom_item_app_name_value)).setText(targetApp.displayName);
                 ((TextView)dialogView.findViewById(R.id.tv_dialog_custom_item_title_value)).setText((customTitle == null) ? targetApp.displayName : customTitle);
                 if (customBanner != null) {
@@ -342,6 +388,11 @@ public class ManageCustomShortcutsActivity extends AppCompatActivity {
                         ((ImageView) dialogView.findViewById(R.id.iv_dialog_custom_item_icon)).setImageDrawable(targetAppIcon.drawable);
                     }
                 }
+                if (customActivity != null) {
+                    ((TextView)dialogView.findViewById(R.id.tv_dialog_custom_item_activity_value)).setText(customActivity);
+                } else {
+                    ((TextView)dialogView.findViewById(R.id.tv_dialog_custom_item_activity_value)).setText(R.string.dialog_custom_item_default);
+                }
             }
         }
 
@@ -354,6 +405,7 @@ public class ManageCustomShortcutsActivity extends AppCompatActivity {
         }
 
         public void setTargetApp(AppItem appItem) {
+            boolean isNewApp = !targetApp.packageName.equals(appItem.packageName);
             targetApp = appItem;
             targetAppIcon = AppItemIcon.getAppItemIcon((MollaApplication)activity.getApplicationContext(), appItem);
             ((TextView)dialogView.findViewById(R.id.tv_dialog_custom_item_app_name_value)).setText(targetApp.displayName);
@@ -363,12 +415,16 @@ public class ManageCustomShortcutsActivity extends AppCompatActivity {
                 ((ImageView)dialogView.findViewById(R.id.iv_dialog_custom_item_icon)).setImageDrawable(null);
             } else {
                 if (targetAppIcon.type == AppItemIcon.IconType.LEANBACK) {
-                    ((ImageView) dialogView.findViewById(R.id.iv_dialog_custom_item_banner)).setImageDrawable(targetAppIcon.drawable);
-                    ((ImageView) dialogView.findViewById(R.id.iv_dialog_custom_item_icon)).setImageDrawable(null);
+                    ((ImageView)dialogView.findViewById(R.id.iv_dialog_custom_item_banner)).setImageDrawable(targetAppIcon.drawable);
+                    ((ImageView)dialogView.findViewById(R.id.iv_dialog_custom_item_icon)).setImageDrawable(null);
                 } else {
-                    ((ImageView) dialogView.findViewById(R.id.iv_dialog_custom_item_banner)).setImageDrawable(simple ? AppCompatResources.getDrawable(activity, R.drawable.generic_simple) : AppCompatResources.getDrawable(activity, R.drawable.generic));
-                    ((ImageView) dialogView.findViewById(R.id.iv_dialog_custom_item_icon)).setImageDrawable(targetAppIcon.drawable);
+                    ((ImageView)dialogView.findViewById(R.id.iv_dialog_custom_item_banner)).setImageDrawable(simple ? AppCompatResources.getDrawable(activity, R.drawable.generic_simple) : AppCompatResources.getDrawable(activity, R.drawable.generic));
+                    ((ImageView)dialogView.findViewById(R.id.iv_dialog_custom_item_icon)).setImageDrawable(targetAppIcon.drawable);
                 }
+            }
+            if (isNewApp) {
+                customActivity = null;
+                ((TextView)dialogView.findViewById(R.id.tv_dialog_custom_item_activity_value)).setText(R.string.dialog_custom_item_default);
             }
             alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setEnabled(true);
         }

@@ -16,6 +16,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
@@ -116,7 +117,13 @@ public class AppItemAdapter extends RecyclerView.Adapter<AppItemAdapter.ViewHold
                 activity.overridePendingTransition(R.anim.no_anim, R.anim.no_anim);
                 ((MainActivity)activity).isFavListUpdateReserved = true;
             } else {
-                if (intent != null) activity.startActivity(intent);
+                if (intent != null) {
+                    try {
+                        activity.startActivity(intent);
+                    } catch (Exception ignored) {
+                        Toast.makeText(activity, R.string.common_error_app_launch_failed, Toast.LENGTH_SHORT).show();
+                    }
+                }
             }
         }
     }

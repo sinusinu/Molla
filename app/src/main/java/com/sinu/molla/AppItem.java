@@ -31,6 +31,7 @@ public class AppItem {
     public boolean isCustomItem = false;
     public String customItemIdentifier;
     public String customItemDisplayName;
+    public String customItemActivityName;
     public ArrayList<AppItemCustomIntentExtra> customItemIntentExtras;
 
     private AppItem(String packageName, String activityName, String displayName, Intent intent) {
@@ -42,6 +43,7 @@ public class AppItem {
         isCustomItem = false;
         customItemIdentifier = null;
         customItemDisplayName = null;
+        customItemActivityName = null;
         customItemIntentExtras = null;
     }
 
@@ -50,18 +52,19 @@ public class AppItem {
      * @param targetPackage only used for setting a fallback icon, not used for launching.
      * @param targetActivity must be a full class path (e.g., <code>com.sinu.molla.MainActivity</code>)
      */
-    public AppItem(String identifier, String appName, String displayName, String targetPackage, String targetActivity, ArrayList<AppItemCustomIntentExtra> intentExtras) {
+    public AppItem(String identifier, String appName, String displayName, String targetPackage, String appActivity, String targetActivity, ArrayList<AppItemCustomIntentExtra> intentExtras) {
         packageName = targetPackage;
-        activityName = targetActivity;
+        activityName = appActivity;
         this.displayName = appName;
 
         isCustomItem = true;
         customItemIdentifier = (identifier != null ? identifier : UUID.randomUUID().toString());
         customItemDisplayName = (displayName != null ? displayName : appName);
+        customItemActivityName = (targetActivity != null ? targetActivity : appActivity);
         customItemIntentExtras = (intentExtras == null ? new ArrayList<>() : intentExtras);
 
         intent = new Intent();
-        intent.setClassName(packageName, activityName);
+        intent.setClassName(packageName, customItemActivityName);
     }
 
     @Override
@@ -174,7 +177,6 @@ public class AppItem {
         thread.start();
     }
 
-    @Deprecated
     public static void fetchListOfAppsAsync(Context context, List<String> packageNames, AppItemLoadCompletedCallback callback) {
         Thread thread = new Thread(() -> {
             fetchAllAppsAsync(context, (allApps) -> {
@@ -203,7 +205,8 @@ public class AppItem {
         j.put("app_name", item.displayName);
         j.put("display_name", item.customItemDisplayName);
         j.put("package", item.packageName);
-        j.put("target", item.activityName);
+        j.put("app_activity", item.activityName);
+        j.put("activity", item.customItemActivityName);
         JSONObject extras = new JSONObject();
         for (int i = 0; i < item.customItemIntentExtras.size(); i++) {
             var extra = item.customItemIntentExtras.get(i);
@@ -247,8 +250,9 @@ public class AppItem {
         var id = j.getString("id");
         var appName = j.getString("app_name");
         var displayName = j.getString("display_name");
-        var launchPackage = j.getString("package");
-        var launchTarget = j.getString("target");
+        var targetPackage = j.getString("package");
+        var appActivity = j.getString("app_activity");
+        var targetActivity = j.getString("activity");
         var ext = j.getJSONObject("extras");
         ArrayList<AppItemCustomIntentExtra> extras = new ArrayList<>();
         for (Iterator<String> it = ext.keys(); it.hasNext(); ) {
@@ -276,6 +280,6 @@ public class AppItem {
                     break;
             }
         }
-        return new AppItem(id, appName, displayName, launchPackage, launchTarget, extras);
+        return new AppItem(id, appName, displayName, targetPackage, appActivity, targetActivity, extras);
     }
 }

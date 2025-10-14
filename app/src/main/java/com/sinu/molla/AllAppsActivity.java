@@ -32,6 +32,8 @@ public class AllAppsActivity extends AppCompatActivity {
 
     SharedPreferences pref;
 
+    boolean isListUpdateReserved = true;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,6 +60,7 @@ public class AllAppsActivity extends AppCompatActivity {
         binding.ivAllManageCustom.setOnClickListener((v) -> {
             startActivity(new Intent(this, ManageCustomShortcutsActivity.class));
             overridePendingTransition(R.anim.no_anim, R.anim.no_anim);
+            isListUpdateReserved = true;
         });
 
         // hide system bars
@@ -88,27 +91,30 @@ public class AllAppsActivity extends AppCompatActivity {
         if (adapter != null) adapter.SetSimpleBackground(pref.getInt("simple_icon_bg", 0) == 1);
         ((MollaApplication)getApplication()).getWallpaperCache().setWallpaperOnImageView(binding.ivAllWallpaper, false);
 
-        binding.rvAllAllapps.setVisibility(View.GONE);
-        binding.pbrAllLoading.setVisibility(View.VISIBLE);
+        if (isListUpdateReserved) {
+            isListUpdateReserved = false;
+            binding.rvAllAllapps.setVisibility(View.GONE);
+            binding.pbrAllLoading.setVisibility(View.VISIBLE);
 
-        new Thread(() -> {
-            AppItem.fetchAllAppsAsync(this, (items) -> {
-                this.items = items;
-                var customItems = ((MollaApplication)getApplication()).getCustomItemManager().getCustomShortcuts();
-                this.items.addAll(customItems);
-                Collections.sort(items, AppItem::compareByDisplayName);
+            new Thread(() -> {
+                AppItem.fetchAllAppsAsync(this, (items) -> {
+                    this.items = items;
+                    var customItems = ((MollaApplication) getApplication()).getCustomItemManager().getCustomShortcuts();
+                    this.items.addAll(customItems);
+                    Collections.sort(items, AppItem::compareByDisplayName);
 
-                runOnUiThread(() -> {
-                    LinearLayoutManager manager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-                    adapter = new AppItemListAdapter(getApplicationContext(), this, items, (pref.getInt("simple_icon_bg", 0) == 1));
+                    runOnUiThread(() -> {
+                        LinearLayoutManager manager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+                        adapter = new AppItemListAdapter(getApplicationContext(), this, items, (pref.getInt("simple_icon_bg", 0) == 1));
 
-                    binding.rvAllAllapps.setLayoutManager(manager);
-                    binding.rvAllAllapps.setAdapter(adapter);
+                        binding.rvAllAllapps.setLayoutManager(manager);
+                        binding.rvAllAllapps.setAdapter(adapter);
 
-                    binding.rvAllAllapps.setVisibility(View.VISIBLE);
-                    binding.pbrAllLoading.setVisibility(View.GONE);
+                        binding.rvAllAllapps.setVisibility(View.VISIBLE);
+                        binding.pbrAllLoading.setVisibility(View.GONE);
+                    });
                 });
-            });
-        }).start();
+            }).start();
+        }
     }
 }

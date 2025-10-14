@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
@@ -75,7 +76,13 @@ public class AppItemListAdapter extends RecyclerView.Adapter<AppItemListAdapter.
         holder.ivIcon.setImageDrawable(appIcon);
         holder.tvAppName.setText(list.get(position).customItemDisplayName == null ? list.get(position).displayName : list.get(position).customItemDisplayName);
         holder.itemView.setOnClickListener(view -> {
-            if (list.get(position).intent != null) activity.startActivity(list.get(position).intent);
+            if (list.get(position).intent != null) {
+                try {
+                    activity.startActivity(list.get(position).intent);
+                } catch (Exception ignored) {
+                    Toast.makeText(activity, R.string.common_error_app_launch_failed, Toast.LENGTH_SHORT).show();
+                }
+            }
         });
     }
 
