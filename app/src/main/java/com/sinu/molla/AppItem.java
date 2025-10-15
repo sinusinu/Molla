@@ -64,7 +64,8 @@ public class AppItem {
         customItemActivityName = (targetActivity != null ? targetActivity : appActivity);
         customItemIntentExtras = (intentExtras == null ? new ArrayList<>() : intentExtras);
 
-        intent = null;
+        intent = new Intent();
+        intent.setClassName(packageName, customItemActivityName);
     }
 
     @Override
