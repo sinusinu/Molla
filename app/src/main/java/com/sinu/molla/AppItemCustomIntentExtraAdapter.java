@@ -149,6 +149,9 @@ public class AppItemCustomIntentExtraAdapter extends RecyclerView.Adapter<AppIte
             notifyDataSetChanged();
             dvc.onDataValidityChanged();
         });
+        holder.ivDelete.setOnFocusChangeListener((view, hasFocus) -> {
+            holder.ivDelete.setBackgroundColor(context.getColor(hasFocus ? R.color.transparent_white : R.color.transparent));
+        });
     }
 
     public boolean areNamesValid() {

@@ -347,11 +347,15 @@ public class ManageCustomShortcutsActivity extends AppCompatActivity {
                 ((RecyclerView)viewSetCustomIntentExtras.findViewById(R.id.rv_dialog_custom_item_extras_list_list)).setLayoutManager(customIntentExtrasLayoutManager);
                 ((RecyclerView)viewSetCustomIntentExtras.findViewById(R.id.rv_dialog_custom_item_extras_list_list)).setAdapter(customIntentExtrasAdapter);
                 ((SimpleItemAnimator)(Objects.requireNonNull(((RecyclerView)viewSetCustomIntentExtras.findViewById(R.id.rv_dialog_custom_item_extras_list_list)).getItemAnimator()))).setSupportsChangeAnimations(false);
-                viewSetCustomIntentExtras.findViewById(R.id.iv_dialog_custom_item_extras_list_add).setOnClickListener((vv) -> {
+                var ivExtrasListAdd = viewSetCustomIntentExtras.findViewById(R.id.iv_dialog_custom_item_extras_list_add);
+                ivExtrasListAdd.setOnClickListener((vv) -> {
                     // add new intent extra
                     customIntentExtrasAdapter.list.add(new AppItemCustomIntentExtra("", ""));
                     customIntentExtrasAdapter.notifyDataSetChanged();
                     adSetCustomIntentExtras.getButton(AlertDialog.BUTTON_POSITIVE).setEnabled(customIntentExtrasAdapter.areNamesValid());
+                });
+                ivExtrasListAdd.setOnFocusChangeListener((view, hasFocus) -> {
+                    ivExtrasListAdd.setBackgroundColor(activity.getColor(hasFocus ? R.color.transparent_white : R.color.transparent));
                 });
                 adSetCustomIntentExtras = new AlertDialog.Builder(activity)
                         .setView(viewSetCustomIntentExtras)
@@ -365,6 +369,19 @@ public class ManageCustomShortcutsActivity extends AppCompatActivity {
                         .create();
                 adSetCustomIntentExtras.show();
             });
+            for (int i : new int[] {
+                    R.id.iv_dialog_custom_item_app_select,
+                    R.id.iv_dialog_custom_item_title_edit,
+                    R.id.iv_dialog_custom_item_banner_add,
+                    R.id.iv_dialog_custom_item_banner_clear,
+                    R.id.iv_dialog_custom_item_activity_edit,
+                    R.id.iv_dialog_custom_item_extras_edit,
+            }) {
+                View v = dialogView.findViewById(i);
+                v.setOnFocusChangeListener((view, hasFocus) -> {
+                    v.setBackgroundColor(activity.getColor(hasFocus ? R.color.transparent_white : R.color.transparent));
+                });
+            }
 
             alertDialog = new AlertDialog.Builder(activity)
                     .setView(dialogView)
