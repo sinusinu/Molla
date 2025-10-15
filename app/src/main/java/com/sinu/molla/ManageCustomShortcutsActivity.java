@@ -317,7 +317,7 @@ public class ManageCustomShortcutsActivity extends AppCompatActivity {
                     var pi = pm.getPackageInfo(targetApp.packageName, PackageManager.GET_ACTIVITIES);
                     if (pi.activities == null) return;
                     for (var a : pi.activities) {
-                        if (a.exported) activityList.add(a.name);
+                        if (a.exported && a.name.startsWith(targetApp.packageName)) activityList.add(a.name);
                     }
                 } catch (Exception ignored) { return; }
                 Collections.sort(activityList);
