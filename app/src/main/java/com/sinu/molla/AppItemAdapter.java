@@ -15,7 +15,6 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
@@ -117,32 +116,7 @@ public class AppItemAdapter extends RecyclerView.Adapter<AppItemAdapter.ViewHold
                 ((MainActivity)activity).isFavListUpdateReserved = true;
             } else {
                 var appItem = list.get(manager.getPosition(view));
-                if (appItem.isCustomItem) {
-                    Intent i = new Intent();
-                    i.setClassName(appItem.packageName, appItem.customItemActivityName);
-                    for (var extra : appItem.customItemIntentExtras) {
-                        var extraType = extra.getValueType();
-                        if (extraType == String.class) i.putExtra(extra.getName(), extra.getValueAsString());
-                        else if (extraType == Integer.class) i.putExtra(extra.getName(), (int)extra.getValueAs(Integer.class));
-                        else if (extraType == Long.class) i.putExtra(extra.getName(), (long)extra.getValueAs(Long.class));
-                        else if (extraType == Float.class) i.putExtra(extra.getName(), (float)extra.getValueAs(Float.class));
-                        else if (extraType == Double.class) i.putExtra(extra.getName(), (double)extra.getValueAs(Double.class));
-                        else if (extraType == Boolean.class) i.putExtra(extra.getName(), (boolean)extra.getValueAs(Boolean.class));
-                    }
-                    try {
-                        activity.startActivity(i);
-                    } catch (Exception ignored) {
-                        Toast.makeText(activity, R.string.common_error_app_launch_failed, Toast.LENGTH_SHORT).show();
-                    }
-                } else {
-                    if (intent != null) {
-                        try {
-                            activity.startActivity(intent);
-                        } catch (Exception ignored) {
-                            Toast.makeText(activity, R.string.common_error_app_launch_failed, Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                }
+                AppItem.launch(activity, appItem);
             }
         }
     }

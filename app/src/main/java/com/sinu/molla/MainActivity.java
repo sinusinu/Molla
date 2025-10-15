@@ -27,7 +27,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.activity.OnBackPressedCallback;
@@ -276,30 +275,7 @@ public class MainActivity extends AppCompatActivity {
             if (autoLaunchCountdown == 0) {
                 isWaitingForAutoLaunch = false;
                 setAutoLaunchOverlayVisibility(false);
-                if (autoLaunchTarget.isCustomItem) {
-                    Intent i = new Intent();
-                    i.setClassName(autoLaunchTarget.packageName, autoLaunchTarget.customItemActivityName);
-                    for (var extra : autoLaunchTarget.customItemIntentExtras) {
-                        var extraType = extra.getValueType();
-                        if (extraType == String.class) i.putExtra(extra.getName(), extra.getValueAsString());
-                        else if (extraType == Integer.class) i.putExtra(extra.getName(), (int)extra.getValueAs(Integer.class));
-                        else if (extraType == Long.class) i.putExtra(extra.getName(), (long)extra.getValueAs(Long.class));
-                        else if (extraType == Float.class) i.putExtra(extra.getName(), (float)extra.getValueAs(Float.class));
-                        else if (extraType == Double.class) i.putExtra(extra.getName(), (double)extra.getValueAs(Double.class));
-                        else if (extraType == Boolean.class) i.putExtra(extra.getName(), (boolean)extra.getValueAs(Boolean.class));
-                    }
-                    try {
-                        startActivity(i);
-                    } catch (Exception ignored) {
-                        Toast.makeText(this, R.string.common_error_app_launch_failed, Toast.LENGTH_SHORT).show();
-                    }
-                } else {
-                    try {
-                        startActivity(autoLaunchTarget.intent);
-                    } catch (Exception ignored) {
-                        Toast.makeText(this, R.string.common_error_app_launch_failed, Toast.LENGTH_SHORT).show();
-                    }
-                }
+                AppItem.launch(this, autoLaunchTarget);
             } else {
                 binding.tvMainAutolaunchOverlaySeconds.setText(autoLaunchCountdown+"");
                 h.postDelayed(rCountdownAutoLaunch, 1000);
@@ -504,30 +480,7 @@ public class MainActivity extends AppCompatActivity {
         var launchDelay = pref.getInt("autolaunch_delay", 0);
         if (launchDelay == 0) {
             // launch immediately
-            if (autoLaunchTarget.isCustomItem) {
-                Intent i = new Intent();
-                i.setClassName(autoLaunchTarget.packageName, autoLaunchTarget.customItemActivityName);
-                for (var extra : autoLaunchTarget.customItemIntentExtras) {
-                    var extraType = extra.getValueType();
-                    if (extraType == String.class) i.putExtra(extra.getName(), extra.getValueAsString());
-                    else if (extraType == Integer.class) i.putExtra(extra.getName(), (int)extra.getValueAs(Integer.class));
-                    else if (extraType == Long.class) i.putExtra(extra.getName(), (long)extra.getValueAs(Long.class));
-                    else if (extraType == Float.class) i.putExtra(extra.getName(), (float)extra.getValueAs(Float.class));
-                    else if (extraType == Double.class) i.putExtra(extra.getName(), (double)extra.getValueAs(Double.class));
-                    else if (extraType == Boolean.class) i.putExtra(extra.getName(), (boolean)extra.getValueAs(Boolean.class));
-                }
-                try {
-                    startActivity(i);
-                } catch (Exception ignored) {
-                    Toast.makeText(this, R.string.common_error_app_launch_failed, Toast.LENGTH_SHORT).show();
-                }
-            } else {
-                try {
-                    startActivity(autoLaunchTarget.intent);
-                } catch (Exception ignored) {
-                    Toast.makeText(this, R.string.common_error_app_launch_failed, Toast.LENGTH_SHORT).show();
-                }
-            }
+            AppItem.launch(this, autoLaunchTarget);
         } else {
             isWaitingForAutoLaunch = true;
             autoLaunchCountdown = launchDelayResolve[launchDelay];

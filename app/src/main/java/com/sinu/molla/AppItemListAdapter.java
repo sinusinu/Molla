@@ -5,14 +5,12 @@ package com.sinu.molla;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
@@ -76,30 +74,7 @@ public class AppItemListAdapter extends RecyclerView.Adapter<AppItemListAdapter.
         holder.ivIcon.setImageDrawable(appIcon);
         holder.tvAppName.setText(list.get(position).customItemDisplayName == null ? list.get(position).displayName : list.get(position).customItemDisplayName);
         holder.itemView.setOnClickListener(view -> {
-            if (list.get(position).isCustomItem) {
-                Intent i = new Intent();
-                i.setClassName(list.get(position).packageName, list.get(position).customItemActivityName);
-                for (var extra : list.get(position).customItemIntentExtras) {
-                    var extraType = extra.getValueType();
-                    if (extraType == String.class) i.putExtra(extra.getName(), extra.getValueAsString());
-                    else if (extraType == Integer.class) i.putExtra(extra.getName(), (int)extra.getValueAs(Integer.class));
-                    else if (extraType == Long.class) i.putExtra(extra.getName(), (long)extra.getValueAs(Long.class));
-                    else if (extraType == Float.class) i.putExtra(extra.getName(), (float)extra.getValueAs(Float.class));
-                    else if (extraType == Double.class) i.putExtra(extra.getName(), (double)extra.getValueAs(Double.class));
-                    else if (extraType == Boolean.class) i.putExtra(extra.getName(), (boolean)extra.getValueAs(Boolean.class));
-                }
-                try {
-                    activity.startActivity(i);
-                } catch (Exception ignored) {
-                    Toast.makeText(activity, R.string.common_error_app_launch_failed, Toast.LENGTH_SHORT).show();
-                }
-            } else if (list.get(position).intent != null) {
-                try {
-                    activity.startActivity(list.get(position).intent);
-                } catch (Exception ignored) {
-                    Toast.makeText(activity, R.string.common_error_app_launch_failed, Toast.LENGTH_SHORT).show();
-                }
-            }
+            AppItem.launch(activity, list.get(position));
         });
     }
 

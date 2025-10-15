@@ -3,11 +3,13 @@
 
 package com.sinu.molla;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
@@ -94,6 +96,37 @@ public class AppItem {
         var o1n = o1.customItemDisplayName != null ? o1.customItemDisplayName : o1.displayName;
         var o2n = o2.customItemDisplayName != null ? o2.customItemDisplayName : o2.displayName;
         return o1n.toLowerCase(Locale.ENGLISH).compareTo(o2n.toLowerCase(Locale.ENGLISH));
+    }
+
+    public static void launch(Activity activity, AppItem appItem) {
+        if (appItem.isCustomItem) {
+            Intent i = new Intent();
+            i.setClassName(appItem.packageName, appItem.customItemActivityName);
+            for (var extra : appItem.customItemIntentExtras) {
+                var extraType = extra.getValueType();
+                if (extraType == String.class) i.putExtra(extra.getName(), extra.getValueAsString());
+                else if (extraType == Integer.class) i.putExtra(extra.getName(), (int)extra.getValueAs(Integer.class));
+                else if (extraType == Long.class) i.putExtra(extra.getName(), (long)extra.getValueAs(Long.class));
+                else if (extraType == Float.class) i.putExtra(extra.getName(), (float)extra.getValueAs(Float.class));
+                else if (extraType == Double.class) i.putExtra(extra.getName(), (double)extra.getValueAs(Double.class));
+                else if (extraType == Boolean.class) i.putExtra(extra.getName(), (boolean)extra.getValueAs(Boolean.class));
+            }
+            try {
+                activity.startActivity(i);
+            } catch (Exception ignored) {
+                ignored.printStackTrace();
+                Toast.makeText(activity, R.string.common_error_app_launch_failed, Toast.LENGTH_SHORT).show();
+            }
+        } else {
+            if (appItem.intent != null) {
+                try {
+                    activity.startActivity(appItem.intent);
+                } catch (Exception ignored) {
+                    ignored.printStackTrace();
+                    Toast.makeText(activity, R.string.common_error_app_launch_failed, Toast.LENGTH_SHORT).show();
+                }
+            }
+        }
     }
 
     private static Thread getFetchAppsRunner(Context context, AppItemLoadCompletedCallback callback) {
