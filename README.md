@@ -1,27 +1,32 @@
 # Molla
 
-[<img src="images/googleplay.png">](https://play.google.com/store/apps/details?id=com.sinu.molla)
-
 ![Icon](icon.png)
 
-Molla is a launcher app for Android, designed for handheld gaming devices.
+Molla is an alternative launcher for Android, primarily designed for handheld gaming devices.
 
-## About
+## Download
 
-- Molla is made for devices with:
-  - No touchscreen
-  - D-pad navigation
-  - Horizontal screen
+[<img src="images/googleplay.png">](https://play.google.com/store/apps/details?id=com.sinu.molla)
 
-- Can be run on regular Android devices like phones and tablets, but is not recommended.
+or you can grab the APK from [here](https://github.com/sinusinu/Molla/releases/latest).
 
-- Can be run on Android TV, but is not recommended. Enable "Hide non-TV apps" on settings if you're on Android TV.
+## Features
+
+- D-pad first design - no touchscreen required
+- A simple and intuitive Android TV-esque interface
+- Packed with a bunch of ~~weird~~ niche features, including:
+  - Separate wallpaper from system
+  - Make Molla closeable
+  - Autostart Molla at boot automatically
+  - Launch an app at boot automatically
+  - Custom shortcuts with "advanced options"
+  - and more!
 
 ## Screenshots
 
-![Main screen](images/1.png)
+![Main Screen with Quick Access](images/1.png)
 
-![All apps](images/2.png)
+![All Apps](images/2.png)
 
 ![Editing Quick Access](images/3.png)
 
