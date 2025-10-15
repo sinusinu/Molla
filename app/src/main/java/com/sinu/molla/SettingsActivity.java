@@ -212,7 +212,11 @@ public class SettingsActivity extends AppCompatActivity {
                             if (si == null) {
                                 pref.edit().remove("autolaunch_package").apply();
                             } else {
-                                pref.edit().putString("autolaunch_package", si.packageName).apply();
+                                if (si.isCustomItem) {
+                                    pref.edit().putString("autolaunch_package", "custom:" + si.customItemIdentifier).apply();
+                                } else {
+                                    pref.edit().putString("autolaunch_package", si.packageName).apply();
+                                }
                             }
                             adAutolaunchSelect.dismiss();
                         }, (pref.getInt("simple_icon_bg", 0) == 1));
@@ -223,15 +227,27 @@ public class SettingsActivity extends AppCompatActivity {
                         new Thread(() -> {
                             AppItem.fetchAllAppsAsync(this, (items) -> {
                                 runOnUiThread(() -> {
+                                    var customItems = ((MollaApplication)getApplication()).getCustomItemManager().getCustomShortcuts();
+                                    items.addAll(customItems);
                                     Collections.sort(items, AppItem::compareByDisplayName);
                                     Objects.requireNonNull((View)adAutolaunchSelect.findViewById(R.id.pbr_dialog_autolaunch_select_loading)).setVisibility(View.GONE);
                                     rvAutolaunchSelectList.setVisibility(View.VISIBLE);
                                     autolaunchItems.add(null);
                                     autolaunchItems.addAll(items);
-                                    for (int i = 0; i < items.size(); i++) {
-                                        if (items.get(i).packageName.equals(currentAutolaunch)) {
-                                            adapterAutolaunchSelectList.setSelectedItem(items.get(i));
-                                            break;
+                                    if (currentAutolaunch != null) {
+                                        for (int i = 0; i < items.size(); i++) {
+                                            if (currentAutolaunch.startsWith("custom:")) {
+                                                String customItemId = currentAutolaunch.substring(7);
+                                                if (items.get(i).isCustomItem && items.get(i).customItemIdentifier.equals(customItemId)) {
+                                                    adapterAutolaunchSelectList.setSelectedItem(items.get(i));
+                                                    break;
+                                                }
+                                            } else {
+                                                if (!items.get(i).isCustomItem && items.get(i).packageName.equals(currentAutolaunch)) {
+                                                    adapterAutolaunchSelectList.setSelectedItem(items.get(i));
+                                                    break;
+                                                }
+                                            }
                                         }
                                     }
                                     adapterAutolaunchSelectList.notifyDataSetChanged();

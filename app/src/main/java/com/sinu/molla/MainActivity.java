@@ -27,6 +27,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.activity.OnBackPressedCallback;
@@ -275,7 +276,30 @@ public class MainActivity extends AppCompatActivity {
             if (autoLaunchCountdown == 0) {
                 isWaitingForAutoLaunch = false;
                 setAutoLaunchOverlayVisibility(false);
-                startActivity(autoLaunchTarget.intent);
+                if (autoLaunchTarget.isCustomItem) {
+                    Intent i = new Intent();
+                    i.setClassName(autoLaunchTarget.packageName, autoLaunchTarget.customItemActivityName);
+                    for (var extra : autoLaunchTarget.customItemIntentExtras) {
+                        var extraType = extra.getValueType();
+                        if (extraType == String.class) i.putExtra(extra.getName(), extra.getValueAsString());
+                        else if (extraType == Integer.class) i.putExtra(extra.getName(), (int)extra.getValueAs(Integer.class));
+                        else if (extraType == Long.class) i.putExtra(extra.getName(), (long)extra.getValueAs(Long.class));
+                        else if (extraType == Float.class) i.putExtra(extra.getName(), (float)extra.getValueAs(Float.class));
+                        else if (extraType == Double.class) i.putExtra(extra.getName(), (double)extra.getValueAs(Double.class));
+                        else if (extraType == Boolean.class) i.putExtra(extra.getName(), (boolean)extra.getValueAs(Boolean.class));
+                    }
+                    try {
+                        startActivity(i);
+                    } catch (Exception ignored) {
+                        Toast.makeText(this, R.string.common_error_app_launch_failed, Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    try {
+                        startActivity(autoLaunchTarget.intent);
+                    } catch (Exception ignored) {
+                        Toast.makeText(this, R.string.common_error_app_launch_failed, Toast.LENGTH_SHORT).show();
+                    }
+                }
             } else {
                 binding.tvMainAutolaunchOverlaySeconds.setText(autoLaunchCountdown+"");
                 h.postDelayed(rCountdownAutoLaunch, 1000);
@@ -301,16 +325,27 @@ public class MainActivity extends AppCompatActivity {
         if (pref.getInt("autolaunch_alt_detect", 0) == 1 && (getIntent().getBooleanExtra("BOOT_COMPLETE_RECEIVED", false) || pref.getInt("boot_complete_alt_detect_hint", 0) == 1)) {
             String autolaunchTargetPackage = pref.getString("autolaunch_package", null);
             if (autolaunchTargetPackage != null) {
-                ArrayList<String> pnAutoLaunchTarget = new ArrayList<>();
-                pnAutoLaunchTarget.add(autolaunchTargetPackage);
-                var customItems = ((MollaApplication)getApplication()).getCustomItemManager().getCustomShortcuts();
-
-                AppItem.fetchListOfAppsAsync(this, pnAutoLaunchTarget, (items) -> {
-                    if (items.size() == 1) runOnUiThread(() -> {
-                        autoLaunchTarget = items.get(0);
-                        if (!isWaitingForAutoLaunch) initiateAutoLaunch();
+                if (autolaunchTargetPackage.startsWith("custom:")) {
+                    var autolaunchTargetCustomItemId = autolaunchTargetPackage.substring(7);
+                    var customItems = ((MollaApplication)getApplication()).getCustomItemManager().getCustomShortcuts();
+                    for (int i = 0; i < customItems.size(); i++) {
+                        var customItem = customItems.get(i);
+                        if (customItem.customItemIdentifier.equals(autolaunchTargetCustomItemId)) {
+                            autoLaunchTarget = customItem;
+                            if (!isWaitingForAutoLaunch) initiateAutoLaunch();
+                            break;
+                        }
+                    }
+                } else {
+                    ArrayList<String> pnAutoLaunchTarget = new ArrayList<>();
+                    pnAutoLaunchTarget.add(autolaunchTargetPackage);
+                    AppItem.fetchListOfAppsAsync(this, pnAutoLaunchTarget, (items) -> {
+                        if (items.size() == 1) runOnUiThread(() -> {
+                            autoLaunchTarget = items.get(0);
+                            if (!isWaitingForAutoLaunch) initiateAutoLaunch();
+                        });
                     });
-                });
+                }
             }
         }
         pref.edit().remove("boot_complete_alt_detect_hint").apply();
@@ -326,14 +361,27 @@ public class MainActivity extends AppCompatActivity {
             setIntent(intent);
             String autolaunchTargetPackage = pref.getString("autolaunch_package", null);
             if (autolaunchTargetPackage != null) {
-                ArrayList<String> pnAutoLaunchTarget = new ArrayList<>();
-                pnAutoLaunchTarget.add(autolaunchTargetPackage);
-                AppItem.fetchListOfAppsAsync(this, pnAutoLaunchTarget, (items) -> {
-                    if (items.size() == 1) runOnUiThread(() -> {
-                        autoLaunchTarget = items.get(0);
-                        if (!isWaitingForAutoLaunch) initiateAutoLaunch();
+                if (autolaunchTargetPackage.startsWith("custom:")) {
+                    var autolaunchTargetCustomItemId = autolaunchTargetPackage.substring(7);
+                    var customItems = ((MollaApplication)getApplication()).getCustomItemManager().getCustomShortcuts();
+                    for (int i = 0; i < customItems.size(); i++) {
+                        var customItem = customItems.get(i);
+                        if (customItem.customItemIdentifier.equals(autolaunchTargetCustomItemId)) {
+                            autoLaunchTarget = customItem;
+                            if (!isWaitingForAutoLaunch) initiateAutoLaunch();
+                            break;
+                        }
+                    }
+                } else {
+                    ArrayList<String> pnAutoLaunchTarget = new ArrayList<>();
+                    pnAutoLaunchTarget.add(autolaunchTargetPackage);
+                    AppItem.fetchListOfAppsAsync(this, pnAutoLaunchTarget, (items) -> {
+                        if (items.size() == 1) runOnUiThread(() -> {
+                            autoLaunchTarget = items.get(0);
+                            if (!isWaitingForAutoLaunch) initiateAutoLaunch();
+                        });
                     });
-                });
+                }
             }
         }
     }
@@ -365,14 +413,27 @@ public class MainActivity extends AppCompatActivity {
                 pref.edit().putLong("last_boot_timestamp", currentBootTimestamp).apply();
                 String autolaunchTargetPackage = pref.getString("autolaunch_package", null);
                 if (autolaunchTargetPackage != null) {
-                    ArrayList<String> pnAutoLaunchTarget = new ArrayList<>();
-                    pnAutoLaunchTarget.add(autolaunchTargetPackage);
-                    AppItem.fetchListOfAppsAsync(this, pnAutoLaunchTarget, (items) -> {
-                        if (items.size() == 1) runOnUiThread(() -> {
-                            autoLaunchTarget = items.get(0);
-                            if (!isWaitingForAutoLaunch) initiateAutoLaunch();
+                    if (autolaunchTargetPackage.startsWith("custom:")) {
+                        var autolaunchTargetCustomItemId = autolaunchTargetPackage.substring(7);
+                        var customItems = ((MollaApplication)getApplication()).getCustomItemManager().getCustomShortcuts();
+                        for (int i = 0; i < customItems.size(); i++) {
+                            var customItem = customItems.get(i);
+                            if (customItem.customItemIdentifier.equals(autolaunchTargetCustomItemId)) {
+                                autoLaunchTarget = customItem;
+                                if (!isWaitingForAutoLaunch) initiateAutoLaunch();
+                                break;
+                            }
+                        }
+                    } else {
+                        ArrayList<String> pnAutoLaunchTarget = new ArrayList<>();
+                        pnAutoLaunchTarget.add(autolaunchTargetPackage);
+                        AppItem.fetchListOfAppsAsync(this, pnAutoLaunchTarget, (items) -> {
+                            if (items.size() == 1) runOnUiThread(() -> {
+                                autoLaunchTarget = items.get(0);
+                                if (!isWaitingForAutoLaunch) initiateAutoLaunch();
+                            });
                         });
-                    });
+                    }
                 }
             }
         }
@@ -443,11 +504,34 @@ public class MainActivity extends AppCompatActivity {
         var launchDelay = pref.getInt("autolaunch_delay", 0);
         if (launchDelay == 0) {
             // launch immediately
-            startActivity(autoLaunchTarget.intent);
+            if (autoLaunchTarget.isCustomItem) {
+                Intent i = new Intent();
+                i.setClassName(autoLaunchTarget.packageName, autoLaunchTarget.customItemActivityName);
+                for (var extra : autoLaunchTarget.customItemIntentExtras) {
+                    var extraType = extra.getValueType();
+                    if (extraType == String.class) i.putExtra(extra.getName(), extra.getValueAsString());
+                    else if (extraType == Integer.class) i.putExtra(extra.getName(), (int)extra.getValueAs(Integer.class));
+                    else if (extraType == Long.class) i.putExtra(extra.getName(), (long)extra.getValueAs(Long.class));
+                    else if (extraType == Float.class) i.putExtra(extra.getName(), (float)extra.getValueAs(Float.class));
+                    else if (extraType == Double.class) i.putExtra(extra.getName(), (double)extra.getValueAs(Double.class));
+                    else if (extraType == Boolean.class) i.putExtra(extra.getName(), (boolean)extra.getValueAs(Boolean.class));
+                }
+                try {
+                    startActivity(i);
+                } catch (Exception ignored) {
+                    Toast.makeText(this, R.string.common_error_app_launch_failed, Toast.LENGTH_SHORT).show();
+                }
+            } else {
+                try {
+                    startActivity(autoLaunchTarget.intent);
+                } catch (Exception ignored) {
+                    Toast.makeText(this, R.string.common_error_app_launch_failed, Toast.LENGTH_SHORT).show();
+                }
+            }
         } else {
             isWaitingForAutoLaunch = true;
             autoLaunchCountdown = launchDelayResolve[launchDelay];
-            binding.tvMainAutolaunchOverlayTitle.setText(String.format(getString(R.string.main_autolaunch_overlay_title), autoLaunchTarget.displayName));
+            binding.tvMainAutolaunchOverlayTitle.setText(String.format(getString(R.string.main_autolaunch_overlay_title), autoLaunchTarget.isCustomItem ? autoLaunchTarget.customItemDisplayName : autoLaunchTarget.displayName));
             binding.tvMainAutolaunchOverlaySeconds.setText(autoLaunchCountdown+"");
             setAutoLaunchOverlayVisibility(true);
             h.postDelayed(rCountdownAutoLaunch, 1000);
