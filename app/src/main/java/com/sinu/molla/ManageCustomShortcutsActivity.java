@@ -312,7 +312,6 @@ public class ManageCustomShortcutsActivity extends AppCompatActivity {
                 // set activity
                 if (targetApp == null) return;
                 activityList = new ArrayList<>();
-                activityList.add(activity.getString(R.string.dialog_custom_item_activity_list_default));
                 try {
                     var pm = activity.getPackageManager();
                     var pi = pm.getPackageInfo(targetApp.packageName, PackageManager.GET_ACTIVITIES);
@@ -321,6 +320,8 @@ public class ManageCustomShortcutsActivity extends AppCompatActivity {
                         if (a.exported) activityList.add(a.name);
                     }
                 } catch (Exception ignored) { return; }
+                Collections.sort(activityList);
+                activityList.add(0, activity.getString(R.string.dialog_custom_item_activity_list_default));
                 viewSetCustomActivity = activity.getLayoutInflater().inflate(R.layout.dialog_custom_item_activity_list, null, false);
                 adSetCustomActivity = new AlertDialog.Builder(activity)
                         .setCustomTitle(viewSetCustomActivity)
