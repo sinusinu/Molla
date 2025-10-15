@@ -4,7 +4,6 @@
 package com.sinu.molla;
 
 import android.content.Context;
-import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;

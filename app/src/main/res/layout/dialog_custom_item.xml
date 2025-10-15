@@ -14,16 +14,9 @@
         android:id="@+id/tv_dialog_custom_item_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/_4sdp"
         android:text="@string/dialog_custom_item_title_create"
         android:textSize="@dimen/_16ssp" />
-
-    <TextView
-        android:id="@+id/tv_dialog_custom_item_subtitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/dialog_custom_item_subtitle_create"
-        android:paddingBottom="@dimen/_4sdp"
-        android:textSize="@dimen/_12ssp" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -57,6 +50,7 @@
                         android:id="@+id/tv_dialog_custom_item_app_name_value"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-condensed"
                         android:text="@string/dialog_custom_item_none"
                         android:textSize="@dimen/_12ssp" />
                 </LinearLayout>
@@ -99,6 +93,7 @@
                         android:id="@+id/tv_dialog_custom_item_title_value"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-condensed"
                         android:text="@string/dialog_custom_item_not_set"
                         android:textSize="@dimen/_12ssp" />
                 </LinearLayout>
@@ -238,6 +233,7 @@
                             android:id="@+id/tv_dialog_custom_item_activity_value"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:fontFamily="sans-serif-condensed"
                             android:text="@string/dialog_custom_item_default"
                             android:textSize="@dimen/_12ssp" />
                     </LinearLayout>
@@ -256,6 +252,50 @@
                         tools:ignore="TouchTargetSizeCheck" />
 
                 </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/_8sdp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/dialog_custom_item_extras"
+                            android:textSize="@dimen/_14ssp" />
+
+                        <TextView
+                            android:id="@+id/tv_dialog_custom_item_extras_value"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="sans-serif-condensed"
+                            android:text="@string/dialog_custom_item_extras"
+                            android:textSize="@dimen/_12ssp" />
+                    </LinearLayout>
+
+                    <ImageView
+                        android:id="@+id/iv_dialog_custom_item_extras_edit"
+                        android:layout_width="@dimen/_36sdp"
+                        android:layout_height="@dimen/_36sdp"
+                        android:layout_weight="0"
+                        android:clickable="true"
+                        android:contentDescription="@string/dialog_custom_item_select"
+                        android:focusable="true"
+                        android:focusableInTouchMode="false"
+                        android:padding="@dimen/_8sdp"
+                        app:srcCompat="@drawable/ic_settings"
+                        tools:ignore="TouchTargetSizeCheck" />
+
+                </LinearLayout>
+
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

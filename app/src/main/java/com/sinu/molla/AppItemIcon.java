@@ -5,7 +5,6 @@ package com.sinu.molla;
 
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
-import android.util.Log;
 
 import java.io.File;
 
@@ -20,9 +19,13 @@ public class AppItemIcon {
         this.drawable = drawable;
     }
 
-    public static AppItemIcon getAppItemIcon(MollaApplication context, AppItem appItem) {
-        if (appItem.isCustomItem) {
-            File customBanner = new File(context.getFilesDir(), appItem.customItemIdentifier + ".webp");
+    public static AppItemIcon getAppItemIcon(MollaApplication application, AppItem appItem) {
+        return getAppItemIcon(application, appItem, true);
+    }
+
+    public static AppItemIcon getAppItemIcon(MollaApplication application, AppItem appItem, boolean loadCustom) {
+        if (loadCustom && appItem.isCustomItem) {
+            File customBanner = new File(application.getFilesDir(), appItem.customItemIdentifier + ".webp");
             if (customBanner.exists()) {
                 var customBannerDrawable = Drawable.createFromPath(customBanner.getAbsolutePath());
                 return new AppItemIcon(IconType.LEANBACK, customBannerDrawable);
@@ -30,7 +33,7 @@ public class AppItemIcon {
         }
 
         AppItemIcon ci;
-        ci = context.getCachedAppIcon(appItem.packageName);
+        ci = application.getCachedAppIcon(appItem.packageName);
         if (ci != null) {
             return ci;
         } else {
@@ -38,24 +41,24 @@ public class AppItemIcon {
             Drawable appIcon;
             AppItemIcon ret;
             try {
-                appBanner = context.getPackageManager().getApplicationBanner(appItem.packageName);
+                appBanner = application.getPackageManager().getApplicationBanner(appItem.packageName);
                 if (appBanner == null) {
-                    appBanner = context.getPackageManager().getActivityBanner(appItem.intent);
+                    appBanner = application.getPackageManager().getActivityBanner(appItem.intent);
                     if (appBanner == null) {
-                        appIcon = context.getPackageManager().getApplicationIcon(appItem.packageName);
+                        appIcon = application.getPackageManager().getApplicationIcon(appItem.packageName);
                         ret = new AppItemIcon(AppItemIcon.IconType.NORMAL, appIcon);
-                        context.cacheAppIcon(appItem.packageName, ret);
+                        application.cacheAppIcon(appItem.packageName, ret);
                     } else {
                         ret = new AppItemIcon(AppItemIcon.IconType.LEANBACK, appBanner);
-                        context.cacheAppIcon(appItem.packageName, ret);
+                        application.cacheAppIcon(appItem.packageName, ret);
                     }
                 } else {
                     ret = new AppItemIcon(AppItemIcon.IconType.LEANBACK, appBanner);
-                    context.cacheAppIcon(appItem.packageName, ret);
+                    application.cacheAppIcon(appItem.packageName, ret);
                 }
             } catch (PackageManager.NameNotFoundException e) {
                 ret = new AppItemIcon(AppItemIcon.IconType.NORMAL, null);
-                context.cacheAppIcon(appItem.packageName, ret);
+                application.cacheAppIcon(appItem.packageName, ret);
             }
             return ret;
         }

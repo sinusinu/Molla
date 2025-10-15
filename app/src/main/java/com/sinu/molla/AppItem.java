@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import java.util.UUID;
 
 public class AppItem {
@@ -63,8 +64,7 @@ public class AppItem {
         customItemActivityName = (targetActivity != null ? targetActivity : appActivity);
         customItemIntentExtras = (intentExtras == null ? new ArrayList<>() : intentExtras);
 
-        intent = new Intent();
-        intent.setClassName(packageName, customItemActivityName);
+        intent = null;
     }
 
     @Override
@@ -92,7 +92,7 @@ public class AppItem {
     public static int compareByDisplayName(AppItem o1, AppItem o2) {
         var o1n = o1.customItemDisplayName != null ? o1.customItemDisplayName : o1.displayName;
         var o2n = o2.customItemDisplayName != null ? o2.customItemDisplayName : o2.displayName;
-        return o1n.compareTo(o2n);
+        return o1n.toLowerCase(Locale.ENGLISH).compareTo(o2n.toLowerCase(Locale.ENGLISH));
     }
 
     private static Thread getFetchAppsRunner(Context context, AppItemLoadCompletedCallback callback) {
@@ -213,32 +213,32 @@ public class AppItem {
             if (extra.getValueType() == String.class) {
                 JSONObject ext = new JSONObject();
                 ext.put("type", "string");
-                ext.put("value", extra.getValueAs(String.class));
+                ext.put("value", extra.getValueAsString());
                 extras.put(extra.getName(), ext);
             } else if (extra.getValueType() == Integer.class) {
                 JSONObject ext = new JSONObject();
                 ext.put("type", "int");
-                ext.put("value", extra.getValueAs(Integer.class).toString());
+                ext.put("value", extra.getValueAsString());
                 extras.put(extra.getName(), ext);
             } else if (extra.getValueType() == Long.class) {
                 JSONObject ext = new JSONObject();
                 ext.put("type", "long");
-                ext.put("value", extra.getValueAs(Long.class).toString());
+                ext.put("value", extra.getValueAsString());
                 extras.put(extra.getName(), ext);
             } else if (extra.getValueType() == Float.class) {
                 JSONObject ext = new JSONObject();
                 ext.put("type", "float");
-                ext.put("value", extra.getValueAs(Float.class).toString());
+                ext.put("value", extra.getValueAsString());
                 extras.put(extra.getName(), ext);
             } else if (extra.getValueType() == Double.class) {
                 JSONObject ext = new JSONObject();
                 ext.put("type", "double");
-                ext.put("value", extra.getValueAs(Double.class).toString());
+                ext.put("value", extra.getValueAsString());
                 extras.put(extra.getName(), ext);
             } else if (extra.getValueType() == Boolean.class) {
                 JSONObject ext = new JSONObject();
                 ext.put("type", "boolean");
-                ext.put("value", extra.getValueAs(Boolean.class).toString());
+                ext.put("value", extra.getValueAsString());
                 extras.put(extra.getName(), ext);
             }
         }

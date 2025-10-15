@@ -96,16 +96,18 @@
     <string name="dialog_autolaunch_delay_5s">5 seconds</string>
     <string name="dialog_autolaunch_delay_10s">10 seconds</string>
 
-    <string name="dialog_custom_item_title_create">New</string>
-    <string name="dialog_custom_item_title_edit">Edit</string>
-    <string name="dialog_custom_item_subtitle_create">A new Custom Shortcut will be created.</string>
-    <string name="dialog_custom_item_subtitle_edit">An existing Custom Shortcut will be edited.</string>
+    <string name="dialog_custom_item_title_create">Create a Custom Shortcut</string>
+    <string name="dialog_custom_item_title_edit">Edit a Custom Shortcut</string>
     <string name="dialog_custom_item_app">App</string>
     <string name="dialog_custom_item_title">Title</string>
     <string name="dialog_custom_item_custom_banner">Banner</string>
     <string name="dialog_custom_item_advanced">Show Advanced Options</string>
     <string name="dialog_custom_item_activity">Activity</string>
     <string name="dialog_custom_item_extras">Intent Extras</string>
+    <plurals name="dialog_custom_item_extras_count">
+        <item quantity="one">%d extra set</item>
+        <item quantity="other">%d extras set</item>
+    </plurals>
     <string name="dialog_custom_item_extras_name">Name</string>
     <string name="dialog_custom_item_extras_type">Type</string>
     <string name="dialog_custom_item_extras_value">Value</string>
@@ -125,6 +127,7 @@
     <string name="dialog_custom_item_edit_title_subtitle">Set it empty to use the default title.</string>
     <string name="dialog_custom_item_error_invalid_banner">Failed to load image!</string>
     <string name="dialog_custom_item_error_app_not_set">App must be set!</string>
+    <string name="dialog_custom_item_error_invalid_extra_value">Value is invalid!</string>
 
     <string name="common_ok">OK</string>
     <string name="common_cancel">Cancel</string>

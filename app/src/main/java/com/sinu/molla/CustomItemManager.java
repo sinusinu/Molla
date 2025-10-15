@@ -15,8 +15,8 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 
 public class CustomItemManager {
-    private Context context;
-    private ArrayList<AppItem> customShortcuts;
+    private final Context context;
+    private final ArrayList<AppItem> customShortcuts;
 
     public CustomItemManager(Context context) {
         this.context = context;

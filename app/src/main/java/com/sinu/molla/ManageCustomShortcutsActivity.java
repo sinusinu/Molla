@@ -13,7 +13,6 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.InputType;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
@@ -25,9 +24,7 @@ import android.widget.Toast;
 import androidx.activity.EdgeToEdge;
 import androidx.activity.OnBackPressedCallback;
 import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.PickVisualMediaRequest;
 import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.content.res.AppCompatResources;
@@ -36,6 +33,7 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.core.view.WindowInsetsControllerCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.SimpleItemAnimator;
 
 import com.sinu.molla.databinding.ActivityManageCustomShortcutsBinding;
 
@@ -207,6 +205,11 @@ public class ManageCustomShortcutsActivity extends AppCompatActivity {
         View viewSetCustomActivity;
         ArrayList<String> activityList;
 
+        AlertDialog adSetCustomIntentExtras;
+        View viewSetCustomIntentExtras;
+        LinearLayoutManager customIntentExtrasLayoutManager;
+        AppItemCustomIntentExtraAdapter customIntentExtrasAdapter;
+
         final AppItem editingItem;
         String uuid;
         AppItem targetApp;
@@ -214,6 +217,7 @@ public class ManageCustomShortcutsActivity extends AppCompatActivity {
         AppItemIcon targetAppIcon;
         Drawable customBanner;
         String customActivity;
+        ArrayList<AppItemCustomIntentExtra> customIntentExtras;
 
         AppItemCustomizationFinishedListener finishedListener;
 
@@ -225,6 +229,7 @@ public class ManageCustomShortcutsActivity extends AppCompatActivity {
             uuid = UUID.randomUUID().toString();
             this.editingItem = editingItem;
             this.finishedListener = finishedListener;
+            customIntentExtras = new ArrayList<>();
 
             dialogView = activity.getLayoutInflater().inflate(R.layout.dialog_custom_item, null, false);
             dialogView.findViewById(R.id.iv_dialog_custom_item_app_select).setOnClickListener((v) -> {
@@ -274,9 +279,8 @@ public class ManageCustomShortcutsActivity extends AppCompatActivity {
                             customTitle = edtCustomTitle.getText().toString();
                             if (customTitle.isBlank()) customTitle = null;
                             ((TextView)dialogView.findViewById(R.id.tv_dialog_custom_item_title_value)).setText((customTitle == null) ? (targetApp == null ? activity.getString(R.string.dialog_custom_item_not_set) : targetApp.displayName) : customTitle);
-                            d.dismiss();
                         })
-                        .setNegativeButton(R.string.common_cancel, (d, i) -> d.dismiss())
+                        .setNegativeButton(R.string.common_cancel, (d, i) -> {})
                         .create();
                 adSetCustomTitle.show();
             });
@@ -298,9 +302,6 @@ public class ManageCustomShortcutsActivity extends AppCompatActivity {
                         ((ImageView)dialogView.findViewById(R.id.iv_dialog_custom_item_icon)).setImageDrawable(targetAppIcon.drawable);
                     }
                 }
-                File bannerFileTemp = new File(activity.getFilesDir(), uuid + ".temp.webp");
-                //noinspection ResultOfMethodCallIgnored
-                bannerFileTemp.delete();
                 customBanner = null;
             });
             ((CheckBox)dialogView.findViewById(R.id.cb_dialog_custom_item_show_advanced)).setOnCheckedChangeListener((b, v) -> {
@@ -308,6 +309,7 @@ public class ManageCustomShortcutsActivity extends AppCompatActivity {
                 Objects.requireNonNull(alertDialog.getWindow()).setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
             });
             dialogView.findViewById(R.id.iv_dialog_custom_item_activity_edit).setOnClickListener((v) -> {
+                // set activity
                 if (targetApp == null) return;
                 activityList = new ArrayList<>();
                 activityList.add(activity.getString(R.string.dialog_custom_item_activity_list_default));
@@ -334,16 +336,52 @@ public class ManageCustomShortcutsActivity extends AppCompatActivity {
                         .create();
                 adSetCustomActivity.show();
             });
+            dialogView.findViewById(R.id.iv_dialog_custom_item_extras_edit).setOnClickListener((v) -> {
+                // set intent extras
+                viewSetCustomIntentExtras = activity.getLayoutInflater().inflate(R.layout.dialog_custom_item_extras_list, null, false);
+                customIntentExtrasLayoutManager = new LinearLayoutManager(activity);
+                customIntentExtrasAdapter = new AppItemCustomIntentExtraAdapter(activity, customIntentExtras, () -> {
+                    adSetCustomIntentExtras.getButton(AlertDialog.BUTTON_POSITIVE).setEnabled(customIntentExtrasAdapter.areNamesValid());
+                });
+                ((RecyclerView)viewSetCustomIntentExtras.findViewById(R.id.rv_dialog_custom_item_extras_list_list)).setLayoutManager(customIntentExtrasLayoutManager);
+                ((RecyclerView)viewSetCustomIntentExtras.findViewById(R.id.rv_dialog_custom_item_extras_list_list)).setAdapter(customIntentExtrasAdapter);
+                ((SimpleItemAnimator)(Objects.requireNonNull(((RecyclerView)viewSetCustomIntentExtras.findViewById(R.id.rv_dialog_custom_item_extras_list_list)).getItemAnimator()))).setSupportsChangeAnimations(false);
+                viewSetCustomIntentExtras.findViewById(R.id.iv_dialog_custom_item_extras_list_add).setOnClickListener((vv) -> {
+                    // add new intent extra
+                    customIntentExtrasAdapter.list.add(new AppItemCustomIntentExtra("", ""));
+                    customIntentExtrasAdapter.notifyDataSetChanged();
+                    adSetCustomIntentExtras.getButton(AlertDialog.BUTTON_POSITIVE).setEnabled(customIntentExtrasAdapter.areNamesValid());
+                });
+                adSetCustomIntentExtras = new AlertDialog.Builder(activity)
+                        .setView(viewSetCustomIntentExtras)
+                        .setPositiveButton(R.string.dialog_custom_item_save, (d, i) -> {
+                            customIntentExtras.clear();
+                            customIntentExtras.addAll(customIntentExtrasAdapter.list);
+                            int extrasCount = customIntentExtras.size();
+                            ((TextView)dialogView.findViewById(R.id.tv_dialog_custom_item_extras_value)).setText(activity.getResources().getQuantityString(R.plurals.dialog_custom_item_extras_count, extrasCount, extrasCount));
+                        })
+                        .setNegativeButton(R.string.common_cancel, (d, i) -> {})
+                        .create();
+                adSetCustomIntentExtras.show();
+            });
 
             alertDialog = new AlertDialog.Builder(activity)
                     .setView(dialogView)
                     .setPositiveButton(R.string.dialog_custom_item_save, (d, i) -> {
                         // save new custom item
-                        File bannerFileTemp = new File(activity.getFilesDir(), uuid + ".temp.webp");
-                        File bannerFile = new File(activity.getFilesDir(), uuid + ".webp");
-                        if (bannerFileTemp.exists()) {
-                            //noinspection ResultOfMethodCallIgnored
-                            bannerFileTemp.renameTo(bannerFile);
+                        if (customBanner != null) {
+                            File bannerFileTemp = new File(activity.getFilesDir(), uuid + ".temp.webp");
+                            File bannerFile = new File(activity.getFilesDir(), uuid + ".webp");
+                            if (bannerFileTemp.exists()) {
+                                //noinspection ResultOfMethodCallIgnored
+                                bannerFileTemp.renameTo(bannerFile);
+                            }
+                        } else if (editingItem != null) {
+                            File bannerFile = new File(activity.getFilesDir(), uuid + ".webp");
+                            if (bannerFile.exists()) {
+                                //noinspection ResultOfMethodCallIgnored
+                                bannerFile.delete();
+                            }
                         }
                         AppItem newItem = new AppItem(
                                 uuid,
@@ -352,28 +390,28 @@ public class ManageCustomShortcutsActivity extends AppCompatActivity {
                                 targetApp.packageName,
                                 targetApp.activityName,
                                 customActivity,
-                                null
+                                customIntentExtras
                         );
                         finishedListener.onAppItemCustomizationFinished(newItem);
-                        d.dismiss();
                     })
-                    .setNegativeButton(R.string.common_cancel, (d, i) -> {
+                    .setNegativeButton(R.string.common_cancel, (d, i) -> {})
+                    .setOnDismissListener((d) -> {
                         File bannerFileTemp = new File(activity.getFilesDir(), uuid + ".temp.webp");
                         //noinspection ResultOfMethodCallIgnored
                         bannerFileTemp.delete();
-                        d.dismiss();
+                        activity.activeCsd = null;
                     })
-                    .setOnDismissListener((d) -> activity.activeCsd = null)
                     .create();
 
             if (editingItem != null && editingItem.isCustomItem) {
                 uuid = editingItem.customItemIdentifier;
                 targetApp = editingItem;
-                targetAppIcon = AppItemIcon.getAppItemIcon((MollaApplication)activity.getApplicationContext(), editingItem);
+                targetAppIcon = AppItemIcon.getAppItemIcon((MollaApplication)activity.getApplicationContext(), editingItem, false);
                 customTitle = targetApp.customItemDisplayName;
                 customActivity = targetApp.customItemActivityName;
-                File customBannerFile = new File(activity.getFilesDir(), uuid + ".webp");
-                customBanner = Drawable.createFromPath(customBannerFile.getAbsolutePath());
+                customIntentExtras = targetApp.customItemIntentExtras;
+                File bannerFile = new File(activity.getFilesDir(), uuid + ".webp");
+                if (bannerFile.exists()) customBanner = Drawable.createFromPath(bannerFile.getAbsolutePath());
                 ((TextView)dialogView.findViewById(R.id.tv_dialog_custom_item_app_name_value)).setText(targetApp.displayName);
                 ((TextView)dialogView.findViewById(R.id.tv_dialog_custom_item_title_value)).setText((customTitle == null) ? targetApp.displayName : customTitle);
                 if (customBanner != null) {
@@ -393,19 +431,22 @@ public class ManageCustomShortcutsActivity extends AppCompatActivity {
                 } else {
                     ((TextView)dialogView.findViewById(R.id.tv_dialog_custom_item_activity_value)).setText(R.string.dialog_custom_item_default);
                 }
+                ((TextView)dialogView.findViewById(R.id.tv_dialog_custom_item_title)).setText(R.string.dialog_custom_item_title_edit);
             }
         }
 
         public void show() {
             alertDialog.show();
             alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setEnabled(false);
+            int extrasCount = customIntentExtras.size();
+            ((TextView)dialogView.findViewById(R.id.tv_dialog_custom_item_extras_value)).setText(activity.getResources().getQuantityString(R.plurals.dialog_custom_item_extras_count, extrasCount, extrasCount));
             if (editingItem != null && editingItem.isCustomItem) {
                 alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setEnabled(true);
             }
         }
 
         public void setTargetApp(AppItem appItem) {
-            boolean isNewApp = !targetApp.packageName.equals(appItem.packageName);
+            boolean isNewApp = targetApp == null || !targetApp.packageName.equals(appItem.packageName);
             targetApp = appItem;
             targetAppIcon = AppItemIcon.getAppItemIcon((MollaApplication)activity.getApplicationContext(), appItem);
             ((TextView)dialogView.findViewById(R.id.tv_dialog_custom_item_app_name_value)).setText(targetApp.displayName);
