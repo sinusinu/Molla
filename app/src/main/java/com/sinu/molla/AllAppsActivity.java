@@ -99,7 +99,7 @@ public class AllAppsActivity extends AppCompatActivity {
             new Thread(() -> {
                 AppItem.fetchAllAppsAsync(this, (items) -> {
                     this.items = items;
-                    var customItems = ((MollaApplication) getApplication()).getCustomItemManager().getCustomShortcuts();
+                    var customItems = ((MollaApplication) getApplication()).getCustomShortcutManager().getCustomShortcuts();
                     this.items.addAll(customItems);
                     Collections.sort(items, AppItem::compareByDisplayName);
 

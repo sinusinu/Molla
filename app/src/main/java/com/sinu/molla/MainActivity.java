@@ -303,7 +303,7 @@ public class MainActivity extends AppCompatActivity {
             if (autolaunchTargetPackage != null) {
                 if (autolaunchTargetPackage.startsWith("custom:")) {
                     var autolaunchTargetCustomItemId = autolaunchTargetPackage.substring(7);
-                    var customItems = ((MollaApplication)getApplication()).getCustomItemManager().getCustomShortcuts();
+                    var customItems = ((MollaApplication)getApplication()).getCustomShortcutManager().getCustomShortcuts();
                     for (int i = 0; i < customItems.size(); i++) {
                         var customItem = customItems.get(i);
                         if (customItem.customItemIdentifier.equals(autolaunchTargetCustomItemId)) {
@@ -339,7 +339,7 @@ public class MainActivity extends AppCompatActivity {
             if (autolaunchTargetPackage != null) {
                 if (autolaunchTargetPackage.startsWith("custom:")) {
                     var autolaunchTargetCustomItemId = autolaunchTargetPackage.substring(7);
-                    var customItems = ((MollaApplication)getApplication()).getCustomItemManager().getCustomShortcuts();
+                    var customItems = ((MollaApplication)getApplication()).getCustomShortcutManager().getCustomShortcuts();
                     for (int i = 0; i < customItems.size(); i++) {
                         var customItem = customItems.get(i);
                         if (customItem.customItemIdentifier.equals(autolaunchTargetCustomItemId)) {
@@ -391,7 +391,7 @@ public class MainActivity extends AppCompatActivity {
                 if (autolaunchTargetPackage != null) {
                     if (autolaunchTargetPackage.startsWith("custom:")) {
                         var autolaunchTargetCustomItemId = autolaunchTargetPackage.substring(7);
-                        var customItems = ((MollaApplication)getApplication()).getCustomItemManager().getCustomShortcuts();
+                        var customItems = ((MollaApplication)getApplication()).getCustomShortcutManager().getCustomShortcuts();
                         for (int i = 0; i < customItems.size(); i++) {
                             var customItem = customItems.get(i);
                             if (customItem.customItemIdentifier.equals(autolaunchTargetCustomItemId)) {
@@ -444,7 +444,7 @@ public class MainActivity extends AppCompatActivity {
         if (isFavListUpdateReserved) {
             binding.pbrMainLoading.setVisibility(View.VISIBLE);
             AppItem.fetchAllAppsAsync(this, (r) -> {
-                var csm = ((MollaApplication)getApplication()).getCustomItemManager();
+                var csm = ((MollaApplication)getApplication()).getCustomShortcutManager();
                 items.clear();
                 for (var favApp : favApps) {
                     if (favApp.startsWith("custom:")) {

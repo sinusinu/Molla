@@ -14,11 +14,11 @@ import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 
-public class CustomItemManager {
+public class CustomShortcutManager {
     private final Context context;
     private final ArrayList<AppItem> customShortcuts;
 
-    public CustomItemManager(Context context) {
+    public CustomShortcutManager(Context context) {
         this.context = context;
         customShortcuts = new ArrayList<>();
         loadCustomShortcuts();

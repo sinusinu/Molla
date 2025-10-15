@@ -227,7 +227,7 @@ public class SettingsActivity extends AppCompatActivity {
                         new Thread(() -> {
                             AppItem.fetchAllAppsAsync(this, (items) -> {
                                 runOnUiThread(() -> {
-                                    var customItems = ((MollaApplication)getApplication()).getCustomItemManager().getCustomShortcuts();
+                                    var customItems = ((MollaApplication)getApplication()).getCustomShortcutManager().getCustomShortcuts();
                                     items.addAll(customItems);
                                     Collections.sort(items, AppItem::compareByDisplayName);
                                     Objects.requireNonNull((View)adAutolaunchSelect.findViewById(R.id.pbr_dialog_autolaunch_select_loading)).setVisibility(View.GONE);

@@ -122,7 +122,7 @@ public class EditActivity extends AppCompatActivity {
     }
 
     private void fetchItems() {
-        var csm = ((MollaApplication)getApplication()).getCustomItemManager();
+        var csm = ((MollaApplication)getApplication()).getCustomShortcutManager();
         var customItems = csm.getCustomShortcuts();
         String favAppsRaw = pref.getString("fav_apps", "");
         ArrayList<String> favApps = new ArrayList<>(Arrays.asList(favAppsRaw.split("\\?")));

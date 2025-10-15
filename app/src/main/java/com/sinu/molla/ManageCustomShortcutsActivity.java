@@ -94,7 +94,7 @@ public class ManageCustomShortcutsActivity extends AppCompatActivity {
             var i = manager.getPosition(v);
             var item = items.get(i);
             activeCsd = new CustomShortcutDialog(this, simple, item, (newItem) -> {
-                ((MollaApplication)getApplication()).getCustomItemManager().replaceCustomShortcutAt(i, newItem);
+                ((MollaApplication)getApplication()).getCustomShortcutManager().replaceCustomShortcutAt(i, newItem);
                 rUpdateCustomShortcuts.run();
             });
             activeCsd.show();
@@ -104,12 +104,12 @@ public class ManageCustomShortcutsActivity extends AppCompatActivity {
             File bannerFile = new File(getFilesDir(), items.get(i).customItemIdentifier + ".webp");
             //noinspection ResultOfMethodCallIgnored
             bannerFile.delete();
-            ((MollaApplication)getApplication()).getCustomItemManager().removeCustomShortcutAt(i);
+            ((MollaApplication)getApplication()).getCustomShortcutManager().removeCustomShortcutAt(i);
             rUpdateCustomShortcuts.run();
         };
 
         rUpdateCustomShortcuts = () -> {
-            var cs = ((MollaApplication)getApplication()).getCustomItemManager().getCustomShortcuts();
+            var cs = ((MollaApplication)getApplication()).getCustomShortcutManager().getCustomShortcuts();
             items.clear();
             items.addAll(cs);
 
@@ -139,7 +139,7 @@ public class ManageCustomShortcutsActivity extends AppCompatActivity {
 
         binding.ivManageCustomShortcutsAdd.setOnClickListener((v) -> {
             activeCsd = new CustomShortcutDialog(this, simple, null, (newItem) -> {
-                ((MollaApplication)getApplication()).getCustomItemManager().addCustomShortcut(newItem);
+                ((MollaApplication)getApplication()).getCustomShortcutManager().addCustomShortcut(newItem);
                 rUpdateCustomShortcuts.run();
             });
             activeCsd.show();

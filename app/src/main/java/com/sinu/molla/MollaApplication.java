@@ -7,7 +7,7 @@ import java.util.HashMap;
 public class MollaApplication extends Application {
     private WallpaperCache wallpaperCache;
     private HashMap<String, AppItemIcon> iconCache;
-    private CustomItemManager customItemManager;
+    private CustomShortcutManager customShortcutManager;
 
     @Override
     public void onCreate() {
@@ -15,7 +15,7 @@ public class MollaApplication extends Application {
 
         wallpaperCache = new WallpaperCache(getApplicationContext());
         iconCache = new HashMap<>();
-        customItemManager = new CustomItemManager(this);
+        customShortcutManager = new CustomShortcutManager(this);
     }
 
     public WallpaperCache getWallpaperCache() {
@@ -31,8 +31,8 @@ public class MollaApplication extends Application {
         iconCache.put(key, value);
     }
 
-    public CustomItemManager getCustomItemManager() {
-        return customItemManager;
+    public CustomShortcutManager getCustomShortcutManager() {
+        return customShortcutManager;
     }
 
     @Override

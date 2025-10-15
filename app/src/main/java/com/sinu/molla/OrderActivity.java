@@ -63,7 +63,7 @@ public class OrderActivity extends AppCompatActivity {
 
         selectedItems = new ArrayList<>();
         AppItem.fetchAllAppsAsync(this, (r) -> {
-            var csm = ((MollaApplication)getApplication()).getCustomItemManager();
+            var csm = ((MollaApplication)getApplication()).getCustomShortcutManager();
             selectedItems.clear();
             for (var favApp : favApps) {
                 if (favApp.startsWith("custom:")) {
