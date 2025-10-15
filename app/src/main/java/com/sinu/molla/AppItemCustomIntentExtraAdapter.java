@@ -5,6 +5,7 @@ package com.sinu.molla;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -66,6 +67,7 @@ public class AppItemCustomIntentExtraAdapter extends RecyclerView.Adapter<AppIte
         holder.btnName.setText(list.get(position).getName().isBlank() ? context.getString(R.string.dialog_custom_item_extras_name) : list.get(position).getName());
         holder.btnName.setOnClickListener((v) -> {
             EditText edtNewName = new EditText(context);
+            edtNewName.setInputType(InputType.TYPE_CLASS_TEXT);
             AlertDialog adSetName = new AlertDialog.Builder(context)
                     .setView(edtNewName)
                     .setPositiveButton(R.string.dialog_custom_item_save, (d, i) -> {
@@ -102,6 +104,7 @@ public class AppItemCustomIntentExtraAdapter extends RecyclerView.Adapter<AppIte
         }
         holder.btnValue.setOnClickListener((v) -> {
             EditText edtNewValue = new EditText(context);
+            edtNewValue.setInputType(InputType.TYPE_CLASS_TEXT);
             AlertDialog adSetValue = new AlertDialog.Builder(context)
                     .setView(edtNewValue)
                     .setPositiveButton(R.string.dialog_custom_item_save, (d, i) -> {
