@@ -8,6 +8,8 @@
     <string name="main_edit_fav">바로가기 편집</string>
     <string name="main_autolaunch_overlay_title">%s 실행까지…</string>
     <string name="main_autolaunch_overlay_cancel_help">취소하려면 \"뒤로\" 버튼을 누르세요.</string>
+    <string name="main_kiosk_unlock">잠금 해제</string>
+    <string name="main_kiosk_unlocked">키오스크 모드 일시적 잠금 해제됨</string>
 
     <string name="all_title">모든 앱</string>
     <string name="all_back">뒤로</string>
@@ -48,6 +50,8 @@
     <string name="settings_autostart_at_boot_desc">장치가 부팅을 완료하면 Molla를 자동으로 실행합니다. 장치가 기본 런처를 변경하는 기능을 제공하지 않을 경우 유용합니다.</string>
     <string name="settings_orientation_title">방향 강제 설정</string>
     <string name="settings_orientation_desc">Molla의 방향을 강제로 설정하게 합니다. 문제가 발생할 수 있습니다. 일부 장치에서는 작동하지 않습니다.</string>
+    <string name="settings_kiosk_mode_title">키오스크 모드</string>
+    <string name="settings_kiosk_mode_desc">메인 화면에서 바로가기를 제외한 모든 버튼을 숨깁니다.</string>
     <string name="settings_category_autolaunch">자동 실행</string>
     <string name="settings_autolaunch_app_title">자동 실행할 앱</string>
     <string name="settings_autolaunch_app_desc">선택한 앱을 장치 재부팅 후 Molla 첫 실행 시 바로 실행합니다. 일부 장치에서는 작동하지 않습니다.</string>
@@ -65,6 +69,8 @@
     <string name="settings_open_system_display_desc">설정 앱의 화면 설정을 실행합니다.</string>
     <string name="settings_open_system_apps">앱 설정</string>
     <string name="settings_open_system_apps_desc">설정 앱의 앱 설정을 실행합니다.</string>
+    <string name="settings_kiosk_set_pin_title">PIN 설정</string>
+    <string name="settings_kiosk_set_pin_content">키오스크 모드 해제에 PIN 입력을 요구할까요?\n\n설정하지 않을 경우, \"잠금 해제\" 바로가기를 한 번 누르는 것만으로 키오스크 모드를 해제할 수 있게 됩니다.</string>
     <string name="settings_autostart_at_boot_perm_title">권한 필요</string>
     <string name="settings_autostart_at_boot_perm_content">이 기능을 사용하려면 특별한 권한이 필요합니다. 계속하려면 다음 내용을 주의깊게 읽어주세요.\n\n\"확인\" 버튼을 누르면 특정한 앱에게 다른 앱 위에 그릴 수 있는 권한을 부여할 수 있는 화면으로 이동합니다.\n\n목록에서 Molla를 찾아 선택한 뒤, 권한을 부여해주세요. 권한이 부여되면 이 설정을 사용할 수 있게 됩니다.\n\n계속하려면 \"확인\" 버튼을 눌러주세요.</string>
     <string name="settings_error_wallpaper">이 기기에서는 배경화면을 사용할 수 없습니다</string>
@@ -127,7 +133,19 @@
     <string name="dialog_custom_item_error_app_not_set">앱이 선택되지 않았습니다!</string>
     <string name="dialog_custom_item_error_invalid_extra_value">값이 올바르지 않습니다!</string>
 
+    <string name="dialog_kiosk_pin_title">PIN 입력 (최대 6자리)</string>
+    <string name="dialog_kiosk_pin_title_repeat">PIN 다시 입력</string>
+    <string name="dialog_kiosk_pin_title_unlock">PIN 입력</string>
+    <string name="dialog_kiosk_pin_backspace">삭제</string>
+    <string name="dialog_kiosk_pin_repeat_mismatch">PIN이 일치하지 않습니다!</string>
+    <string name="dialog_kiosk_pin_unlock_mismatch">PIN이 일치하지 않습니다!</string>
+    <string name="dialog_kiosk_pin_help">도움말</string>
+    <string name="dialog_kiosk_pin_help_title">키오스크 모드</string>
+    <string name="dialog_kiosk_pin_help_content">이 장치는 현재 일부 기능만 사용 가능하도록 제한되어 있습니다. 잠긴 기능에 접근하려면 PIN을 입력해야 합니다.\n\nPIN을 입력하면 모든 기능이 일시적으로 잠금 해제되지만, 메인 화면으로 돌아오면 다시 잠금이 적용됩니다.\n\n키오스크 모드를 영구적으로 해제하려면, 설정 화면에서 키오스크 모드 옵션을 해제하세요.</string>
+
     <string name="common_ok">확인</string>
     <string name="common_cancel">취소</string>
+    <string name="common_yes">예</string>
+    <string name="common_no">아니오</string>
     <string name="common_error_app_launch_failed">이 앱을 시작할 수 없습니다!</string>
 </resources>

@@ -9,6 +9,8 @@
     <string name="main_edit_fav">Edit Quick Access</string>
     <string name="main_autolaunch_overlay_title">Launching %s in…</string>
     <string name="main_autolaunch_overlay_cancel_help">Press \"Back\" now to cancel.</string>
+    <string name="main_kiosk_unlock">Unlock</string>
+    <string name="main_kiosk_unlocked">Kiosk Mode temporarily disabled</string>
 
     <string name="all_title">All Apps</string>
     <string name="all_back">Back</string>
@@ -49,6 +51,8 @@
     <string name="settings_autostart_at_boot_desc">Start Molla automatically after the device boots up. Useful if the device does not allow changing the default launcher.</string>
     <string name="settings_orientation_title">Forced Orientation</string>
     <string name="settings_orientation_desc">Set forced orientation of Molla. May cause problems. May not work on some devices.</string>
+    <string name="settings_kiosk_mode_title">Kiosk Mode</string>
+    <string name="settings_kiosk_mode_desc">Hide all buttons except Quick Access icons from the main screen.</string>
     <string name="settings_category_autolaunch">Auto-Launch</string>
     <string name="settings_autolaunch_app_title">Auto-Launch App</string>
     <string name="settings_autolaunch_app_desc">When set, the selected app will automatically launch when Molla first launches after rebooting the device. May not work on some devices.</string>
@@ -68,6 +72,8 @@
     <string name="settings_open_system_display_desc">Open the Display settings.</string>
     <string name="settings_open_system_apps">Apps Settings</string>
     <string name="settings_open_system_apps_desc">Open the Apps settings.</string>
+    <string name="settings_kiosk_set_pin_title">Set up PIN</string>
+    <string name="settings_kiosk_set_pin_content">Should a PIN code be required to unlock Kiosk Mode?\n\nIf not, pressing the \"Unlock\" icon will immediately unlock the Kiosk Mode.</string>
     <string name="settings_autostart_at_boot_perm_title">Permission required</string>
     <string name="settings_autostart_at_boot_perm_content">This feature requires a special permission. Please read the following carefully.\n\nPressing \"OK\" button will take you to a screen where you can grant specific apps permission to display over other apps.\n\nFind Molla in the list, and grant the permission. Once the permission is granted, you can enable this feature.\n\nTo continue, press \"OK\".</string>
     <string name="settings_error_wallpaper">Wallpaper is not supported on this device</string>
@@ -131,8 +137,20 @@
     <string name="dialog_custom_item_error_app_not_set">App must be set!</string>
     <string name="dialog_custom_item_error_invalid_extra_value">Value is invalid!</string>
 
+    <string name="dialog_kiosk_pin_title">Enter PIN (up to 6 digits)</string>
+    <string name="dialog_kiosk_pin_title_repeat">Repeat PIN</string>
+    <string name="dialog_kiosk_pin_title_unlock">Enter PIN</string>
+    <string name="dialog_kiosk_pin_backspace">Backspace</string>
+    <string name="dialog_kiosk_pin_repeat_mismatch">PIN does not match!</string>
+    <string name="dialog_kiosk_pin_unlock_mismatch">PIN does not match!</string>
+    <string name="dialog_kiosk_pin_help">Help</string>
+    <string name="dialog_kiosk_pin_help_title">Kiosk Mode</string>
+    <string name="dialog_kiosk_pin_help_content">This device is currently restricted to limited access. To access all features, you need to enter the PIN.\n\nEntering the PIN will temporarily unlock the features, but they will be locked again as soon as you return to the main screen.\n\nTo disable Kiosk Mode permanently, go to Settings and disable the option.</string>
+
     <string name="common_ok">OK</string>
     <string name="common_cancel">Cancel</string>
+    <string name="common_yes">Yes</string>
+    <string name="common_no">No</string>
     <string name="common_error_app_launch_failed">Unable to launch this app!</string>
 </resources>
 

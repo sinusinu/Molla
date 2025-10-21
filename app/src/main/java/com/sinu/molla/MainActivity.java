@@ -5,9 +5,11 @@ package com.sinu.molla;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
@@ -23,11 +25,13 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
 import android.text.format.DateFormat;
-import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.activity.OnBackPressedCallback;
@@ -76,6 +80,11 @@ public class MainActivity extends AppCompatActivity {
     boolean isWaitingForAutoLaunch = false;
     int autoLaunchCountdown = 0;
 
+    boolean useFocusOutline;
+
+    boolean kioskModeActive;
+    StringBuilder sbPin;
+
     @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,6 +95,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         pref = getSharedPreferences("com.sinu.molla.settings", Context.MODE_PRIVATE);
+        useFocusOutline = pref.getInt("use_focus_outline", 0) == 1;
 
         items = new ArrayList<>();
 
@@ -94,6 +104,94 @@ public class MainActivity extends AppCompatActivity {
 
         adapter.setOnAppItemFocusChangedListener((i, n) -> {
             binding.tvMainFavName.setText(n);
+        });
+
+        adapter.setOnKioskUnlockRequestedListener(() -> {
+            if (kioskModeActive) {
+                String kioskPin = pref.getString("kiosk_mode_pin", null);
+                if (kioskPin == null) {
+                    kioskModeActive = false;
+                    adapter.setKioskMode(false);
+                    binding.lvMainAll.setVisibility(View.VISIBLE);
+                    binding.lvMainSettings.setVisibility(View.VISIBLE);
+                    Toast.makeText(this, R.string.main_kiosk_unlocked, Toast.LENGTH_SHORT).show();
+                } else {
+                    if (sbPin == null) sbPin = new StringBuilder();
+                    else sbPin.setLength(0);
+                    var viewKioskPin = getLayoutInflater().inflate(R.layout.dialog_kiosk_pin, null, false);
+                    ((TextView)viewKioskPin.findViewById(R.id.tv_dialog_kiosk_pin_title)).setText(R.string.dialog_kiosk_pin_title_unlock);
+                    int[] buttons = { R.id.btn_dialog_kiosk_pin_0, R.id.btn_dialog_kiosk_pin_1, R.id.btn_dialog_kiosk_pin_2, R.id.btn_dialog_kiosk_pin_3, R.id.btn_dialog_kiosk_pin_4, R.id.btn_dialog_kiosk_pin_5, R.id.btn_dialog_kiosk_pin_6, R.id.btn_dialog_kiosk_pin_7, R.id.btn_dialog_kiosk_pin_8, R.id.btn_dialog_kiosk_pin_9 };
+                    for (int j = 0; j < buttons.length; j++) {
+                        int fi = j;
+                        View v = viewKioskPin.findViewById(buttons[j]);
+                        v.setOnClickListener((vv) -> {
+                            if (sbPin.length() < 6) {
+                                sbPin.append(fi);
+                                ((TextView)viewKioskPin.findViewById(R.id.tv_dialog_kiosk_pin_display)).setText(sbPin.toString());
+                            }
+                        });
+                        v.setOnKeyListener((view, code, event) -> false);
+                        v.setBackgroundResource(useFocusOutline ? R.drawable.focus_outline : R.drawable.focus_highlight);
+                    }
+                    var ivBksp = viewKioskPin.findViewById(R.id.iv_dialog_kiosk_pin_bksp);
+                    ivBksp.setOnClickListener((v) -> {
+                        if (sbPin.length() > 0) {
+                            sbPin.setLength(sbPin.length() - 1);
+                            ((TextView)viewKioskPin.findViewById(R.id.tv_dialog_kiosk_pin_display)).setText(sbPin.toString());
+                        }
+                    });
+                    ivBksp.setOnKeyListener((view, code, event) -> false);
+                    ivBksp.setBackgroundResource(useFocusOutline ? R.drawable.focus_outline : R.drawable.focus_highlight);
+                    var adKioskPin = new AlertDialog.Builder(this)
+                            .setView(viewKioskPin)
+                            .setPositiveButton(R.string.common_ok, null)
+                            .setNegativeButton(R.string.common_cancel, null)
+                            .setNeutralButton(R.string.dialog_kiosk_pin_help, null)
+                            .create();
+                    adKioskPin.setOnKeyListener((view, code, event) -> {
+                        if (event.getAction() == KeyEvent.ACTION_DOWN) {
+                            if (code >= KeyEvent.KEYCODE_0 && code <= KeyEvent.KEYCODE_9) {
+                                int number = code - KeyEvent.KEYCODE_0;
+                                if (sbPin.length() < 6) {
+                                    sbPin.append(number);
+                                    ((TextView)viewKioskPin.findViewById(R.id.tv_dialog_kiosk_pin_display)).setText(sbPin.toString());
+                                }
+                                return true;
+                            } else if (code == KeyEvent.KEYCODE_DEL) {
+                                if (sbPin.length() > 0) {
+                                    sbPin.setLength(sbPin.length() - 1);
+                                    ((TextView)viewKioskPin.findViewById(R.id.tv_dialog_kiosk_pin_display)).setText(sbPin.toString());
+                                }
+                                return true;
+                            }
+                        }
+                        return false;
+                    });
+                    adKioskPin.show();
+                    adKioskPin.getButton(DialogInterface.BUTTON_POSITIVE).setOnClickListener((v) -> {
+                        if (kioskPin.equals(sbPin.toString())) {
+                            kioskModeActive = false;
+                            adapter.setKioskMode(false);
+                            binding.lvMainAll.setVisibility(View.VISIBLE);
+                            binding.lvMainSettings.setVisibility(View.VISIBLE);
+                            Toast.makeText(this, R.string.main_kiosk_unlocked, Toast.LENGTH_SHORT).show();
+                            adKioskPin.dismiss();
+                        } else {
+                            sbPin.setLength(0);
+                            ((TextView)viewKioskPin.findViewById(R.id.tv_dialog_kiosk_pin_display)).setText(sbPin.toString());
+                            Toast.makeText(this, R.string.dialog_kiosk_pin_unlock_mismatch, Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                    adKioskPin.getButton(DialogInterface.BUTTON_NEUTRAL).setOnClickListener((v) -> {
+                        var adKioskHelp = new AlertDialog.Builder(this)
+                                .setTitle(R.string.dialog_kiosk_pin_help_title)
+                                .setMessage(R.string.dialog_kiosk_pin_help_content)
+                                .setPositiveButton(R.string.common_ok, (dd, ii) -> {})
+                                .create();
+                        adKioskHelp.show();
+                    });
+                }
+            }
         });
 
         binding.rvMainFav.setLayoutManager(manager);
@@ -377,13 +475,23 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-        var useFocusOutline = pref.getInt("use_focus_outline", 0) == 1;
+        useFocusOutline = pref.getInt("use_focus_outline", 0) == 1;
         if (useFocusOutline) {
             binding.lvMainAll.setBackgroundResource(R.drawable.focus_outline);
             binding.lvMainSettings.setBackgroundResource(R.drawable.focus_outline);
         } else {
             binding.lvMainAll.setBackgroundResource(R.drawable.focus_highlight);
             binding.lvMainSettings.setBackgroundResource(R.drawable.focus_highlight);
+        }
+
+        kioskModeActive = pref.getInt("kiosk_mode", 0) == 1;
+        adapter.setKioskMode(kioskModeActive);
+        if (kioskModeActive) {
+            binding.lvMainAll.setVisibility(View.GONE);
+            binding.lvMainSettings.setVisibility(View.GONE);
+        } else {
+            binding.lvMainAll.setVisibility(View.VISIBLE);
+            binding.lvMainSettings.setVisibility(View.VISIBLE);
         }
 
         // check if device rebooted (normal)
@@ -468,6 +576,7 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 runOnUiThread(() -> {
+                    adapter.setKioskMode(kioskModeActive);
                     adapter.notifyDataSetChanged();
                     binding.pbrMainLoading.setVisibility(View.GONE);
                     binding.rvMainFav.setVisibility(View.VISIBLE);

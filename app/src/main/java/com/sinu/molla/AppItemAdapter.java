@@ -35,8 +35,11 @@ public class AppItemAdapter extends RecyclerView.Adapter<AppItemAdapter.ViewHold
     private Drawable drawableGeneric;
 
     private OnAppItemFocusChangedListener focusChangedListener;
+    private OnKioskUnlockRequestedListener kioskUnlockRequestedListener;
 
     private final boolean shouldAddEditButton;
+
+    private boolean kioskModeActive = false;
 
     public int selectedItem = -1;
 
@@ -56,6 +59,13 @@ public class AppItemAdapter extends RecyclerView.Adapter<AppItemAdapter.ViewHold
 
     public void SetSimpleBackground(boolean simple) {
         drawableGeneric = ContextCompat.getDrawable(context, simple ? R.drawable.generic_simple : R.drawable.generic);
+    }
+
+    public void setKioskMode(boolean active) {
+        if (shouldAddEditButton) {
+            kioskModeActive = active;
+            notifyItemChanged(list.size());
+        }
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnHoverListener, View.OnFocusChangeListener {
@@ -91,7 +101,7 @@ public class AppItemAdapter extends RecyclerView.Adapter<AppItemAdapter.ViewHold
                 focused = true;
                 selectedItem = manager.getPosition(view);
                 if (focusChangedListener != null) {
-                    String dispName = selectedItem == list.size() ? context.getString(R.string.main_edit_fav) : ((list.get(selectedItem).isCustomItem && list.get(selectedItem).customItemDisplayName != null) ? list.get(selectedItem).customItemDisplayName : list.get(selectedItem).displayName);
+                    String dispName = selectedItem == list.size() ? (kioskModeActive ? context.getString(R.string.main_kiosk_unlock) : context.getString(R.string.main_edit_fav)) : ((list.get(selectedItem).isCustomItem && list.get(selectedItem).customItemDisplayName != null) ? list.get(selectedItem).customItemDisplayName : list.get(selectedItem).displayName);
                     focusChangedListener.onAppItemFocusChanged(selectedItem, dispName);
                 }
             } else {
@@ -111,9 +121,13 @@ public class AppItemAdapter extends RecyclerView.Adapter<AppItemAdapter.ViewHold
         @Override
         public void onClick(View view) {
             if (isEdit) {
-                activity.startActivity(intent);
-                activity.overridePendingTransition(R.anim.no_anim, R.anim.no_anim);
-                ((MainActivity)activity).isFavListUpdateReserved = true;
+                if (kioskModeActive) {
+                    if (kioskUnlockRequestedListener != null) kioskUnlockRequestedListener.onKioskUnlockRequested();
+                } else {
+                    activity.startActivity(intent);
+                    activity.overridePendingTransition(R.anim.no_anim, R.anim.no_anim);
+                    ((MainActivity) activity).isFavListUpdateReserved = true;
+                }
             } else {
                 var appItem = list.get(manager.getPosition(view));
                 AppItem.launch(activity, appItem);
@@ -132,10 +146,13 @@ public class AppItemAdapter extends RecyclerView.Adapter<AppItemAdapter.ViewHold
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         if (position == list.size()) {
             holder.ivBanner.setImageDrawable(drawableGeneric);
-            holder.ivIcon.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_edit));
-
-            holder.fvBody.setContentDescription(context.getString(R.string.main_edit_fav));
-
+            if (kioskModeActive) {
+                holder.ivIcon.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_lock));
+                holder.fvBody.setContentDescription(context.getString(R.string.main_kiosk_unlock));
+            } else {
+                holder.ivIcon.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_edit));
+                holder.fvBody.setContentDescription(context.getString(R.string.main_edit_fav));
+            }
             holder.intent = new Intent(context, EditActivity.class);
             holder.isEdit = true;
         } else {
@@ -171,5 +188,13 @@ public class AppItemAdapter extends RecyclerView.Adapter<AppItemAdapter.ViewHold
 
     public void setOnAppItemFocusChangedListener(OnAppItemFocusChangedListener listener) {
         this.focusChangedListener = listener;
+    }
+
+    public interface OnKioskUnlockRequestedListener {
+        void onKioskUnlockRequested();
+    }
+
+    public void setOnKioskUnlockRequestedListener(OnKioskUnlockRequestedListener listener) {
+        this.kioskUnlockRequestedListener = listener;
     }
 }

@@ -93,6 +93,11 @@ public class SettingsAdapter extends RecyclerView.Adapter<SettingsAdapter.ViewHo
                         MollaSetting.TYPE_BUTTON, "orientation", true
                 ),
                 new MollaSetting(
+                        context.getString(R.string.settings_kiosk_mode_title),
+                        context.getString(R.string.settings_kiosk_mode_desc),
+                        MollaSetting.TYPE_CHECKBOX, "kiosk_mode", true
+                ),
+                new MollaSetting(
                         context.getString(R.string.settings_category_autolaunch),
                         null,
                         MollaSetting.TYPE_CATEGORY, null, false

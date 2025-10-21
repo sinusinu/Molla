@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingStart="@dimen/_16sdp"
+    android:paddingEnd="@dimen/_16sdp"
+    android:paddingTop="@dimen/_12sdp"
+    android:paddingBottom="@dimen/_12sdp"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_dialog_kiosk_pin_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/dialog_kiosk_pin_title"
+        android:textSize="@dimen/_16ssp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_dialog_kiosk_pin_display"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fontFamily="monospace"
+            android:letterSpacing="0.3"
+            android:textAlignment="center"
+            android:textSize="@dimen/_24ssp" />
+
+        <ImageView
+            android:id="@+id/iv_dialog_kiosk_pin_bksp"
+            android:layout_width="@dimen/_56sdp"
+            android:layout_height="match_parent"
+            android:layout_weight="0"
+            android:background="@drawable/focus_highlight"
+            android:clickable="true"
+            android:contentDescription="@string/dialog_kiosk_pin_backspace"
+            android:focusable="true"
+            android:padding="@dimen/_6sdp"
+            app:srcCompat="@drawable/ic_backspace" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btn_dialog_kiosk_pin_1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/focus_highlight"
+            android:paddingTop="@dimen/_2sdp"
+            android:paddingBottom="@dimen/_2sdp"
+            android:text="1"
+            android:textSize="@dimen/_20ssp"
+            tools:ignore="HardcodedText" />
+
+        <Button
+            android:id="@+id/btn_dialog_kiosk_pin_2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/focus_highlight"
+            android:paddingTop="@dimen/_2sdp"
+            android:paddingBottom="@dimen/_2sdp"
+            android:text="2"
+            android:textSize="@dimen/_20ssp"
+            tools:ignore="HardcodedText" />
+
+        <Button
+            android:id="@+id/btn_dialog_kiosk_pin_3"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/focus_highlight"
+            android:paddingTop="@dimen/_2sdp"
+            android:paddingBottom="@dimen/_2sdp"
+            android:text="3"
+            android:textSize="@dimen/_20ssp"
+            tools:ignore="HardcodedText" />
+
+        <Button
+            android:id="@+id/btn_dialog_kiosk_pin_4"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/focus_highlight"
+            android:paddingTop="@dimen/_2sdp"
+            android:paddingBottom="@dimen/_2sdp"
+            android:text="4"
+            android:textSize="@dimen/_20ssp"
+            tools:ignore="HardcodedText" />
+
+        <Button
+            android:id="@+id/btn_dialog_kiosk_pin_5"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/focus_highlight"
+            android:paddingTop="@dimen/_2sdp"
+            android:paddingBottom="@dimen/_2sdp"
+            android:text="5"
+            android:textSize="@dimen/_20ssp"
+            tools:ignore="HardcodedText" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/_4sdp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btn_dialog_kiosk_pin_6"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/focus_highlight"
+            android:paddingTop="@dimen/_2sdp"
+            android:paddingBottom="@dimen/_2sdp"
+            android:text="6"
+            android:textSize="@dimen/_20ssp"
+            tools:ignore="HardcodedText" />
+
+        <Button
+            android:id="@+id/btn_dialog_kiosk_pin_7"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/focus_highlight"
+            android:paddingTop="@dimen/_2sdp"
+            android:paddingBottom="@dimen/_2sdp"
+            android:text="7"
+            android:textSize="@dimen/_20ssp"
+            tools:ignore="HardcodedText" />
+
+        <Button
+            android:id="@+id/btn_dialog_kiosk_pin_8"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/focus_highlight"
+            android:paddingTop="@dimen/_2sdp"
+            android:paddingBottom="@dimen/_2sdp"
+            android:text="8"
+            android:textSize="@dimen/_20ssp"
+            tools:ignore="HardcodedText" />
+
+        <Button
+            android:id="@+id/btn_dialog_kiosk_pin_9"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/focus_highlight"
+            android:paddingTop="@dimen/_2sdp"
+            android:paddingBottom="@dimen/_2sdp"
+            android:text="9"
+            android:textSize="@dimen/_20ssp"
+            tools:ignore="HardcodedText" />
+
+        <Button
+            android:id="@+id/btn_dialog_kiosk_pin_0"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/focus_highlight"
+            android:paddingTop="@dimen/_2sdp"
+            android:paddingBottom="@dimen/_2sdp"
+            android:text="0"
+            android:textSize="@dimen/_20ssp"
+            tools:ignore="HardcodedText" />
+    </LinearLayout>
+
+</LinearLayout>
