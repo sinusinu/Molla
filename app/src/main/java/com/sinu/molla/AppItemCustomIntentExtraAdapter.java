@@ -192,6 +192,7 @@ public class AppItemCustomIntentExtraAdapter extends RecyclerView.Adapter<AppIte
         return "?";
     }
 
+    /** @noinspection IfStatementWithIdenticalBranches */
     private Class<?> getNextType(Class<?> currentType) {
         if (currentType == String.class) return Integer.class;
         if (currentType == Integer.class) return Long.class;
@@ -203,6 +204,6 @@ public class AppItemCustomIntentExtraAdapter extends RecyclerView.Adapter<AppIte
     }
 
     public interface DataValidityChangedListener {
-        public void onDataValidityChanged();
+        void onDataValidityChanged();
     }
 }

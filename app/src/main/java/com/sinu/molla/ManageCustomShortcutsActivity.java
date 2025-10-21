@@ -115,7 +115,7 @@ public class ManageCustomShortcutsActivity extends AppCompatActivity {
             items.clear();
             items.addAll(cs);
 
-            adapter = new AppItemListManageCustomAdapter(getApplicationContext(), this, items, itemEditListener, itemDeleteListener, simple, useFocusOutline);
+            adapter = new AppItemListManageCustomAdapter(getApplicationContext(), items, itemEditListener, itemDeleteListener, simple, useFocusOutline);
             binding.rvManageCustomShortcutsShortcuts.setAdapter(adapter);
 
             binding.rvManageCustomShortcutsShortcuts.setVisibility(View.VISIBLE);

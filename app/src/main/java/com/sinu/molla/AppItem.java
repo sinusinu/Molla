@@ -114,7 +114,7 @@ public class AppItem {
             try {
                 activity.startActivity(i);
             } catch (Exception ignored) {
-                ignored.printStackTrace();
+                //ignored.printStackTrace();
                 Toast.makeText(activity, R.string.common_error_app_launch_failed, Toast.LENGTH_SHORT).show();
             }
         } else {
@@ -122,7 +122,7 @@ public class AppItem {
                 try {
                     activity.startActivity(appItem.intent);
                 } catch (Exception ignored) {
-                    ignored.printStackTrace();
+                    //ignored.printStackTrace();
                     Toast.makeText(activity, R.string.common_error_app_launch_failed, Toast.LENGTH_SHORT).show();
                 }
             }

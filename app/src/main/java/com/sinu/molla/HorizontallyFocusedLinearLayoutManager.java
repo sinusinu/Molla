@@ -10,11 +10,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class HorizontallyFocusedLinearLayoutManager extends LinearLayoutManager {
-    private RecyclerView rv;
-
-    public HorizontallyFocusedLinearLayoutManager(Context context, int orientation, boolean reverseLayout, RecyclerView rv) {
+    public HorizontallyFocusedLinearLayoutManager(Context context, int orientation, boolean reverseLayout) {
         super(context, orientation, reverseLayout);
-        this.rv = rv;
     }
 
     @Override

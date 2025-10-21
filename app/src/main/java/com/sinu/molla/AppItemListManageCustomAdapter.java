@@ -20,20 +20,18 @@ import java.util.ArrayList;
 
 public class AppItemListManageCustomAdapter extends RecyclerView.Adapter<AppItemListManageCustomAdapter.ViewHolder> {
     private final Context context;
-    private final Activity activity;
     private final ArrayList<AppItem> list;
 
-    private Drawable drawableGeneric;
+    private final Drawable drawableGeneric;
 
     private final View.OnClickListener itemEditListener;
     private final View.OnClickListener itemDeleteListener;
 
     private final boolean useFocusOutline;
 
-    public AppItemListManageCustomAdapter(Context context, Activity activity, ArrayList<AppItem> list, View.OnClickListener itemEditListener, View.OnClickListener itemDeleteListener, boolean simple, boolean useFocusOutline) {
+    public AppItemListManageCustomAdapter(Context context, ArrayList<AppItem> list, View.OnClickListener itemEditListener, View.OnClickListener itemDeleteListener, boolean simple, boolean useFocusOutline) {
         this.list = list;
         this.context = context;
-        this.activity = activity;
         this.useFocusOutline = useFocusOutline;
 
         this.itemEditListener = itemEditListener;
