@@ -121,10 +121,10 @@ public class MainActivity extends AppCompatActivity {
             binding.lvMainSettings.startAnimation(hasFocus ? animScaleUp : animScaleDown);
         });
 
-        // hide system bars
+        // setup system bars (hide/show on onResume)
         WindowInsetsControllerCompat windowInsetsController = WindowCompat.getInsetsController(getWindow(), getWindow().getDecorView());
         windowInsetsController.setSystemBarsBehavior(WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE);
-        windowInsetsController.hide(WindowInsetsCompat.Type.systemBars());
+        windowInsetsController.setAppearanceLightStatusBars(false);
 
         var batteryIntent = registerReceiver(null, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
 
@@ -430,15 +430,19 @@ public class MainActivity extends AppCompatActivity {
         // enable system bar if goofy setting "use_system_bar" is enabled
         if (pref.getInt("use_system_bar", 0) == 1) {
             WindowInsetsControllerCompat windowInsetsController = WindowCompat.getInsetsController(getWindow(), getWindow().getDecorView());
-            windowInsetsController.setSystemBarsBehavior(WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE);
-            windowInsetsController.setAppearanceLightStatusBars(false);
             windowInsetsController.show(WindowInsetsCompat.Type.systemBars());
 
             ViewCompat.setOnApplyWindowInsetsListener(binding.clMainContainer, (v, insets) -> {
-                Insets bars = insets.getInsets(
-                        WindowInsetsCompat.Type.systemBars()
-                                | WindowInsetsCompat.Type.displayCutout()
-                );
+                Insets bars = insets.getInsets(WindowInsetsCompat.Type.systemBars() | WindowInsetsCompat.Type.displayCutout());
+                v.setPadding(bars.left, bars.top, bars.right, bars.bottom);
+                return WindowInsetsCompat.CONSUMED;
+            });
+        } else {
+            WindowInsetsControllerCompat windowInsetsController = WindowCompat.getInsetsController(getWindow(), getWindow().getDecorView());
+            windowInsetsController.hide(WindowInsetsCompat.Type.systemBars());
+
+            ViewCompat.setOnApplyWindowInsetsListener(binding.clMainContainer, (v, insets) -> {
+                Insets bars = insets.getInsets(WindowInsetsCompat.Type.displayCutout());
                 v.setPadding(bars.left, bars.top, bars.right, bars.bottom);
                 return WindowInsetsCompat.CONSUMED;
             });

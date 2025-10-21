@@ -2,7 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/cl_main_container"
+    android:id="@+id/cl_main_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity"
@@ -33,179 +33,196 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0" />
 
-    <LinearLayout
-        android:id="@+id/lv_main_all"
-        android:layout_width="wrap_content"
-        android:layout_height="@dimen/_36sdp"
-        android:layout_marginStart="@dimen/_36sdp"
-        android:background="@drawable/focus_highlight"
-        android:clickable="true"
-        android:contentDescription="@string/main_menu_all"
-        android:focusable="true"
-        android:focusableInTouchMode="false"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toTopOf="@+id/lv_main_settings"
-        app:layout_constraintStart_toStartOf="parent">
-
-        <ImageView
-            android:id="@+id/iv_main_all"
-            android:layout_width="@dimen/_36sdp"
-            android:layout_height="@dimen/_36sdp"
-            android:contentDescription="@string/main_menu_all"
-            android:padding="@dimen/_2sdp"
-            app:layout_constraintBottom_toTopOf="@+id/lv_main_settings"
-            app:layout_constraintStart_toStartOf="parent"
-            app:srcCompat="@drawable/ic_apps" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/_36sdp"
-            android:layout_marginStart="@dimen/_8sdp"
-            android:layout_marginEnd="@dimen/_8sdp"
-            android:fontFamily="sans-serif-condensed"
-            android:gravity="center_vertical"
-            android:text="@string/main_menu_all"
-            android:textSize="@dimen/_16ssp" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/lv_main_settings"
-        android:layout_width="wrap_content"
-        android:layout_height="@dimen/_36sdp"
-        android:layout_marginStart="@dimen/_36sdp"
-        android:layout_marginBottom="@dimen/_18sdp"
-        android:background="@drawable/focus_highlight"
-        android:clickable="true"
-        android:contentDescription="@string/main_menu_settings"
-        android:focusable="true"
-        android:focusableInTouchMode="false"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
-
-        <ImageView
-            android:id="@+id/iv_main_settings"
-            android:layout_width="@dimen/_36sdp"
-            android:layout_height="@dimen/_36sdp"
-            android:contentDescription="@string/main_menu_settings"
-            android:padding="@dimen/_2sdp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:srcCompat="@drawable/ic_settings" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/_36sdp"
-            android:layout_marginStart="@dimen/_8sdp"
-            android:layout_marginEnd="@dimen/_8sdp"
-            android:fontFamily="sans-serif-condensed"
-            android:gravity="center_vertical"
-            android:text="@string/main_menu_settings"
-            android:textSize="@dimen/_16ssp" />
-
-    </LinearLayout>
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_main_fav"
-        android:layout_width="0dp"
-        android:layout_height="@dimen/_88sdp"
-        android:clickable="true"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_main_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:clipChildren="false"
-        android:clipToPadding="false"
-        android:focusable="true"
-        android:focusableInTouchMode="true"
-        android:nextFocusLeft="@id/rv_main_fav"
-        android:nextFocusRight="@id/rv_main_fav"
-        android:orientation="horizontal"
-        android:paddingStart="@dimen/_36sdp"
-        android:paddingTop="@dimen/_8sdp"
-        android:paddingEnd="@dimen/_36sdp"
-        android:paddingBottom="@dimen/_8sdp"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toTopOf="@+id/lv_main_all"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:listitem="@layout/layout_appitem" />
+        android:clipToPadding="false">
 
-    <ProgressBar
-        android:id="@+id/pbr_main_loading"
-        style="?android:attr/progressBarStyle"
-        android:layout_width="@dimen/_56sdp"
-        android:layout_height="@dimen/_88sdp"
-        android:layout_marginStart="@dimen/_36sdp"
-        app:layout_constraintBottom_toTopOf="@+id/lv_main_all"
-        app:layout_constraintStart_toStartOf="parent" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_main_container_inner"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipChildren="false"
+            android:clipToPadding="false"
+            android:paddingBottom="@dimen/_18sdp">
 
-    <TextView
-        android:id="@+id/tv_main_fav_name"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_36sdp"
-        android:layout_marginEnd="@dimen/_36sdp"
-        android:layout_marginBottom="@dimen/_8sdp"
-        android:ellipsize="end"
-        android:fontFamily="sans-serif-condensed"
-        android:maxLines="1"
-        android:textSize="@dimen/_20ssp"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toTopOf="@+id/rv_main_fav"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+            <LinearLayout
+                android:id="@+id/lv_main_all"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/_36sdp"
+                android:layout_marginStart="@dimen/_36sdp"
+                android:background="@drawable/focus_highlight"
+                android:clickable="true"
+                android:contentDescription="@string/main_menu_all"
+                android:focusable="true"
+                android:focusableInTouchMode="false"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toTopOf="@+id/lv_main_settings"
+                app:layout_constraintStart_toStartOf="parent">
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_18sdp"
-        android:layout_marginEnd="@dimen/_28sdp"
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+                <ImageView
+                    android:id="@+id/iv_main_all"
+                    android:layout_width="@dimen/_36sdp"
+                    android:layout_height="@dimen/_36sdp"
+                    android:contentDescription="@string/main_menu_all"
+                    android:padding="@dimen/_2sdp"
+                    app:layout_constraintBottom_toTopOf="@+id/lv_main_settings"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:srcCompat="@drawable/ic_apps" />
 
-        <ImageView
-            android:id="@+id/iv_main_bt_icon"
-            android:layout_width="@dimen/_16sdp"
-            android:layout_height="@dimen/_16sdp"
-            android:layout_weight="1"
-            android:visibility="visible"
-            app:srcCompat="@drawable/ic_bluetooth" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/_36sdp"
+                    android:layout_marginStart="@dimen/_8sdp"
+                    android:layout_marginEnd="@dimen/_8sdp"
+                    android:fontFamily="sans-serif-condensed"
+                    android:gravity="center_vertical"
+                    android:text="@string/main_menu_all"
+                    android:textSize="@dimen/_16ssp" />
 
-        <ImageView
-            android:id="@+id/iv_main_conn_icon"
-            android:layout_width="@dimen/_16sdp"
-            android:layout_height="@dimen/_16sdp"
-            android:layout_marginStart="@dimen/_10sdp"
-            android:layout_weight="1"
-            app:srcCompat="@drawable/ic_conn_ethernet" />
+            </LinearLayout>
 
-        <ImageView
-            android:id="@+id/iv_main_bat_icon"
-            android:layout_width="@dimen/_16sdp"
-            android:layout_height="@dimen/_16sdp"
-            android:layout_marginStart="@dimen/_10sdp"
-            app:srcCompat="@drawable/ic_battery_charging" />
+            <LinearLayout
+                android:id="@+id/lv_main_settings"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/_36sdp"
+                android:layout_marginStart="@dimen/_36sdp"
+                android:background="@drawable/focus_highlight"
+                android:clickable="true"
+                android:contentDescription="@string/main_menu_settings"
+                android:focusable="true"
+                android:focusableInTouchMode="false"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent">
 
-        <TextView
-            android:id="@+id/tv_main_bat_percentage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="@dimen/_12sdp"
-            android:gravity="center_vertical"
-            android:text="@string/main_placeholder_bat" />
+                <ImageView
+                    android:id="@+id/iv_main_settings"
+                    android:layout_width="@dimen/_36sdp"
+                    android:layout_height="@dimen/_36sdp"
+                    android:contentDescription="@string/main_menu_settings"
+                    android:padding="@dimen/_2sdp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:srcCompat="@drawable/ic_settings" />
 
-        <TextView
-            android:id="@+id/tv_main_time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/_10sdp"
-            android:textSize="@dimen/_12sdp"
-            android:layout_gravity="center_horizontal|center_vertical"
-            android:gravity="center_vertical"
-            android:text="@string/main_placeholder_time" />
-    </LinearLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/_36sdp"
+                    android:layout_marginStart="@dimen/_8sdp"
+                    android:layout_marginEnd="@dimen/_8sdp"
+                    android:fontFamily="sans-serif-condensed"
+                    android:gravity="center_vertical"
+                    android:text="@string/main_menu_settings"
+                    android:textSize="@dimen/_16ssp" />
+
+            </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_main_fav"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_88sdp"
+                android:clickable="true"
+                android:clipChildren="false"
+                android:clipToPadding="false"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:nextFocusLeft="@id/rv_main_fav"
+                android:nextFocusRight="@id/rv_main_fav"
+                android:orientation="horizontal"
+                android:paddingStart="@dimen/_36sdp"
+                android:paddingTop="@dimen/_8sdp"
+                android:paddingEnd="@dimen/_36sdp"
+                android:paddingBottom="@dimen/_8sdp"
+                android:visibility="invisible"
+                app:layout_constraintBottom_toTopOf="@+id/lv_main_all"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:listitem="@layout/layout_appitem" />
+
+            <ProgressBar
+                android:id="@+id/pbr_main_loading"
+                style="?android:attr/progressBarStyle"
+                android:layout_width="@dimen/_56sdp"
+                android:layout_height="@dimen/_88sdp"
+                android:layout_marginStart="@dimen/_36sdp"
+                app:layout_constraintBottom_toTopOf="@+id/lv_main_all"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_main_fav_name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_36sdp"
+                android:layout_marginEnd="@dimen/_36sdp"
+                android:layout_marginBottom="@dimen/_8sdp"
+                android:ellipsize="end"
+                android:fontFamily="sans-serif-condensed"
+                android:maxLines="1"
+                android:textSize="@dimen/_20ssp"
+                android:visibility="invisible"
+                app:layout_constraintBottom_toTopOf="@+id/rv_main_fav"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_18sdp"
+                android:layout_marginEnd="@dimen/_28sdp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:id="@+id/iv_main_bt_icon"
+                    android:layout_width="@dimen/_16sdp"
+                    android:layout_height="@dimen/_16sdp"
+                    android:layout_weight="1"
+                    android:visibility="visible"
+                    app:srcCompat="@drawable/ic_bluetooth" />
+
+                <ImageView
+                    android:id="@+id/iv_main_conn_icon"
+                    android:layout_width="@dimen/_16sdp"
+                    android:layout_height="@dimen/_16sdp"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:layout_weight="1"
+                    app:srcCompat="@drawable/ic_conn_ethernet" />
+
+                <ImageView
+                    android:id="@+id/iv_main_bat_icon"
+                    android:layout_width="@dimen/_16sdp"
+                    android:layout_height="@dimen/_16sdp"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    app:srcCompat="@drawable/ic_battery_charging" />
+
+                <TextView
+                    android:id="@+id/tv_main_bat_percentage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:text="@string/main_placeholder_bat"
+                    android:textSize="@dimen/_12sdp" />
+
+                <TextView
+                    android:id="@+id/tv_main_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal|center_vertical"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:gravity="center_vertical"
+                    android:text="@string/main_placeholder_time"
+                    android:textSize="@dimen/_12sdp" />
+            </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <LinearLayout
         android:id="@+id/ll_main_autolaunch_overlay"
