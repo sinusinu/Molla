@@ -335,10 +335,6 @@ public class SettingsActivity extends AppCompatActivity {
             }
         });
 
-        binding.ivSettingsBack.setOnFocusChangeListener((view, hasFocus) -> {
-            binding.ivSettingsBack.setBackgroundColor(getColor(hasFocus ? R.color.transparent_white : R.color.transparent));
-        });
-
         binding.ivSettingsBack.setOnClickListener((v) -> {
             finish();
             overridePendingTransition(R.anim.no_anim, R.anim.no_anim);

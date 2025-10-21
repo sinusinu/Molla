@@ -115,11 +115,9 @@ public class MainActivity extends AppCompatActivity {
 
         binding.lvMainAll.setOnFocusChangeListener((view, hasFocus) -> {
             binding.lvMainAll.startAnimation(hasFocus ? animScaleUp : animScaleDown);
-            binding.lvMainAll.setBackgroundColor(getColor(hasFocus ? R.color.transparent_white : R.color.transparent));
         });
         binding.lvMainSettings.setOnFocusChangeListener((view, hasFocus) -> {
             binding.lvMainSettings.startAnimation(hasFocus ? animScaleUp : animScaleDown);
-            binding.lvMainSettings.setBackgroundColor(getColor(hasFocus ? R.color.transparent_white : R.color.transparent));
         });
 
         // hide system bars

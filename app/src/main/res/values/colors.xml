@@ -10,4 +10,6 @@
     <color name="transparent_black">#A0000000</color>
     <color name="transparent_white">#50FFFFFF</color>
     <color name="transparent">#00000000</color>
+
+    <color name="focused">#60FFFFFF</color>
 </resources>

@@ -90,10 +90,6 @@ public class OrderActivity extends AppCompatActivity {
             });
         });
 
-        binding.ivOrdBack.setOnFocusChangeListener((view, hasFocus) -> {
-            binding.ivOrdBack.setBackgroundColor(getColor(hasFocus ? R.color.transparent_white : R.color.transparent));
-        });
-
         binding.ivOrdBack.setOnClickListener((v) -> {
             finish();
             overridePendingTransition(R.anim.no_anim, R.anim.no_anim);

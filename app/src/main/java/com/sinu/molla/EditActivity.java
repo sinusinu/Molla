@@ -75,17 +75,9 @@ public class EditActivity extends AppCompatActivity {
 
         fetchItems();
 
-        binding.ivEditBack.setOnFocusChangeListener((view, hasFocus) -> {
-            binding.ivEditBack.setBackgroundColor(getColor(hasFocus ? R.color.transparent_white : R.color.transparent));
-        });
-
         binding.ivEditBack.setOnClickListener((v) -> {
             finish();
             overridePendingTransition(R.anim.no_anim, R.anim.no_anim);
-        });
-
-        binding.ivEditReorder.setOnFocusChangeListener((view, hasFocus) -> {
-            binding.ivEditReorder.setBackgroundColor(getColor(hasFocus ? R.color.transparent_white : R.color.transparent));
         });
 
         binding.ivEditReorder.setOnClickListener((v) -> {

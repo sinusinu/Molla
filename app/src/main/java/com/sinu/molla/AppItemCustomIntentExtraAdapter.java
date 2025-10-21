@@ -36,7 +36,7 @@ public class AppItemCustomIntentExtraAdapter extends RecyclerView.Adapter<AppIte
         this.dvc = dvc;
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder {
         public final Button btnName;
         public final Button btnType;
         public final Button btnValue;
@@ -151,9 +151,6 @@ public class AppItemCustomIntentExtraAdapter extends RecyclerView.Adapter<AppIte
             list.remove(position);
             notifyDataSetChanged();
             dvc.onDataValidityChanged();
-        });
-        holder.ivDelete.setOnFocusChangeListener((view, hasFocus) -> {
-            holder.ivDelete.setBackgroundColor(context.getColor(hasFocus ? R.color.transparent_white : R.color.transparent));
         });
     }
 

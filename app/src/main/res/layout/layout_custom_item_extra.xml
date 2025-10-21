@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="@dimen/_36sdp"
-    android:background="?attr/selectableItemBackground"
     android:clickable="true"
     android:descendantFocusability="afterDescendants"
     android:focusable="true"
@@ -16,6 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
+        android:background="@drawable/focus_highlight"
         android:ellipsize="end"
         android:fontFamily="sans-serif-condensed"
         android:maxLines="1"
@@ -29,6 +29,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
+        android:background="@drawable/focus_highlight"
         android:fontFamily="sans-serif-condensed"
         android:text="@string/dialog_custom_item_extras_type"
         android:textAllCaps="false"
@@ -40,6 +41,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
+        android:background="@drawable/focus_highlight"
         android:ellipsize="end"
         android:fontFamily="sans-serif-condensed"
         android:maxLines="1"
@@ -52,6 +54,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
+        android:background="@drawable/focus_highlight"
         android:visibility="gone"/>
 
     <ImageView
@@ -64,6 +67,7 @@
         android:focusable="true"
         android:focusableInTouchMode="false"
         android:padding="@dimen/_8sdp"
+        android:background="@drawable/focus_highlight"
         app:srcCompat="@drawable/ic_delete"
         tools:ignore="TouchTargetSizeCheck" />
 </LinearLayout>

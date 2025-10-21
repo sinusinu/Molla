@@ -44,17 +44,9 @@ public class AllAppsActivity extends AppCompatActivity {
 
         pref = getSharedPreferences("com.sinu.molla.settings", Context.MODE_PRIVATE);
 
-        binding.ivAllBack.setOnFocusChangeListener((view, hasFocus) -> {
-            binding.ivAllBack.setBackgroundColor(getColor(hasFocus ? R.color.transparent_white : R.color.transparent));
-        });
-
         binding.ivAllBack.setOnClickListener((v) -> {
             finish();
             overridePendingTransition(R.anim.no_anim, R.anim.no_anim);
-        });
-
-        binding.ivAllManageCustom.setOnFocusChangeListener((view, hasFocus) -> {
-            binding.ivAllManageCustom.setBackgroundColor(getColor(hasFocus ? R.color.transparent_white : R.color.transparent));
         });
 
         binding.ivAllManageCustom.setOnClickListener((v) -> {

@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="@dimen/_40sdp"
-    android:background="?attr/selectableItemBackground"
     android:clickable="false"
     android:descendantFocusability="afterDescendants"
     android:focusable="false"
@@ -63,16 +62,18 @@
         android:id="@+id/iv_appitem_order_up"
         android:layout_width="@dimen/_40sdp"
         android:layout_height="@dimen/_40sdp"
-        android:padding="@dimen/_10sdp"
+        android:background="@drawable/focus_highlight"
         android:layout_weight="0"
+        android:padding="@dimen/_10sdp"
         app:srcCompat="@drawable/ic_arrow_up" />
 
     <ImageView
         android:id="@+id/iv_appitem_order_down"
         android:layout_width="@dimen/_40sdp"
         android:layout_height="@dimen/_40sdp"
-        android:padding="@dimen/_10sdp"
+        android:background="@drawable/focus_highlight"
         android:layout_weight="0"
+        android:padding="@dimen/_10sdp"
         app:srcCompat="@drawable/ic_arrow_down" />
 
 </LinearLayout>

@@ -57,6 +57,7 @@
             android:id="@+id/iv_ord_back"
             android:layout_width="@dimen/_36sdp"
             android:layout_height="@dimen/_36sdp"
+            android:background="@drawable/focus_highlight"
             android:clickable="true"
             android:contentDescription="@string/all_back"
             android:focusable="true"

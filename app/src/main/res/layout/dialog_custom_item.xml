@@ -4,11 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:orientation="vertical"
     android:paddingStart="@dimen/_16sdp"
-    android:paddingEnd="@dimen/_16sdp"
     android:paddingTop="@dimen/_12sdp"
-    android:paddingBottom="@dimen/_12sdp"
-    android:orientation="vertical">
+    android:paddingEnd="@dimen/_16sdp"
+    android:paddingBottom="@dimen/_12sdp">
 
     <TextView
         android:id="@+id/tv_dialog_custom_item_title"
@@ -25,7 +25,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical" >
+            android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -60,6 +60,7 @@
                     android:layout_width="@dimen/_36sdp"
                     android:layout_height="@dimen/_36sdp"
                     android:layout_weight="0"
+                    android:background="@drawable/focus_highlight"
                     android:clickable="true"
                     android:contentDescription="@string/dialog_custom_item_select"
                     android:focusable="true"
@@ -103,6 +104,7 @@
                     android:layout_width="@dimen/_36sdp"
                     android:layout_height="@dimen/_36sdp"
                     android:layout_weight="0"
+                    android:background="@drawable/focus_highlight"
                     android:clickable="true"
                     android:contentDescription="@string/dialog_custom_item_edit"
                     android:focusable="true"
@@ -173,6 +175,7 @@
                     android:layout_width="@dimen/_36sdp"
                     android:layout_height="@dimen/_36sdp"
                     android:layout_weight="0"
+                    android:background="@drawable/focus_highlight"
                     android:clickable="true"
                     android:contentDescription="@string/dialog_custom_item_edit"
                     android:focusable="true"
@@ -186,6 +189,7 @@
                     android:layout_width="@dimen/_36sdp"
                     android:layout_height="@dimen/_36sdp"
                     android:layout_weight="0"
+                    android:background="@drawable/focus_highlight"
                     android:clickable="true"
                     android:contentDescription="@string/dialog_custom_item_clear"
                     android:focusable="true"
@@ -200,6 +204,7 @@
                 android:id="@+id/cb_dialog_custom_item_show_advanced"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@drawable/focus_highlight"
                 android:text="@string/dialog_custom_item_advanced"
                 android:textSize="@dimen/_13ssp" />
 
@@ -243,6 +248,7 @@
                         android:layout_width="@dimen/_36sdp"
                         android:layout_height="@dimen/_36sdp"
                         android:layout_weight="0"
+                        android:background="@drawable/focus_highlight"
                         android:clickable="true"
                         android:contentDescription="@string/dialog_custom_item_select"
                         android:focusable="true"
@@ -286,6 +292,7 @@
                         android:layout_width="@dimen/_36sdp"
                         android:layout_height="@dimen/_36sdp"
                         android:layout_weight="0"
+                        android:background="@drawable/focus_highlight"
                         android:clickable="true"
                         android:contentDescription="@string/dialog_custom_item_select"
                         android:focusable="true"

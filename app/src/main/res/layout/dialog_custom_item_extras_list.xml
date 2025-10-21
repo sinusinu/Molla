@@ -36,6 +36,7 @@
         android:focusableInTouchMode="false"
         android:layout_marginTop="@dimen/_8sdp"
         android:padding="@dimen/_8sdp"
+        android:background="@drawable/focus_highlight"
         app:srcCompat="@drawable/ic_add"
         tools:ignore="TouchTargetSizeCheck" />
 

@@ -62,9 +62,6 @@ public class AppItemOrderAdapter extends RecyclerView.Adapter<AppItemOrderAdapte
             ivUp = v.findViewById(R.id.iv_appitem_order_up);
             ivDown = v.findViewById(R.id.iv_appitem_order_down);
 
-            ivUp.setOnFocusChangeListener((view, hasFocus) -> ivUp.setBackgroundColor(context.getColor(hasFocus ? R.color.transparent_white : R.color.transparent)));
-            ivDown.setOnFocusChangeListener((view, hasFocus) -> ivDown.setBackgroundColor(context.getColor(hasFocus ? R.color.transparent_white : R.color.transparent)));
-
             ivUp.setOnClickListener((vw) -> {
                 upClickListener.onOrderItemClicked(vw, manager.getPosition(v));
             });
