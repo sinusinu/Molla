@@ -55,15 +55,6 @@ public class EditActivity extends AppCompatActivity {
         items = new ArrayList<>();
         selectedItems = new ArrayList<>();
 
-        manager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-        adapter = new AppItemListSelectAdapter(getApplicationContext(), items, selectedItems, itemClickListener, (pref.getInt("simple_icon_bg", 0) == 1));
-        binding.rvEditList.setLayoutManager(manager);
-        binding.rvEditList.setAdapter(adapter);
-        binding.rvEditList.setItemAnimator(null);
-        if (binding.rvEditList.getItemAnimator() != null) {
-            ((SimpleItemAnimator)binding.rvEditList.getItemAnimator()).setSupportsChangeAnimations(false);
-        }
-
         itemClickListener = view -> {
             int idx = manager.getPosition(view);
             AppItem si = items.get(idx);
@@ -74,6 +65,12 @@ public class EditActivity extends AppCompatActivity {
         };
 
         fetchItems();
+
+        var useFocusOutline = pref.getInt("use_focus_outline", 0) == 1;
+        if (useFocusOutline) {
+            binding.ivEditBack.setBackgroundResource(R.drawable.focus_outline);
+            binding.ivEditReorder.setBackgroundResource(R.drawable.focus_outline);
+        }
 
         binding.ivEditBack.setOnClickListener((v) -> {
             finish();
@@ -136,8 +133,14 @@ public class EditActivity extends AppCompatActivity {
             Collections.sort(items, AppItem::compareByDisplayName);
 
             runOnUiThread(() -> {
-                adapter = new AppItemListSelectAdapter(getApplicationContext(), items, selectedItems, itemClickListener, (pref.getInt("simple_icon_bg", 0) == 1));
+                manager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+                adapter = new AppItemListSelectAdapter(getApplicationContext(), items, selectedItems, itemClickListener, (pref.getInt("simple_icon_bg", 0) == 1), (pref.getInt("use_focus_outline", 0) == 1));
+                binding.rvEditList.setLayoutManager(manager);
                 binding.rvEditList.setAdapter(adapter);
+                binding.rvEditList.setItemAnimator(null);
+                if (binding.rvEditList.getItemAnimator() != null) {
+                    ((SimpleItemAnimator)binding.rvEditList.getItemAnimator()).setSupportsChangeAnimations(false);
+                }
 
                 binding.rvEditList.setVisibility(View.VISIBLE);
                 binding.pbrEditLoading.setVisibility(View.GONE);

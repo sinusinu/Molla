@@ -47,6 +47,8 @@
     <string name="settings_autostart_at_boot_desc">Start Molla automatically after the device boots up. Useful if the device does not allow changing the default launcher.</string>
     <string name="settings_orientation_title">Forced Orientation</string>
     <string name="settings_orientation_desc">Set forced orientation of Molla. May cause problems. May not work on some devices.</string>
+    <string name="settings_outline_title">Show Outline on Focus</string>
+    <string name="settings_outline_desc">Show white outline instead of highlight on focused item.</string>
     <string name="settings_category_autolaunch">Auto-Launch</string>
     <string name="settings_autolaunch_app_title">Auto-Launch App</string>
     <string name="settings_autolaunch_app_desc">When set, the selected app will automatically launch when Molla first launches after rebooting the device. May not work on some devices.</string>

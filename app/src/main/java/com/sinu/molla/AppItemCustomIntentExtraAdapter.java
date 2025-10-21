@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.content.res.AppCompatResources;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -27,13 +28,16 @@ public class AppItemCustomIntentExtraAdapter extends RecyclerView.Adapter<AppIte
     public final ArrayList<AppItemCustomIntentExtra> list;
     private final DataValidityChangedListener dvc;
 
-    public AppItemCustomIntentExtraAdapter(Context context, ArrayList<AppItemCustomIntentExtra> list, DataValidityChangedListener dvc) {
+    private final boolean useFocusOutline;
+
+    public AppItemCustomIntentExtraAdapter(Context context, ArrayList<AppItemCustomIntentExtra> list, DataValidityChangedListener dvc, boolean useFocusOutline) {
         this.context = context;
         this.list = new ArrayList<>();
         for (int i = 0; i < list.size(); i++) {
             this.list.add(new AppItemCustomIntentExtra(list.get(i).getName(), list.get(i).getValueAs(list.get(i).getValueType())));
         }
         this.dvc = dvc;
+        this.useFocusOutline = useFocusOutline;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -51,6 +55,14 @@ public class AppItemCustomIntentExtraAdapter extends RecyclerView.Adapter<AppIte
             btnValue = v.findViewById(R.id.btn_custom_item_extra_value);
             cbValue = v.findViewById(R.id.cb_custom_item_extra_value);
             ivDelete = v.findViewById(R.id.iv_custom_item_extra_delete);
+
+            if (useFocusOutline) {
+                btnName.setBackgroundResource(R.drawable.focus_outline);
+                btnType.setBackgroundResource(R.drawable.focus_outline);
+                btnValue.setBackgroundResource(R.drawable.focus_outline);
+                cbValue.setBackgroundResource(R.drawable.focus_outline);
+                ivDelete.setBackgroundResource(R.drawable.focus_outline);
+            }
         }
     }
 

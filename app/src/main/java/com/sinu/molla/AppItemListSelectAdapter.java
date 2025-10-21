@@ -27,10 +27,13 @@ public class AppItemListSelectAdapter extends RecyclerView.Adapter<AppItemListSe
 
     private final View.OnClickListener itemClickListener;
 
-    public AppItemListSelectAdapter(Context context, ArrayList<AppItem> list, ArrayList<AppItem> selectedList, View.OnClickListener itemClickListener, boolean simple) {
+    private final boolean useFocusOutline;
+
+    public AppItemListSelectAdapter(Context context, ArrayList<AppItem> list, ArrayList<AppItem> selectedList, View.OnClickListener itemClickListener, boolean simple, boolean useFocusOutline) {
         this.list = list;
         this.selectedList = selectedList;
         this.context = context;
+        this.useFocusOutline = useFocusOutline;
 
         drawableGeneric = ContextCompat.getDrawable(context, simple ? R.drawable.generic_simple : R.drawable.generic);
 
@@ -47,8 +50,6 @@ public class AppItemListSelectAdapter extends RecyclerView.Adapter<AppItemListSe
         public final TextView tvAppName;
         public final CheckBox cbCheck;
 
-        public boolean focused = false;
-
         public ViewHolder(@NonNull View v) {
             super(v);
 
@@ -58,6 +59,8 @@ public class AppItemListSelectAdapter extends RecyclerView.Adapter<AppItemListSe
             cbCheck = v.findViewById(R.id.cb_appitem_list_select_check);
 
             v.setOnClickListener(itemClickListener);
+
+            if (useFocusOutline) v.setBackgroundResource(R.drawable.focus_outline);
         }
     }
 

@@ -23,21 +23,20 @@ public class AppItemListAdapter extends RecyclerView.Adapter<AppItemListAdapter.
     private final Activity activity;
     private final ArrayList<AppItem> list;
 
-    private Drawable drawableGeneric;
+    private final Drawable drawableGeneric;
 
-    public AppItemListAdapter(Context context, Activity activity, ArrayList<AppItem> list, boolean simple) {
+    private final boolean useFocusOutline;
+
+    public AppItemListAdapter(Context context, Activity activity, ArrayList<AppItem> list, boolean simple, boolean useFocusOutline) {
         this.list = list;
         this.context = context;
         this.activity = activity;
+        this.useFocusOutline = useFocusOutline;
 
         drawableGeneric = ContextCompat.getDrawable(context, simple ? R.drawable.generic_simple : R.drawable.generic);
     }
 
-    public void SetSimpleBackground(boolean simple) {
-        drawableGeneric = ContextCompat.getDrawable(context, simple ? R.drawable.generic_simple : R.drawable.generic);
-    }
-
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder {
         public final ImageView ivBanner;
         public final ImageView ivIcon;
         public final TextView tvAppName;
@@ -48,6 +47,8 @@ public class AppItemListAdapter extends RecyclerView.Adapter<AppItemListAdapter.
             ivBanner = v.findViewById(R.id.iv_appitem_list_banner);
             ivIcon = v.findViewById(R.id.iv_appitem_list_icon);
             tvAppName = v.findViewById(R.id.tv_appitem_list_app_name);
+
+            if (useFocusOutline) v.setBackgroundResource(R.drawable.focus_outline);
         }
     }
 

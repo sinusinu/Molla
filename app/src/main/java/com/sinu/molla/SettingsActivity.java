@@ -93,6 +93,7 @@ public class SettingsActivity extends AppCompatActivity {
                 case "simple_icon_bg":
                 case "use_system_bar":
                 case "autolaunch_alt_detect":
+                case "use_focus_outline":
                     adapter.settings[idx].fetch(pref);
                     if (adapter.settings[idx].value == 0) {
                         adapter.settings[idx].set(pref, 1);
@@ -219,7 +220,7 @@ public class SettingsActivity extends AppCompatActivity {
                                 }
                             }
                             adAutolaunchSelect.dismiss();
-                        }, (pref.getInt("simple_icon_bg", 0) == 1));
+                        }, (pref.getInt("use_focus_outline", 0) == 1));
                         String currentAutolaunch = pref.getString("autolaunch_package", null);
                         adapterAutolaunchSelectList.setSelectedItem(null);
                         rvAutolaunchSelectList.setLayoutManager(autolaunchSelectListManager);
@@ -334,6 +335,9 @@ public class SettingsActivity extends AppCompatActivity {
                 ((MollaApplication)getApplication()).getWallpaperCache().setWallpaperOnImageView(binding.ivSettingsWallpaper, true);
             }
         });
+
+        var useFocusOutline = pref.getInt("use_focus_outline", 0) == 1;
+        if (useFocusOutline) binding.ivSettingsBack.setBackgroundResource(R.drawable.focus_outline);
 
         binding.ivSettingsBack.setOnClickListener((v) -> {
             finish();

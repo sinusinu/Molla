@@ -24,15 +24,13 @@ public class AppItemSingleSelectAdapter extends RecyclerView.Adapter<AppItemSing
     private final ArrayList<AppItem> list;
     private AppItem selectedItem = null;
 
-    private Drawable drawableGeneric;
-
     private final View.OnClickListener itemClickListener;
+    private final boolean useFocusOutline;
 
-    public AppItemSingleSelectAdapter(Context context, ArrayList<AppItem> list, View.OnClickListener itemClickListener, boolean simple) {
+    public AppItemSingleSelectAdapter(Context context, ArrayList<AppItem> list, View.OnClickListener itemClickListener, boolean useFocusOutline) {
         this.list = list;
         this.context = context;
-
-        drawableGeneric = ContextCompat.getDrawable(context, simple ? R.drawable.generic_simple : R.drawable.generic);
+        this.useFocusOutline = useFocusOutline;
 
         this.itemClickListener = itemClickListener;
     }
@@ -56,6 +54,8 @@ public class AppItemSingleSelectAdapter extends RecyclerView.Adapter<AppItemSing
             rbCheck = v.findViewById(R.id.rb_appitem_single_select_check);
 
             v.setOnClickListener(itemClickListener);
+
+            if (useFocusOutline) v.setBackgroundResource(R.drawable.focus_outline);
         }
     }
 

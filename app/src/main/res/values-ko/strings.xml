@@ -46,6 +46,8 @@
     <string name="settings_autostart_at_boot_desc">장치가 부팅을 완료하면 Molla를 자동으로 실행합니다. 장치가 기본 런처를 변경하는 기능을 제공하지 않을 경우 유용합니다.</string>
     <string name="settings_orientation_title">방향 강제 설정</string>
     <string name="settings_orientation_desc">Molla의 방향을 강제로 설정하게 합니다. 문제가 발생할 수 있습니다. 일부 장치에서는 작동하지 않습니다.</string>
+    <string name="settings_outline_title">포커스 시 외곽선 표시</string>
+    <string name="settings_outline_desc">포커스된 항목을 배경색 대신 흰 외곽선으로 표시합니다.</string>
     <string name="settings_category_autolaunch">자동 실행</string>
     <string name="settings_autolaunch_app_title">자동 실행할 앱</string>
     <string name="settings_autolaunch_app_desc">선택한 앱을 장치 재부팅 후 Molla 첫 실행 시 바로 실행합니다. 일부 장치에서는 작동하지 않습니다.</string>

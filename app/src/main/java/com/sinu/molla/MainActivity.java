@@ -23,6 +23,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
 import android.text.format.DateFormat;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
@@ -375,6 +376,15 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+
+        var useFocusOutline = pref.getInt("use_focus_outline", 0) == 1;
+        if (useFocusOutline) {
+            binding.lvMainAll.setBackgroundResource(R.drawable.focus_outline);
+            binding.lvMainSettings.setBackgroundResource(R.drawable.focus_outline);
+        } else {
+            binding.lvMainAll.setBackgroundResource(R.drawable.focus_highlight);
+            binding.lvMainSettings.setBackgroundResource(R.drawable.focus_highlight);
+        }
 
         // check if device rebooted (normal)
         if (pref.getInt("autolaunch_alt_detect", 0) == 0) {

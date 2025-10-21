@@ -77,7 +77,7 @@ public class OrderActivity extends AppCompatActivity {
             runOnUiThread(() -> {
                 LinearLayoutManager manager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
 
-                adapter = new AppItemOrderAdapter(getApplicationContext(), manager, selectedItems, upClickListener, downClickListener, (pref.getInt("simple_icon_bg", 0) == 1));
+                adapter = new AppItemOrderAdapter(getApplicationContext(), manager, selectedItems, upClickListener, downClickListener, (pref.getInt("simple_icon_bg", 0) == 1), (pref.getInt("use_focus_outline", 0) == 1));
 
                 binding.rvOrdList.setLayoutManager(manager);
                 binding.rvOrdList.setAdapter(adapter);
@@ -89,6 +89,9 @@ public class OrderActivity extends AppCompatActivity {
                 binding.pbrOrdLoading.setVisibility(View.GONE);
             });
         });
+
+        var useFocusOutline = pref.getInt("use_focus_outline", 0) == 1;
+        if (useFocusOutline) binding.ivOrdBack.setBackgroundResource(R.drawable.focus_outline);
 
         binding.ivOrdBack.setOnClickListener((v) -> {
             finish();

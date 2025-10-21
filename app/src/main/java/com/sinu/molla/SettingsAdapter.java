@@ -5,7 +5,6 @@ package com.sinu.molla;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,10 +22,11 @@ public class SettingsAdapter extends RecyclerView.Adapter<SettingsAdapter.ViewHo
 
     public MollaSetting[] settings;
 
-    private OnSettingsClickedListener clickListener;
-    private OnSettingsLongClickedListener longClickListener;
+    private SettingsClickedListener clickListener;
+    private SettingsLongClickedListener longClickListener;
 
     private boolean showGoofy = false;
+    private boolean useFocusOutline = false;
 
     public SettingsAdapter(Context context, SharedPreferences pref, RecyclerView.LayoutManager manager) {
         this.context = context;
@@ -34,6 +34,7 @@ public class SettingsAdapter extends RecyclerView.Adapter<SettingsAdapter.ViewHo
         this.manager = manager;
 
         showGoofy = pref.getInt("show_goofy", 0) == 1;
+        useFocusOutline = pref.getInt("use_focus_outline", 0) == 1;
 
         settings = new MollaSetting[] {
                 new MollaSetting(
@@ -85,6 +86,11 @@ public class SettingsAdapter extends RecyclerView.Adapter<SettingsAdapter.ViewHo
                         context.getString(R.string.settings_orientation_title),
                         context.getString(R.string.settings_orientation_desc),
                         MollaSetting.TYPE_BUTTON, "orientation", true
+                ),
+                new MollaSetting(
+                        context.getString(R.string.settings_outline_title),
+                        context.getString(R.string.settings_outline_desc),
+                        MollaSetting.TYPE_CHECKBOX, "use_focus_outline", false
                 ),
                 new MollaSetting(
                         context.getString(R.string.settings_category_autolaunch),
@@ -164,6 +170,8 @@ public class SettingsAdapter extends RecyclerView.Adapter<SettingsAdapter.ViewHo
 
             itemView.setOnClickListener(this);
             itemView.setOnLongClickListener(this);
+
+            if (useFocusOutline) itemView.setBackgroundResource(R.drawable.focus_outline);
         }
 
         @Override
@@ -219,19 +227,19 @@ public class SettingsAdapter extends RecyclerView.Adapter<SettingsAdapter.ViewHo
         return settings.length;
     }
 
-    public void setOnSettingsClickedListener(OnSettingsClickedListener listener) {
+    public void setOnSettingsClickedListener(SettingsClickedListener listener) {
         this.clickListener = listener;
     }
 
-    public void setOnSettingsLongClickedListener(OnSettingsLongClickedListener listener) {
+    public void setOnSettingsLongClickedListener(SettingsLongClickedListener listener) {
         this.longClickListener = listener;
     }
 
-    public interface OnSettingsClickedListener {
+    public interface SettingsClickedListener {
         void onSettingsClick(int position, String key);
     }
 
-    public interface OnSettingsLongClickedListener {
+    public interface SettingsLongClickedListener {
         void onSettingsLongClick(int position, String key);
     }
 }

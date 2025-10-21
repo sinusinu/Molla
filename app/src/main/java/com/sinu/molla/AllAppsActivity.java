@@ -44,6 +44,12 @@ public class AllAppsActivity extends AppCompatActivity {
 
         pref = getSharedPreferences("com.sinu.molla.settings", Context.MODE_PRIVATE);
 
+        var useFocusOutline = pref.getInt("use_focus_outline", 0) == 1;
+        if (useFocusOutline) {
+            binding.ivAllBack.setBackgroundResource(R.drawable.focus_outline);
+            binding.ivAllManageCustom.setBackgroundResource(R.drawable.focus_outline);
+        }
+
         binding.ivAllBack.setOnClickListener((v) -> {
             finish();
             overridePendingTransition(R.anim.no_anim, R.anim.no_anim);
@@ -80,7 +86,6 @@ public class AllAppsActivity extends AppCompatActivity {
         else if ("portrait".equals(orient)) setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_USER_PORTRAIT);
         else setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
 
-        if (adapter != null) adapter.SetSimpleBackground(pref.getInt("simple_icon_bg", 0) == 1);
         ((MollaApplication)getApplication()).getWallpaperCache().setWallpaperOnImageView(binding.ivAllWallpaper, false);
 
         if (isListUpdateReserved) {
@@ -97,7 +102,7 @@ public class AllAppsActivity extends AppCompatActivity {
 
                     runOnUiThread(() -> {
                         LinearLayoutManager manager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-                        adapter = new AppItemListAdapter(getApplicationContext(), this, items, (pref.getInt("simple_icon_bg", 0) == 1));
+                        adapter = new AppItemListAdapter(getApplicationContext(), this, items, (pref.getInt("simple_icon_bg", 0) == 1), (pref.getInt("use_focus_outline", 0) == 1));
 
                         binding.rvAllAllapps.setLayoutManager(manager);
                         binding.rvAllAllapps.setAdapter(adapter);

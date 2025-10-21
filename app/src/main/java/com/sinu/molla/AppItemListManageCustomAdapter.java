@@ -28,18 +28,17 @@ public class AppItemListManageCustomAdapter extends RecyclerView.Adapter<AppItem
     private final View.OnClickListener itemEditListener;
     private final View.OnClickListener itemDeleteListener;
 
-    public AppItemListManageCustomAdapter(Context context, Activity activity, ArrayList<AppItem> list, View.OnClickListener itemEditListener, View.OnClickListener itemDeleteListener, boolean simple) {
+    private final boolean useFocusOutline;
+
+    public AppItemListManageCustomAdapter(Context context, Activity activity, ArrayList<AppItem> list, View.OnClickListener itemEditListener, View.OnClickListener itemDeleteListener, boolean simple, boolean useFocusOutline) {
         this.list = list;
         this.context = context;
         this.activity = activity;
+        this.useFocusOutline = useFocusOutline;
 
         this.itemEditListener = itemEditListener;
         this.itemDeleteListener = itemDeleteListener;
 
-        drawableGeneric = ContextCompat.getDrawable(context, simple ? R.drawable.generic_simple : R.drawable.generic);
-    }
-
-    public void SetSimpleBackground(boolean simple) {
         drawableGeneric = ContextCompat.getDrawable(context, simple ? R.drawable.generic_simple : R.drawable.generic);
     }
 
@@ -61,6 +60,11 @@ public class AppItemListManageCustomAdapter extends RecyclerView.Adapter<AppItem
 
             ivEdit.setOnClickListener((e) -> itemEditListener.onClick(v));
             ivDelete.setOnClickListener((e) -> itemDeleteListener.onClick(v));
+
+            if (useFocusOutline) {
+                ivEdit.setBackgroundResource(R.drawable.focus_outline);
+                ivDelete.setBackgroundResource(R.drawable.focus_outline);
+            }
         }
     }
 

@@ -27,14 +27,17 @@ public class AppItemOrderAdapter extends RecyclerView.Adapter<AppItemOrderAdapte
     private final OnOrderItemClickedListener upClickListener;
     private final OnOrderItemClickedListener downClickListener;
 
+    public final boolean useFocusOutline;
+
     public interface OnOrderItemClickedListener {
-        public void onOrderItemClicked(View v, int position);
+        void onOrderItemClicked(View v, int position);
     }
 
-    public AppItemOrderAdapter(Context context, RecyclerView.LayoutManager manager, ArrayList<AppItem> list, OnOrderItemClickedListener upClickListener, OnOrderItemClickedListener downClickListener, boolean simple) {
+    public AppItemOrderAdapter(Context context, RecyclerView.LayoutManager manager, ArrayList<AppItem> list, OnOrderItemClickedListener upClickListener, OnOrderItemClickedListener downClickListener, boolean simple, boolean useFocusOutline) {
         this.list = list;
         this.manager = manager;
         this.context = context;
+        this.useFocusOutline = useFocusOutline;
 
         drawableGeneric = ContextCompat.getDrawable(context, simple ? R.drawable.generic_simple : R.drawable.generic);
 
@@ -68,6 +71,11 @@ public class AppItemOrderAdapter extends RecyclerView.Adapter<AppItemOrderAdapte
             ivDown.setOnClickListener((vw) -> {
                 downClickListener.onOrderItemClicked(vw, manager.getPosition(v));
             });
+
+            if (useFocusOutline) {
+                ivUp.setBackgroundResource(R.drawable.focus_outline);
+                ivDown.setBackgroundResource(R.drawable.focus_outline);
+            }
         }
     }
 

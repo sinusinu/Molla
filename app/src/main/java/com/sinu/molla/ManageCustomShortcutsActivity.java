@@ -52,6 +52,7 @@ public class ManageCustomShortcutsActivity extends AppCompatActivity {
     AppItemListManageCustomAdapter adapter;
 
     boolean simple;
+    boolean useFocusOutline;
 
     SharedPreferences pref;
 
@@ -74,6 +75,7 @@ public class ManageCustomShortcutsActivity extends AppCompatActivity {
 
         pref = getSharedPreferences("com.sinu.molla.settings", Context.MODE_PRIVATE);
         simple = pref.getInt("simple_icon_bg", 0) == 1;
+        useFocusOutline = pref.getInt("use_focus_outline", 0) == 1;
 
         items = new ArrayList<>();
 
@@ -113,7 +115,7 @@ public class ManageCustomShortcutsActivity extends AppCompatActivity {
             items.clear();
             items.addAll(cs);
 
-            adapter = new AppItemListManageCustomAdapter(getApplicationContext(), this, items, itemEditListener, itemDeleteListener, simple);
+            adapter = new AppItemListManageCustomAdapter(getApplicationContext(), this, items, itemEditListener, itemDeleteListener, simple, useFocusOutline);
             binding.rvManageCustomShortcutsShortcuts.setAdapter(adapter);
 
             binding.rvManageCustomShortcutsShortcuts.setVisibility(View.VISIBLE);
@@ -123,6 +125,10 @@ public class ManageCustomShortcutsActivity extends AppCompatActivity {
         };
 
         rUpdateCustomShortcuts.run();
+
+        var useFocusOutline = pref.getInt("use_focus_outline", 0) == 1;
+        binding.ivManageCustomShortcutsBack.setBackgroundResource(useFocusOutline ? R.drawable.focus_outline : R.drawable.focus_highlight);
+        binding.ivManageCustomShortcutsAdd.setBackgroundResource(useFocusOutline ? R.drawable.focus_outline : R.drawable.focus_highlight);
 
         binding.ivManageCustomShortcutsBack.setOnClickListener((v) -> {
             finish();
@@ -176,7 +182,7 @@ public class ManageCustomShortcutsActivity extends AppCompatActivity {
         void onAppItemCustomizationFinished(AppItem newItem);
     }
 
-    private static class CustomShortcutDialog {
+    private class CustomShortcutDialog {
         ManageCustomShortcutsActivity activity;
         boolean simple;
 
@@ -232,7 +238,7 @@ public class ManageCustomShortcutsActivity extends AppCompatActivity {
                     // set selected app
                     setTargetApp(appList.get(appListLayoutManager.getPosition(vv)));
                     adAppList.dismiss();
-                }, simple);
+                }, useFocusOutline);
                 appListAdapter.setSelectedItem(targetApp);
                 ((RecyclerView)dialogAppListView.findViewById(R.id.rv_dialog_custom_item_app_list_list)).setLayoutManager(appListLayoutManager);
                 ((RecyclerView)dialogAppListView.findViewById(R.id.rv_dialog_custom_item_app_list_list)).setAdapter(appListAdapter);
@@ -335,7 +341,7 @@ public class ManageCustomShortcutsActivity extends AppCompatActivity {
                 customIntentExtrasLayoutManager = new LinearLayoutManager(activity);
                 customIntentExtrasAdapter = new AppItemCustomIntentExtraAdapter(activity, customIntentExtras, () -> {
                     adSetCustomIntentExtras.getButton(AlertDialog.BUTTON_POSITIVE).setEnabled(customIntentExtrasAdapter.areNamesValid());
-                });
+                }, useFocusOutline);
                 ((RecyclerView)viewSetCustomIntentExtras.findViewById(R.id.rv_dialog_custom_item_extras_list_list)).setLayoutManager(customIntentExtrasLayoutManager);
                 ((RecyclerView)viewSetCustomIntentExtras.findViewById(R.id.rv_dialog_custom_item_extras_list_list)).setAdapter(customIntentExtrasAdapter);
                 ((SimpleItemAnimator)(Objects.requireNonNull(((RecyclerView)viewSetCustomIntentExtras.findViewById(R.id.rv_dialog_custom_item_extras_list_list)).getItemAnimator()))).setSupportsChangeAnimations(false);
@@ -346,6 +352,7 @@ public class ManageCustomShortcutsActivity extends AppCompatActivity {
                     customIntentExtrasAdapter.notifyDataSetChanged();
                     adSetCustomIntentExtras.getButton(AlertDialog.BUTTON_POSITIVE).setEnabled(customIntentExtrasAdapter.areNamesValid());
                 });
+                if (useFocusOutline) ivExtrasListAdd.setBackgroundResource(R.drawable.focus_outline);
                 adSetCustomIntentExtras = new AlertDialog.Builder(activity)
                         .setView(viewSetCustomIntentExtras)
                         .setPositiveButton(R.string.dialog_custom_item_save, (d, i) -> {
@@ -358,6 +365,16 @@ public class ManageCustomShortcutsActivity extends AppCompatActivity {
                         .create();
                 adSetCustomIntentExtras.show();
             });
+            int[] focusableViews = {
+                    R.id.iv_dialog_custom_item_app_select,
+                    R.id.iv_dialog_custom_item_title_edit,
+                    R.id.iv_dialog_custom_item_banner_add,
+                    R.id.iv_dialog_custom_item_banner_clear,
+                    R.id.cb_dialog_custom_item_show_advanced,
+                    R.id.iv_dialog_custom_item_activity_edit,
+                    R.id.iv_dialog_custom_item_extras_edit,
+            };
+            for (int v : focusableViews) dialogView.findViewById(v).setBackgroundResource(useFocusOutline ? R.drawable.focus_outline : R.drawable.focus_highlight);
 
             alertDialog = new AlertDialog.Builder(activity)
                     .setView(dialogView)
