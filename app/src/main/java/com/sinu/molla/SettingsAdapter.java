@@ -63,6 +63,11 @@ public class SettingsAdapter extends RecyclerView.Adapter<SettingsAdapter.ViewHo
                         MollaSetting.TYPE_CHECKBOX, "use_system_bar", true
                 ),
                 new MollaSetting(
+                        context.getString(R.string.settings_outline_title),
+                        context.getString(R.string.settings_outline_desc),
+                        MollaSetting.TYPE_CHECKBOX, "use_focus_outline", false
+                ),
+                new MollaSetting(
                         context.getString(R.string.settings_category_behavior),
                         null,
                         MollaSetting.TYPE_CATEGORY, null, false
@@ -86,11 +91,6 @@ public class SettingsAdapter extends RecyclerView.Adapter<SettingsAdapter.ViewHo
                         context.getString(R.string.settings_orientation_title),
                         context.getString(R.string.settings_orientation_desc),
                         MollaSetting.TYPE_BUTTON, "orientation", true
-                ),
-                new MollaSetting(
-                        context.getString(R.string.settings_outline_title),
-                        context.getString(R.string.settings_outline_desc),
-                        MollaSetting.TYPE_CHECKBOX, "use_focus_outline", false
                 ),
                 new MollaSetting(
                         context.getString(R.string.settings_category_autolaunch),
