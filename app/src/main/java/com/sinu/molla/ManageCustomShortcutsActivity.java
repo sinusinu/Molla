@@ -365,6 +365,7 @@ public class ManageCustomShortcutsActivity extends AppCompatActivity {
                         .create();
                 adSetCustomIntentExtras.show();
             });
+            ((ImageView)dialogView.findViewById(R.id.iv_dialog_custom_item_banner)).setImageDrawable(simple ? AppCompatResources.getDrawable(activity, R.drawable.generic_simple) : AppCompatResources.getDrawable(activity, R.drawable.generic));
             int[] focusableViews = {
                     R.id.iv_dialog_custom_item_app_select,
                     R.id.iv_dialog_custom_item_title_edit,
