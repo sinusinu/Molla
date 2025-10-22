@@ -174,9 +174,14 @@ public class AppItem {
     }
 
     public static void fetchAllAppsAsync(Context context, AppItemLoadCompletedCallback callback) {
+        fetchAllAppsAsync(context, callback, false);
+    }
+
+    /** @param ignoreHide If true, ignore Hide Non-TV Apps option and always fetch all apps. */
+    public static void fetchAllAppsAsync(Context context, AppItemLoadCompletedCallback callback, boolean ignoreHide) {
         Thread thread = new Thread(() -> {
             SharedPreferences pref = context.getSharedPreferences("com.sinu.molla.settings", Context.MODE_PRIVATE);
-            if (pref.getInt("hide_non_tv", 0) == 0) {
+            if (ignoreHide || pref.getInt("hide_non_tv", 0) == 0) {
                 final ArrayList<AppItem> apps = new ArrayList<>();
                 final ArrayList<AppItem> tvApps = new ArrayList<>();
                 var fetchAppsRunner = getFetchAppsRunner(context, apps::addAll);

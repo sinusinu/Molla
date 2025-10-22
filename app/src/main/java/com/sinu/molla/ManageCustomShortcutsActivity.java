@@ -259,7 +259,7 @@ public class ManageCustomShortcutsActivity extends AppCompatActivity {
                             appListAdapter.notifyDataSetChanged();
                             Objects.requireNonNull(adAppList.getWindow()).setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                         });
-                    });
+                    }, true);
                 }).start();
             });
             dialogView.findViewById(R.id.iv_dialog_custom_item_title_edit).setOnClickListener((v) -> {
