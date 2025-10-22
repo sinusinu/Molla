@@ -202,10 +202,11 @@ public class AppItem {
 
                 callback.OnAppItemLoadCompleted(ret);
             } else {
-                getFetchTvAppsRunner(context, (tvApps) -> {
-                    ArrayList<AppItem> ret = new ArrayList<>(tvApps);
-                    callback.OnAppItemLoadCompleted(ret);
-                });
+                final ArrayList<AppItem> tvApps = new ArrayList<>();
+                var fetchTvAppsRunner = getFetchTvAppsRunner(context, tvApps::addAll);
+                fetchTvAppsRunner.start();
+                try { fetchTvAppsRunner.join(); } catch (InterruptedException e) { throw new RuntimeException(e); }
+                callback.OnAppItemLoadCompleted(tvApps);
             }
         });
         thread.start();
