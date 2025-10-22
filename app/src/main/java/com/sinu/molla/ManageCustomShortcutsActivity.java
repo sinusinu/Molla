@@ -2,6 +2,7 @@ package com.sinu.molla;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -172,10 +173,13 @@ public class ManageCustomShortcutsActivity extends AppCompatActivity {
     }
 
     private void callBannerImagePicker() {
-        Intent intentPickMedia = new Intent(Intent.ACTION_OPEN_DOCUMENT);
-        intentPickMedia.addCategory(Intent.CATEGORY_OPENABLE);
+        Intent intentPickMedia = new Intent(Intent.ACTION_PICK);
         intentPickMedia.setType("image/*");
-        pickMedia.launch(intentPickMedia);
+        try {
+            pickMedia.launch(intentPickMedia);
+        } catch (ActivityNotFoundException e) {
+            Toast.makeText(this, getString(R.string.dialog_custom_item_error_no_picker), Toast.LENGTH_LONG).show();
+        }
     }
 
     private interface AppItemCustomizationFinishedListener {

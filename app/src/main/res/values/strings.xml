@@ -136,6 +136,7 @@
     <string name="dialog_custom_item_error_invalid_banner">Failed to load image!</string>
     <string name="dialog_custom_item_error_app_not_set">App must be set!</string>
     <string name="dialog_custom_item_error_invalid_extra_value">Value is invalid!</string>
+    <string name="dialog_custom_item_error_no_picker">You need an Image viewer app to perform this action!</string>
 
     <string name="dialog_kiosk_pin_title">Enter PIN (up to 6 digits)</string>
     <string name="dialog_kiosk_pin_title_repeat">Repeat PIN</string>
