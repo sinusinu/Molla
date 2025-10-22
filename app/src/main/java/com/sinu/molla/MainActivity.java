@@ -563,6 +563,9 @@ public class MainActivity extends AppCompatActivity {
 
         if (isFavListUpdateReserved) {
             binding.pbrMainLoading.setVisibility(View.VISIBLE);
+            binding.rvMainFav.setVisibility(View.GONE);
+            items.clear();
+            adapter.notifyDataSetChanged();
             AppItem.fetchAllAppsAsync(this, (r) -> {
                 var csm = ((MollaApplication)getApplication()).getCustomShortcutManager();
                 items.clear();
