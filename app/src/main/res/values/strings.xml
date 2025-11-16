@@ -79,6 +79,7 @@
     <string name="settings_error_wallpaper">Wallpaper is not supported on this device</string>
     <string name="settings_error_wallpaper_no_picker">You need an Image viewer app to perform this action!</string>
     <string name="settings_error_settings_no_activity">This setting is not available on this device!</string>
+    <string name="settings_error_wallpaper_no_permission">Error opening image viewer, try installing another image viewer app?</string>
 
     <string name="dialog_customize_indicators_title">Customize Indicators</string>
     <string name="dialog_customize_indicators_subtitle">Selected indicators will show up on main screen.</string>

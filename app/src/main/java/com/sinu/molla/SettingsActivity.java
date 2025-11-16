@@ -98,6 +98,8 @@ public class SettingsActivity extends AppCompatActivity {
                         startActivityForResult(photoPickerIntent, PICK_WALLPAPER);
                     } catch (ActivityNotFoundException e) {
                         Toast.makeText(this, getString(R.string.settings_error_wallpaper_no_picker), Toast.LENGTH_LONG).show();
+                    } catch (SecurityException e) {
+                        Toast.makeText(this, getString(R.string.settings_error_wallpaper_no_permission), Toast.LENGTH_LONG).show();
                     }
                     break;
                 case "hide_non_tv":
