@@ -100,7 +100,7 @@ public class AppItemAdapter extends RecyclerView.Adapter<AppItemAdapter.ViewHold
                 if (!focused) cvCard.startAnimation(animScaleUp);
                 focused = true;
                 selectedItem = manager.getPosition(view);
-                if (focusChangedListener != null) {
+                if (focusChangedListener != null && selectedItem <= list.size()) {
                     String dispName = selectedItem == list.size() ? (kioskModeActive ? context.getString(R.string.main_kiosk_unlock) : context.getString(R.string.main_edit_fav)) : ((list.get(selectedItem).isCustomItem && list.get(selectedItem).customItemDisplayName != null) ? list.get(selectedItem).customItemDisplayName : list.get(selectedItem).displayName);
                     focusChangedListener.onAppItemFocusChanged(selectedItem, dispName);
                 }
