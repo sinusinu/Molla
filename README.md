@@ -4,7 +4,7 @@
 
 Molla is an alternative launcher for Android.
 
-Originally designed for handheld gaming devices, Molla features an intuitive D-pad first design, with a simple Android-centered experience.
+Originally designed for handheld gaming devices, Molla features an intuitive D-pad first design, with a straightforward Android-centered experience.
 
 ## Download
 
