@@ -62,7 +62,7 @@
     <string name="settings_autolaunch_alt_detect_desc">For devices without a real-time clock, default reboot detection may not work properly. In that case, try enabling this option. Not recommended otherwise.</string>
     <string name="settings_category_about">About</string>
     <string name="settings_about_title" translatable="false">Molla %s</string>
-    <string name="settings_about_desc" translatable="false">© 2022‐2025 sinu</string>
+    <string name="settings_about_desc" translatable="false">© 2022‐2026 sinu</string>
     <string name="settings_about_secret_enabled">Goofy settings enabled. Reload settings screen to take effect.</string>
     <string name="settings_about_secret_disabled">Goofy settings disabled. Reload settings screen to take effect.</string>
     <string name="settings_category_system_settings">Quick Access to System Settings</string>
