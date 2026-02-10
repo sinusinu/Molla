@@ -10,15 +10,35 @@ android {
         applicationId "com.sinu.molla"
         minSdk 23
         targetSdk 36
-        versionCode 20
-        versionName "1.4.3"
+        versionCode 21
+        versionName "1.4.4"
         resourceConfigurations += ['en', 'ko']
     }
 
+    signingConfigs {
+        register("nightly") {
+            storeFile = rootProject.file("release.keystore")
+            storePassword = System.getenv("KEYSTORE_PASSWORD")
+            keyAlias = System.getenv("KEY_ALIAS")
+            keyPassword = System.getenv("KEY_PASSWORD")
+        }
+    }
+
     buildTypes {
+        debug {
+            versionNameSuffix = "-debug"
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        register("nightly") {
+            initWith(buildTypes.release)
+            signingConfig = signingConfigs.getByName("nightly")
+            applicationIdSuffix = ".nightly"
+            versionNameSuffix = "-nightly"
         }
     }
     compileOptions {

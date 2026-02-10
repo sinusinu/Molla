@@ -1,0 +1,52 @@
+name: Build and Publish
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    - name: Set up JDK
+      uses: actions/setup-java@v4
+      with:
+        java-version: '21'
+        distribution: 'temurin'
+        cache: gradle
+
+    - name: Decode keystore
+      run: |
+        echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 --decode > release.keystore
+
+    - name: Grant execute permission for gradlew
+      run: chmod +x gradlew
+
+    - name: Build nightly APK
+      env:
+        KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+        KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
+        KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+      run: ./gradlew assembleNightly
+
+    - name: Rename APK
+      run: mv app/build/outputs/apk/nightly/app-nightly.apk app/build/outputs/apk/nightly/molla-nightly.apk
+
+    - name: Upload artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: artifact
+        path: app/build/outputs/apk/nightly/*.apk
+
+    - name: Release as nightly
+      uses: softprops/action-gh-release@v2
+      with:
+        tag_name: nightly
+        name: Nightly build
+        body: This is an automated release.
+        prerelease: true
+        files: app/build/outputs/apk/nightly/*.apk
