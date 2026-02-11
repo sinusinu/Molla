@@ -3,6 +3,8 @@ name: Build PR
 on:
   pull_request:
     branches: [ "main" ]
+    paths:
+      - "app/src/**"
 
 jobs:
   build:

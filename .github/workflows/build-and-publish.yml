@@ -3,6 +3,8 @@ name: Build and Publish
 on:
   push:
     branches: [ "main" ]
+    paths:
+      - "app/src/**"
 
 jobs:
   build:
