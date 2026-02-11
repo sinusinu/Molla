@@ -10,7 +10,7 @@ Originally designed for handheld gaming devices, Molla features an intuitive D-p
 
 [<img src="images/googleplay.png">](https://play.google.com/store/apps/details?id=com.sinu.molla)
 
-or you can grab the APK from [here](https://github.com/sinusinu/Molla/releases/latest).
+or grab the APKs directly: [Latest Release](https://github.com/sinusinu/Molla/releases/latest) / [Nightly](https://github.com/sinusinu/Molla/releases/tag/nightly)
 
 ## Features
 
