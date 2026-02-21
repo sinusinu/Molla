@@ -138,9 +138,11 @@ public class AppItem {
             Intent i = new Intent(Intent.ACTION_MAIN, null);
             i.addCategory(Intent.CATEGORY_LAUNCHER);
 
+            String myPackageName = context.getPackageName();
+
             List<ResolveInfo> allApps = pm.queryIntentActivities(i, 0);
             for(ResolveInfo ri : allApps) {
-                if (ri.activityInfo.packageName.equals("com.sinu.molla")) continue;
+                if (ri.activityInfo.packageName.equals(myPackageName)) continue;
                 Intent intentForThisActivity = new Intent();
                 intentForThisActivity.setClassName(ri.activityInfo.applicationInfo.packageName, ri.activityInfo.name);
                 AppItem n = new AppItem(ri.activityInfo.applicationInfo.packageName, ri.activityInfo.name, ri.activityInfo.loadLabel(pm).toString(), intentForThisActivity);
@@ -160,9 +162,11 @@ public class AppItem {
             Intent i = new Intent(Intent.ACTION_MAIN, null);
             i.addCategory(Intent.CATEGORY_LEANBACK_LAUNCHER);
 
+            String myPackageName = context.getPackageName();
+
             List<ResolveInfo> allApps = pm.queryIntentActivities(i, 0);
             for(ResolveInfo ri : allApps) {
-                if (ri.activityInfo.packageName.equals("com.sinu.molla")) continue;
+                if (ri.activityInfo.packageName.equals(myPackageName)) continue;
                 Intent intentForThisActivity = new Intent();
                 intentForThisActivity.setClassName(ri.activityInfo.applicationInfo.packageName, ri.activityInfo.name);
                 AppItem n = new AppItem(ri.activityInfo.applicationInfo.packageName, ri.activityInfo.name, ri.loadLabel(pm).toString(), intentForThisActivity);
