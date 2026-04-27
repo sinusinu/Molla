@@ -78,6 +78,7 @@
     <string name="settings_error_wallpaper_image_read_fail">이미지를 불러오지 못했습니다!</string>
     <string name="settings_error_settings_security_error">이 설정 화면은 열 수 없습니다!</string>
     <string name="settings_error_settings_no_activity">이 설정은 이 장치에서는 사용할 수 없습니다!</string>
+    <string name="settings_error_wallpaper_no_permission">갤러리 앱을 실행할 수 없습니다!</string>
 
     <string name="dialog_customize_indicators_title">표시할 알림 아이콘</string>
     <string name="dialog_customize_indicators_subtitle">선택된 아이콘이 첫 화면에 표시됩니다.</string>
@@ -135,7 +136,6 @@
     <string name="dialog_custom_item_error_app_not_set">앱이 선택되지 않았습니다!</string>
     <string name="dialog_custom_item_error_invalid_extra_value">값이 올바르지 않습니다!</string>
     <string name="dialog_custom_item_error_no_picker">배너를 선택하려면 갤러리 앱이 필요합니다!</string>
-    <string name="settings_error_wallpaper_no_permission">갤러리 앱을 실행할 수 없습니다. 다른 갤러리 앱을 설치해보세요.</string>
 
     <string name="dialog_kiosk_pin_title">PIN 입력 (최대 6자리)</string>
     <string name="dialog_kiosk_pin_title_repeat">PIN 다시 입력</string>
