@@ -476,9 +476,25 @@ public class SettingsActivity extends AppCompatActivity {
 
         if (requestCode == PICK_WALLPAPER && resultCode == RESULT_OK) {
             try {
+                if (data == null) {
+                    Toast.makeText(this, R.string.settings_error_wallpaper_image_read_fail, Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 final Uri imageUri = data.getData();
+                if (imageUri == null) {
+                    Toast.makeText(this, R.string.settings_error_wallpaper_image_read_fail, Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 final InputStream imageStream = getContentResolver().openInputStream(imageUri);
+                if (imageStream == null) {
+                    Toast.makeText(this, R.string.settings_error_wallpaper_image_read_fail, Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
+                if (selectedImage == null) {
+                    Toast.makeText(this, R.string.settings_error_wallpaper_image_read_fail, Toast.LENGTH_SHORT).show();
+                    return;
+                }
 
                 // downscale the bitmap if it's larger than screen size
                 DisplayMetrics displayMetrics = new DisplayMetrics();
