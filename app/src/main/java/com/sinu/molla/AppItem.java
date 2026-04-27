@@ -102,6 +102,7 @@ public class AppItem {
         if (appItem.isCustomItem) {
             Intent i = new Intent();
             i.setClassName(appItem.packageName, appItem.customItemActivityName);
+            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
             for (var extra : appItem.customItemIntentExtras) {
                 var extraType = extra.getValueType();
                 if (extraType == String.class) i.putExtra(extra.getName(), extra.getValueAsString());
@@ -145,6 +146,7 @@ public class AppItem {
                 if (ri.activityInfo.packageName.equals(myPackageName)) continue;
                 Intent intentForThisActivity = new Intent();
                 intentForThisActivity.setClassName(ri.activityInfo.applicationInfo.packageName, ri.activityInfo.name);
+                intentForThisActivity.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
                 AppItem n = new AppItem(ri.activityInfo.applicationInfo.packageName, ri.activityInfo.name, ri.activityInfo.loadLabel(pm).toString(), intentForThisActivity);
                 ret.add(n);
             }
@@ -169,6 +171,7 @@ public class AppItem {
                 if (ri.activityInfo.packageName.equals(myPackageName)) continue;
                 Intent intentForThisActivity = new Intent();
                 intentForThisActivity.setClassName(ri.activityInfo.applicationInfo.packageName, ri.activityInfo.name);
+                intentForThisActivity.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
                 AppItem n = new AppItem(ri.activityInfo.applicationInfo.packageName, ri.activityInfo.name, ri.loadLabel(pm).toString(), intentForThisActivity);
                 ret.add(n);
             }
