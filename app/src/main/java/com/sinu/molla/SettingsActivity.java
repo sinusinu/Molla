@@ -410,6 +410,8 @@ public class SettingsActivity extends AppCompatActivity {
                         startActivity(settingsIntent);
                     } catch (ActivityNotFoundException e) {
                         Toast.makeText(this, getString(R.string.settings_error_settings_no_activity), Toast.LENGTH_LONG).show();
+                    } catch (SecurityException e) {
+                        Toast.makeText(this, getString(R.string.settings_error_settings_security_error), Toast.LENGTH_LONG).show();
                     }
                     break;
                 case "open_set_disp":
@@ -418,6 +420,8 @@ public class SettingsActivity extends AppCompatActivity {
                         startActivity(settingsIntent);
                     } catch (ActivityNotFoundException e) {
                         Toast.makeText(this, getString(R.string.settings_error_settings_no_activity), Toast.LENGTH_LONG).show();
+                    } catch (SecurityException e) {
+                        Toast.makeText(this, getString(R.string.settings_error_settings_security_error), Toast.LENGTH_LONG).show();
                     }
                     break;
                 case "open_set_apps":
@@ -426,6 +430,8 @@ public class SettingsActivity extends AppCompatActivity {
                         startActivity(settingsIntent);
                     } catch (ActivityNotFoundException e) {
                         Toast.makeText(this, getString(R.string.settings_error_settings_no_activity), Toast.LENGTH_LONG).show();
+                    } catch (SecurityException e) {
+                        Toast.makeText(this, getString(R.string.settings_error_settings_security_error), Toast.LENGTH_LONG).show();
                     }
                     break;
             }
