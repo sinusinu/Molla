@@ -88,11 +88,6 @@ public class SettingsAdapter extends RecyclerView.Adapter<SettingsAdapter.ViewHo
                         MollaSetting.TYPE_CHECKBOX, "autostart", false
                 ),
                 new MollaSetting(
-                        context.getString(R.string.settings_orientation_title),
-                        context.getString(R.string.settings_orientation_desc),
-                        MollaSetting.TYPE_BUTTON, "orientation", true
-                ),
-                new MollaSetting(
                         context.getString(R.string.settings_kiosk_mode_title),
                         context.getString(R.string.settings_kiosk_mode_desc),
                         MollaSetting.TYPE_CHECKBOX, "kiosk_mode", false
@@ -113,8 +108,18 @@ public class SettingsAdapter extends RecyclerView.Adapter<SettingsAdapter.ViewHo
                         MollaSetting.TYPE_BUTTON, "autolaunch_delay", false
                 ),
                 new MollaSetting(
-                        context.getString(R.string.settings_autolaunch_alt_detect_title),
-                        context.getString(R.string.settings_autolaunch_alt_detect_desc),
+                        context.getString(R.string.settings_category_troubleshoot),
+                        null,
+                        MollaSetting.TYPE_CATEGORY, null, false
+                ),
+                new MollaSetting(
+                        context.getString(R.string.settings_orientation_title),
+                        context.getString(R.string.settings_orientation_desc),
+                        MollaSetting.TYPE_BUTTON, "orientation", false
+                ),
+                new MollaSetting(
+                        context.getString(R.string.settings_reboot_alt_detect_title),
+                        context.getString(R.string.settings_reboot_alt_detect_desc),
                         MollaSetting.TYPE_CHECKBOX, "autolaunch_alt_detect", false
                 ),
                 new MollaSetting(
