@@ -5,10 +5,10 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingTop="@dimen/_6sdp"
-    android:paddingBottom="@dimen/_10sdp"
-    android:paddingStart="@dimen/_12sdp"
-    android:paddingEnd="@dimen/_12sdp">
+    android:paddingTop="@dimen/_8sdp"
+    android:paddingBottom="@dimen/_14sdp"
+    android:paddingStart="@dimen/_14sdp"
+    android:paddingEnd="@dimen/_14sdp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -23,6 +23,7 @@
             android:layout_height="@dimen/_48sdp"
             android:layout_weight="0"
             android:padding="@dimen/_6sdp"
+            android:contentDescription="@string/dialog_app_details_icon"
             app:srcCompat="@drawable/ic_apps" />
 
         <TextView
@@ -44,13 +45,16 @@
             android:clickable="true"
             android:focusable="true"
             android:focusableInTouchMode="false"
+            android:focusedByDefault="false"
             android:contentDescription="@string/common_cancel"
-            app:srcCompat="@drawable/ic_close" />
+            app:srcCompat="@drawable/ic_close"
+            tools:targetApi="26" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:baselineAligned="false"
         android:orientation="horizontal"
         android:layout_marginTop="@dimen/_4sdp">
 
@@ -71,10 +75,10 @@
             tools:targetApi="26">
 
             <ImageView
-                android:layout_width="@dimen/_36sdp"
-                android:layout_height="@dimen/_36sdp"
-                android:padding="@dimen/_3sdp"
+                android:layout_width="@dimen/_32sdp"
+                android:layout_height="@dimen/_32sdp"
                 android:contentDescription="@string/dialog_app_details_open"
+                android:padding="@dimen/_7sdp"
                 app:srcCompat="@drawable/ic_open" />
 
             <TextView
@@ -100,11 +104,11 @@
             android:contentDescription="@string/dialog_app_details_app_info">
 
             <ImageView
-                android:layout_width="@dimen/_36sdp"
-                android:layout_height="@dimen/_36sdp"
-                android:padding="@dimen/_3sdp"
-                app:srcCompat="@drawable/ic_info"
-                android:contentDescription="@string/dialog_app_details_app_info" />
+                android:layout_width="@dimen/_32sdp"
+                android:layout_height="@dimen/_32sdp"
+                android:contentDescription="@string/dialog_app_details_app_info"
+                android:padding="@dimen/_7sdp"
+                app:srcCompat="@drawable/ic_info" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -129,11 +133,11 @@
             android:contentDescription="@string/dialog_app_details_uninstall">
 
             <ImageView
-                android:layout_width="@dimen/_36sdp"
-                android:layout_height="@dimen/_36sdp"
-                android:padding="@dimen/_3sdp"
-                app:srcCompat="@drawable/ic_delete"
-                android:contentDescription="@string/dialog_app_details_uninstall" />
+                android:layout_width="@dimen/_32sdp"
+                android:layout_height="@dimen/_32sdp"
+                android:contentDescription="@string/dialog_app_details_uninstall"
+                android:padding="@dimen/_7sdp"
+                app:srcCompat="@drawable/ic_delete" />
 
             <TextView
                 android:layout_width="match_parent"

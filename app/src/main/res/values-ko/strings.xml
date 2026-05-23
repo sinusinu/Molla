@@ -148,6 +148,7 @@
     <string name="dialog_kiosk_pin_help_title">키오스크 모드</string>
     <string name="dialog_kiosk_pin_help_content">이 장치는 현재 일부 기능만 사용 가능하도록 제한되어 있습니다. 잠긴 기능에 접근하려면 PIN을 입력해야 합니다.\n\nPIN을 입력하면 모든 기능이 일시적으로 잠금 해제되지만, 메인 화면으로 돌아오면 다시 잠금이 적용됩니다.\n\n키오스크 모드를 영구적으로 해제하려면, 설정 화면에서 키오스크 모드 옵션을 해제하세요.</string>
 
+    <string name="dialog_app_details_icon">앱 아이콘</string>
     <string name="dialog_app_details_open">열기</string>
     <string name="dialog_app_details_app_info">앱 정보</string>
     <string name="dialog_app_details_uninstall">제거</string>
