@@ -152,6 +152,11 @@
     <string name="dialog_kiosk_pin_help_title">Kiosk Mode</string>
     <string name="dialog_kiosk_pin_help_content">This device is currently restricted to limited access. To access all features, you need to enter the PIN.\n\nEntering the PIN will temporarily unlock the features, but they will be locked again as soon as you return to the main screen.\n\nTo disable Kiosk Mode permanently, go to Settings and disable the option.</string>
 
+    <string name="dialog_app_details_name_placeholder" translatable="false">App Name</string>
+    <string name="dialog_app_details_open">Open</string>
+    <string name="dialog_app_details_app_info">App Info</string>
+    <string name="dialog_app_details_uninstall">Uninstall</string>
+
     <string name="common_ok">OK</string>
     <string name="common_cancel">Cancel</string>
     <string name="common_yes">Yes</string>

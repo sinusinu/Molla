@@ -4,9 +4,12 @@
 package com.sinu.molla;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
+import android.provider.Settings;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -15,6 +18,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
@@ -70,7 +74,7 @@ public class AppItemAdapter extends RecyclerView.Adapter<AppItemAdapter.ViewHold
         }
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnHoverListener, View.OnFocusChangeListener {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnHoverListener, View.OnFocusChangeListener, View.OnLongClickListener {
         public final FrameLayout fvBody;
         public final CardView cvCard;
         public final ImageView ivBanner;
@@ -92,6 +96,7 @@ public class AppItemAdapter extends RecyclerView.Adapter<AppItemAdapter.ViewHold
             v.setOnFocusChangeListener(this);
             v.setOnHoverListener(this);
             v.setOnClickListener(this);
+            v.setOnLongClickListener(this);
         }
 
         @Override
@@ -135,6 +140,51 @@ public class AppItemAdapter extends RecyclerView.Adapter<AppItemAdapter.ViewHold
                 var appItem = list.get(manager.getPosition(view));
                 AppItem.launch(activity, appItem);
             }
+        }
+
+        @Override
+        public boolean onLongClick(View view) {
+            if (isEdit) return false;
+
+            var appItem = list.get(manager.getPosition(view));
+            var viewDetailsDialog = activity.getLayoutInflater().inflate(R.layout.dialog_app_details, null);
+
+            AlertDialog ad = new AlertDialog.Builder(activity)
+                    .setView(viewDetailsDialog)
+                    .create();
+
+            boolean isNotUninstallable = UninstallabilityChecker.checkUninstallability(context, appItem.packageName) == UninstallabilityChecker.UNINSTALLABILITY_NOT_UNINSTALLABLE;
+
+            ((TextView)(viewDetailsDialog.findViewById(R.id.tv_dialog_app_details_name))).setText(appItem.displayName);
+            var ci = AppItemIcon.getAppItemIcon((MollaApplication)context, appItem, false);
+            ((ImageView)(viewDetailsDialog.findViewById(R.id.iv_dialog_app_details_icon))).setImageDrawable(ci.drawable);
+            viewDetailsDialog.findViewById(R.id.iv_dialog_app_details_close).setOnClickListener((v) -> {
+                ad.dismiss();
+            });
+            viewDetailsDialog.findViewById(R.id.ll_dialog_app_details_open).setOnClickListener((v) -> {
+                AppItem.launch(activity, appItem);
+                ad.dismiss();
+            });
+            viewDetailsDialog.findViewById(R.id.ll_dialog_app_details_app_info).setOnClickListener((v) -> {
+                var intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                intent.setData(Uri.fromParts("package", appItem.packageName, null));
+                activity.startActivity(intent);
+                ad.dismiss();
+            });
+            if (isNotUninstallable) {
+                viewDetailsDialog.findViewById(R.id.ll_dialog_app_details_uninstall).setVisibility(View.GONE);
+            } else {
+                viewDetailsDialog.findViewById(R.id.ll_dialog_app_details_uninstall).setVisibility(View.VISIBLE);
+                viewDetailsDialog.findViewById(R.id.ll_dialog_app_details_uninstall).setOnClickListener((v) -> {
+                    var intent = new Intent(Intent.ACTION_DELETE);
+                    intent.setData(Uri.fromParts("package", appItem.packageName, null));
+                    activity.startActivity(intent);
+                    ad.dismiss();
+                });
+            }
+
+            ad.show();
+            return true;
         }
     }
 

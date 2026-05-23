@@ -4,8 +4,12 @@
 package com.sinu.molla;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
+import android.provider.Settings;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -82,6 +86,46 @@ public class AppItemListAdapter extends RecyclerView.Adapter<AppItemListAdapter.
         holder.itemView.setOnClickListener(view -> {
             holder.itemView.startAnimation(animScalePressWide);
             AppItem.launch(activity, list.get(position));
+        });
+        holder.itemView.setOnLongClickListener(view -> {
+            var appItem = list.get(position);
+            var viewDetailsDialog = activity.getLayoutInflater().inflate(R.layout.dialog_app_details, null);
+
+            AlertDialog ad = new AlertDialog.Builder(activity)
+                    .setView(viewDetailsDialog)
+                    .create();
+
+            boolean isNotUninstallable = UninstallabilityChecker.checkUninstallability(context, appItem.packageName) == UninstallabilityChecker.UNINSTALLABILITY_NOT_UNINSTALLABLE;
+
+            ((TextView)(viewDetailsDialog.findViewById(R.id.tv_dialog_app_details_name))).setText(appItem.displayName);
+            ((ImageView)(viewDetailsDialog.findViewById(R.id.iv_dialog_app_details_icon))).setImageDrawable(ci.drawable);
+            viewDetailsDialog.findViewById(R.id.iv_dialog_app_details_close).setOnClickListener((v) -> {
+                ad.dismiss();
+            });
+            viewDetailsDialog.findViewById(R.id.ll_dialog_app_details_open).setOnClickListener((v) -> {
+                AppItem.launch(activity, appItem);
+                ad.dismiss();
+            });
+            viewDetailsDialog.findViewById(R.id.ll_dialog_app_details_app_info).setOnClickListener((v) -> {
+                var intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                intent.setData(Uri.fromParts("package", appItem.packageName, null));
+                activity.startActivity(intent);
+                ad.dismiss();
+            });
+            if (isNotUninstallable) {
+                viewDetailsDialog.findViewById(R.id.ll_dialog_app_details_uninstall).setVisibility(View.GONE);
+            } else {
+                viewDetailsDialog.findViewById(R.id.ll_dialog_app_details_uninstall).setVisibility(View.VISIBLE);
+                viewDetailsDialog.findViewById(R.id.ll_dialog_app_details_uninstall).setOnClickListener((v) -> {
+                    var intent = new Intent(Intent.ACTION_DELETE);
+                    intent.setData(Uri.fromParts("package", appItem.packageName, null));
+                    activity.startActivity(intent);
+                    ad.dismiss();
+                });
+            }
+
+            ad.show();
+            return true;
         });
     }
 
