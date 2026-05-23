@@ -460,6 +460,57 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        switch (keyCode) {
+            case KeyEvent.KEYCODE_1:
+            case KeyEvent.KEYCODE_NUMPAD_1:
+                return scrollAndFocusToIndex(0);
+            case KeyEvent.KEYCODE_2:
+            case KeyEvent.KEYCODE_NUMPAD_2:
+                return scrollAndFocusToIndex(1);
+            case KeyEvent.KEYCODE_3:
+            case KeyEvent.KEYCODE_NUMPAD_3:
+                return scrollAndFocusToIndex(2);
+            case KeyEvent.KEYCODE_4:
+            case KeyEvent.KEYCODE_NUMPAD_4:
+                return scrollAndFocusToIndex(3);
+            case KeyEvent.KEYCODE_5:
+            case KeyEvent.KEYCODE_NUMPAD_5:
+                return scrollAndFocusToIndex(4);
+            case KeyEvent.KEYCODE_6:
+            case KeyEvent.KEYCODE_NUMPAD_6:
+                return scrollAndFocusToIndex(5);
+            case KeyEvent.KEYCODE_7:
+            case KeyEvent.KEYCODE_NUMPAD_7:
+                return scrollAndFocusToIndex(6);
+            case KeyEvent.KEYCODE_8:
+            case KeyEvent.KEYCODE_NUMPAD_8:
+                return scrollAndFocusToIndex(7);
+            case KeyEvent.KEYCODE_9:
+            case KeyEvent.KEYCODE_NUMPAD_9:
+                return scrollAndFocusToIndex(8);
+            case KeyEvent.KEYCODE_0:
+            case KeyEvent.KEYCODE_NUMPAD_0:
+                binding.lvMainAll.requestFocus();
+                return true;
+            default:
+                return super.onKeyDown(keyCode, event);
+        }
+    }
+
+    private boolean scrollAndFocusToIndex(int index) {
+        if (items.size() - 1 < index) return false;
+        binding.rvMainFav.post(() -> {
+            binding.rvMainFav.scrollToPosition(index);
+            binding.rvMainFav.post(() -> {
+                var vh = binding.rvMainFav.findViewHolderForAdapterPosition(index);
+                if (vh != null) vh.itemView.requestFocus();
+            });
+        });
+        return true;
+    }
+
+    @Override
     protected void onPause() {
         super.onPause();
         if (isFavListUpdateReserved) {
