@@ -9,6 +9,8 @@ import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -23,6 +25,8 @@ public class AppItemListAdapter extends RecyclerView.Adapter<AppItemListAdapter.
     private final Activity activity;
     private final ArrayList<AppItem> list;
 
+    private final Animation animScalePressWide;
+
     private final Drawable drawableGeneric;
 
     private final boolean useFocusOutline;
@@ -32,6 +36,7 @@ public class AppItemListAdapter extends RecyclerView.Adapter<AppItemListAdapter.
         this.context = context;
         this.activity = activity;
         this.useFocusOutline = useFocusOutline;
+        animScalePressWide = AnimationUtils.loadAnimation(context, R.anim.scale_press_wide);
 
         drawableGeneric = ContextCompat.getDrawable(context, simple ? R.drawable.generic_simple : R.drawable.generic);
     }
@@ -75,6 +80,7 @@ public class AppItemListAdapter extends RecyclerView.Adapter<AppItemListAdapter.
         holder.ivIcon.setImageDrawable(appIcon);
         holder.tvAppName.setText(list.get(position).customItemDisplayName == null ? list.get(position).displayName : list.get(position).customItemDisplayName);
         holder.itemView.setOnClickListener(view -> {
+            holder.itemView.startAnimation(animScalePressWide);
             AppItem.launch(activity, list.get(position));
         });
     }

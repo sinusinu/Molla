@@ -31,6 +31,7 @@ public class AppItemAdapter extends RecyclerView.Adapter<AppItemAdapter.ViewHold
 
     private final Animation animScaleUp;
     private final Animation animScaleDown;
+    private final Animation animScalePress;
 
     private Drawable drawableGeneric;
 
@@ -50,6 +51,7 @@ public class AppItemAdapter extends RecyclerView.Adapter<AppItemAdapter.ViewHold
         this.activity = activity;
         animScaleUp = AnimationUtils.loadAnimation(context, R.anim.scale_up);
         animScaleDown = AnimationUtils.loadAnimation(context, R.anim.scale_down);
+        animScalePress = AnimationUtils.loadAnimation(context, R.anim.scale_press);
         animScaleUp.setFillAfter(true);
 
         drawableGeneric = ContextCompat.getDrawable(context, simple ? R.drawable.generic_simple : R.drawable.generic);
@@ -120,6 +122,7 @@ public class AppItemAdapter extends RecyclerView.Adapter<AppItemAdapter.ViewHold
 
         @Override
         public void onClick(View view) {
+            view.startAnimation(animScalePress);
             if (isEdit) {
                 if (kioskModeActive) {
                     if (kioskUnlockRequestedListener != null) kioskUnlockRequestedListener.onKioskUnlockRequested();

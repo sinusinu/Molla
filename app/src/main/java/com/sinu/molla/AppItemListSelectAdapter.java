@@ -8,6 +8,8 @@ import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -25,15 +27,19 @@ public class AppItemListSelectAdapter extends RecyclerView.Adapter<AppItemListSe
 
     private Drawable drawableGeneric;
 
+    private final Animation animScalePressWide;
+
     private final View.OnClickListener itemClickListener;
 
     private final boolean useFocusOutline;
 
-    public AppItemListSelectAdapter(Context context, ArrayList<AppItem> list, ArrayList<AppItem> selectedList, View.OnClickListener itemClickListener, boolean simple, boolean useFocusOutline) {
+    public AppItemListSelectAdapter(Context context, ArrayList<AppItem> list, ArrayList<AppItem> selectedList, @NonNull View.OnClickListener itemClickListener, boolean simple, boolean useFocusOutline) {
         this.list = list;
         this.selectedList = selectedList;
         this.context = context;
         this.useFocusOutline = useFocusOutline;
+
+        animScalePressWide = AnimationUtils.loadAnimation(context, R.anim.scale_press_wide);
 
         drawableGeneric = ContextCompat.getDrawable(context, simple ? R.drawable.generic_simple : R.drawable.generic);
 
@@ -58,7 +64,10 @@ public class AppItemListSelectAdapter extends RecyclerView.Adapter<AppItemListSe
             tvAppName = v.findViewById(R.id.tv_appitem_list_select_app_name);
             cbCheck = v.findViewById(R.id.cb_appitem_list_select_check);
 
-            v.setOnClickListener(itemClickListener);
+            v.setOnClickListener((vv) -> {
+                v.startAnimation(animScalePressWide);
+                itemClickListener.onClick(vv);
+            });
 
             if (useFocusOutline) v.setBackgroundResource(R.drawable.focus_outline);
         }
