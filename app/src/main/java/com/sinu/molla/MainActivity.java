@@ -17,6 +17,7 @@ import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.BatteryManager;
@@ -24,6 +25,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
+import android.provider.Settings;
 import android.text.format.DateFormat;
 import android.view.KeyEvent;
 import android.view.View;
@@ -35,6 +37,7 @@ import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.activity.OnBackPressedCallback;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.content.res.AppCompatResources;
 import androidx.core.content.ContextCompat;
@@ -53,6 +56,8 @@ import java.util.Arrays;
 import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
+    private static final int REQ_APP_REMOVAL_CHECK_NEEDED = 1;
+
     ActivityMainBinding binding;
 
     SharedPreferences pref;
@@ -84,6 +89,8 @@ public class MainActivity extends AppCompatActivity {
 
     boolean kioskModeActive;
     StringBuilder sbPin;
+
+    int removalCheckTarget = -1;
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -680,6 +687,54 @@ public class MainActivity extends AppCompatActivity {
             binding.lvMainSettings.setFocusable(true);
             binding.llMainAutolaunchOverlay.setVisibility(View.GONE);
             binding.lvMainAll.requestFocus();
+        }
+    }
+
+    @SuppressWarnings("deprecation")
+    public void showAppInfo(int index) {
+        if (index < 0 || index >= items.size()) return;
+        removalCheckTarget = index;
+        var appItem = items.get(index);
+        var intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+        intent.setData(Uri.fromParts("package", appItem.packageName, null));
+        startActivityForResult(intent, REQ_APP_REMOVAL_CHECK_NEEDED);
+    }
+
+    @SuppressWarnings("deprecation")
+    public void askAppUninstall(int index) {
+        if (index < 0 || index >= items.size()) return;
+        removalCheckTarget = index;
+        var appItem = items.get(index);
+        var intent = new Intent(Intent.ACTION_DELETE);
+        intent.setData(Uri.fromParts("package", appItem.packageName, null));
+        startActivityForResult(intent, REQ_APP_REMOVAL_CHECK_NEEDED);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if (requestCode == REQ_APP_REMOVAL_CHECK_NEEDED) {
+            h.postDelayed(() -> {
+                if (removalCheckTarget < 0 || removalCheckTarget >= items.size()) return;
+                checkIfAppAtIndexIsRemoved(removalCheckTarget);
+                removalCheckTarget = -1;
+            }, 1000);
+        }
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    private void checkIfAppAtIndexIsRemoved(int index) {
+        var appItem = items.get(index);
+        boolean packageRemoved = false;
+        try {
+            getPackageManager().getPackageInfo(appItem.packageName, 0);
+        } catch (PackageManager.NameNotFoundException e) {
+            packageRemoved = true;
+        }
+        if (packageRemoved) {
+            // no need to modify the fav apps list as uninstalled app will be filtered out anyway
+            // ...right?
+            items.remove(index);
+            adapter.notifyItemRemoved(index);
         }
     }
 }

@@ -146,7 +146,8 @@ public class AppItemAdapter extends RecyclerView.Adapter<AppItemAdapter.ViewHold
         public boolean onLongClick(View view) {
             if (isEdit) return false;
 
-            var appItem = list.get(manager.getPosition(view));
+            var appItemIndex = manager.getPosition(view);
+            var appItem = list.get(appItemIndex);
             var viewDetailsDialog = activity.getLayoutInflater().inflate(R.layout.dialog_app_details, null);
 
             AlertDialog ad = new AlertDialog.Builder(activity)
@@ -166,9 +167,7 @@ public class AppItemAdapter extends RecyclerView.Adapter<AppItemAdapter.ViewHold
                 ad.dismiss();
             });
             viewDetailsDialog.findViewById(R.id.ll_dialog_app_details_app_info).setOnClickListener((v) -> {
-                var intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-                intent.setData(Uri.fromParts("package", appItem.packageName, null));
-                activity.startActivity(intent);
+                if (activity instanceof MainActivity) ((MainActivity)activity).showAppInfo(appItemIndex);
                 ad.dismiss();
             });
             if (isNotUninstallable) {
@@ -176,9 +175,7 @@ public class AppItemAdapter extends RecyclerView.Adapter<AppItemAdapter.ViewHold
             } else {
                 viewDetailsDialog.findViewById(R.id.ll_dialog_app_details_uninstall).setVisibility(View.VISIBLE);
                 viewDetailsDialog.findViewById(R.id.ll_dialog_app_details_uninstall).setOnClickListener((v) -> {
-                    var intent = new Intent(Intent.ACTION_DELETE);
-                    intent.setData(Uri.fromParts("package", appItem.packageName, null));
-                    activity.startActivity(intent);
+                    if (activity instanceof MainActivity) ((MainActivity)activity).askAppUninstall(appItemIndex);
                     ad.dismiss();
                 });
             }

@@ -107,9 +107,7 @@ public class AppItemListAdapter extends RecyclerView.Adapter<AppItemListAdapter.
                 ad.dismiss();
             });
             viewDetailsDialog.findViewById(R.id.ll_dialog_app_details_app_info).setOnClickListener((v) -> {
-                var intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-                intent.setData(Uri.fromParts("package", appItem.packageName, null));
-                activity.startActivity(intent);
+                if (activity instanceof AllAppsActivity) ((AllAppsActivity)activity).showAppInfo(position);
                 ad.dismiss();
             });
             if (isNotUninstallable) {
@@ -117,9 +115,7 @@ public class AppItemListAdapter extends RecyclerView.Adapter<AppItemListAdapter.
             } else {
                 viewDetailsDialog.findViewById(R.id.ll_dialog_app_details_uninstall).setVisibility(View.VISIBLE);
                 viewDetailsDialog.findViewById(R.id.ll_dialog_app_details_uninstall).setOnClickListener((v) -> {
-                    var intent = new Intent(Intent.ACTION_DELETE);
-                    intent.setData(Uri.fromParts("package", appItem.packageName, null));
-                    activity.startActivity(intent);
+                    if (activity instanceof AllAppsActivity) ((AllAppsActivity)activity).askAppUninstall(position);
                     ad.dismiss();
                 });
             }
