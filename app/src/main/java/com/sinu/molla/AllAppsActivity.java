@@ -159,6 +159,7 @@ public class AllAppsActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     private void checkIfAppAtIndexIsRemoved(int index) {
         var appItem = items.get(index);
         boolean packageRemoved = false;
@@ -169,7 +170,7 @@ public class AllAppsActivity extends AppCompatActivity {
         }
         if (packageRemoved) {
             items.remove(index);
-            adapter.notifyItemRemoved(index);
+            adapter.notifyDataSetChanged();
         }
     }
 }

@@ -722,6 +722,7 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     private void checkIfAppAtIndexIsRemoved(int index) {
         var appItem = items.get(index);
         boolean packageRemoved = false;
@@ -734,7 +735,7 @@ public class MainActivity extends AppCompatActivity {
             // no need to modify the fav apps list as uninstalled app will be filtered out anyway
             // ...right?
             items.remove(index);
-            adapter.notifyItemRemoved(index);
+            adapter.notifyDataSetChanged();
         }
     }
 }
