@@ -4,12 +4,12 @@ plugins {
 
 android {
     namespace 'com.sinu.molla'
-    compileSdk = 36
+    compileSdk = 37
 
     defaultConfig {
         applicationId "com.sinu.molla"
         minSdk 23
-        targetSdk 36
+        targetSdk 37
         versionCode 23
         versionName "1.4.6"
         resourceConfigurations += ['en', 'ko']
@@ -52,9 +52,9 @@ android {
 }
 
 dependencies {
-    implementation 'androidx.appcompat:appcompat:1.7.1'
+    implementation 'androidx.appcompat:appcompat:1.8.0'
     implementation 'com.google.android.material:material:1.14.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.2.1'
+    implementation 'androidx.constraintlayout:constraintlayout:2.2.2'
     implementation 'com.intuit.sdp:sdp-android:1.1.1'
     implementation 'com.intuit.ssp:ssp-android:1.1.1'
     implementation 'androidx.recyclerview:recyclerview:1.4.0'
