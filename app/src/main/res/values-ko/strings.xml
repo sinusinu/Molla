@@ -38,7 +38,7 @@
     <string name="settings_simple_background_title">단순한 아이콘 배경</string>
     <string name="settings_simple_background_desc">아이콘 배경으로 단순한 회색 사각형을 사용합니다.</string>
     <string name="settings_use_system_bar_title">시스템 표시줄 보이기</string>
-    <string name="settings_use_system_bar_desc">첫 화면에서 시스템 표시줄을 표시합니다.</string>
+    <string name="settings_use_system_bar_desc">상태 표시줄과 내비게이션 표시줄을 항상 표시합니다. 일부 장치에서는 제대로 작동하지 않습니다.</string>
     <string name="settings_outline_title">포커스 시 외곽선 표시</string>
     <string name="settings_outline_desc">포커스된 항목을 배경색 대신 흰 외곽선으로 표시합니다.</string>
     <string name="settings_category_behavior">동작</string>

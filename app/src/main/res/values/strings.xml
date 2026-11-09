@@ -38,8 +38,8 @@
     <string name="settings_customize_indicator_desc">Set which indicator to show on main screen.</string>
     <string name="settings_simple_background_title">Simple Icon Background</string>
     <string name="settings_simple_background_desc">Use a simple gray rectangle as the icon background.</string>
-    <string name="settings_use_system_bar_title">Show System Bar</string>
-    <string name="settings_use_system_bar_desc">Display System Bar on main screen.</string>
+    <string name="settings_use_system_bar_title">Show System Bars</string>
+    <string name="settings_use_system_bar_desc">Always show Status and Navigation Bars. May not work properly on some devices.</string>
     <string name="settings_outline_title">Show Outline on Focus</string>
     <string name="settings_outline_desc">Show white outline instead of highlight on focused item.</string>
     <string name="settings_category_behavior">Behavior</string>

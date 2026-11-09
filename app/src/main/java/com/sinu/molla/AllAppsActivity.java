@@ -19,6 +19,8 @@ import androidx.activity.EdgeToEdge;
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.core.view.WindowInsetsControllerCompat;
@@ -71,10 +73,10 @@ public class AllAppsActivity extends AppCompatActivity {
             isListUpdateReserved = true;
         });
 
-        // hide system bars
+        // setup system bars (hide/show on onResume)
         WindowInsetsControllerCompat windowInsetsController = WindowCompat.getInsetsController(getWindow(), getWindow().getDecorView());
         windowInsetsController.setSystemBarsBehavior(WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE);
-        windowInsetsController.hide(WindowInsetsCompat.Type.systemBars());
+        windowInsetsController.setAppearanceLightStatusBars(false);
 
         h = new Handler(getMainLooper());
 
@@ -92,6 +94,27 @@ public class AllAppsActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+
+        // enable system bar if goofy setting "use_system_bar" is enabled
+        if (pref.getInt("use_system_bar", 0) == 1) {
+            WindowInsetsControllerCompat windowInsetsController = WindowCompat.getInsetsController(getWindow(), getWindow().getDecorView());
+            windowInsetsController.show(WindowInsetsCompat.Type.systemBars());
+
+            ViewCompat.setOnApplyWindowInsetsListener(binding.getRoot(), (v, insets) -> {
+                Insets bars = insets.getInsets(WindowInsetsCompat.Type.systemBars() | WindowInsetsCompat.Type.displayCutout());
+                v.setPadding(bars.left, bars.top, bars.right, bars.bottom);
+                return WindowInsetsCompat.CONSUMED;
+            });
+        } else {
+            WindowInsetsControllerCompat windowInsetsController = WindowCompat.getInsetsController(getWindow(), getWindow().getDecorView());
+            windowInsetsController.hide(WindowInsetsCompat.Type.systemBars());
+
+            ViewCompat.setOnApplyWindowInsetsListener(binding.getRoot(), (v, insets) -> {
+                Insets bars = insets.getInsets(WindowInsetsCompat.Type.displayCutout());
+                v.setPadding(bars.left, bars.top, bars.right, bars.bottom);
+                return WindowInsetsCompat.CONSUMED;
+            });
+        }
 
         String orient = pref.getString("forced_orientation", "disable");
         if ("landscape".equals(orient)) setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_USER_LANDSCAPE);
