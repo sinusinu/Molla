@@ -97,6 +97,7 @@ public class OrderActivity extends AppCompatActivity {
 
         binding.ivOrdBack.setOnClickListener((v) -> {
             finish();
+            //noinspection deprecation
             overridePendingTransition(R.anim.no_anim, R.anim.no_anim);
         });
 
@@ -109,6 +110,7 @@ public class OrderActivity extends AppCompatActivity {
             @Override
             public void handleOnBackPressed() {
                 finish();
+                //noinspection deprecation
                 overridePendingTransition(R.anim.no_anim, R.anim.no_anim);
             }
         };

@@ -464,6 +464,7 @@ public class SettingsActivity extends AppCompatActivity {
 
         binding.ivSettingsBack.setOnClickListener((v) -> {
             finish();
+            //noinspection deprecation
             overridePendingTransition(R.anim.no_anim, R.anim.no_anim);
         });
 
@@ -476,6 +477,7 @@ public class SettingsActivity extends AppCompatActivity {
             @Override
             public void handleOnBackPressed() {
                 finish();
+                //noinspection deprecation
                 overridePendingTransition(R.anim.no_anim, R.anim.no_anim);
             }
         };

@@ -76,6 +76,7 @@ public class EditActivity extends AppCompatActivity {
 
         binding.ivEditBack.setOnClickListener((v) -> {
             finish();
+            //noinspection deprecation
             overridePendingTransition(R.anim.no_anim, R.anim.no_anim);
         });
 
@@ -84,6 +85,7 @@ public class EditActivity extends AppCompatActivity {
                 Toast.makeText(this, getString(R.string.edit_reorder_empty), Toast.LENGTH_SHORT).show();
             } else {
                 startActivityForResult(new Intent(this, OrderActivity.class), REQ_REORDER);
+                //noinspection deprecation
                 overridePendingTransition(R.anim.no_anim, R.anim.no_anim);
             }
         });
@@ -97,6 +99,7 @@ public class EditActivity extends AppCompatActivity {
             @Override
             public void handleOnBackPressed() {
                 finish();
+                //noinspection deprecation
                 overridePendingTransition(R.anim.no_anim, R.anim.no_anim);
             }
         };

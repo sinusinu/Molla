@@ -37,6 +37,7 @@ import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.activity.OnBackPressedCallback;
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.content.res.AppCompatResources;
@@ -206,11 +207,13 @@ public class MainActivity extends AppCompatActivity {
 
         binding.lvMainAll.setOnClickListener((v) -> {
             startActivity(new Intent(this, AllAppsActivity.class));
+            //noinspection deprecation
             overridePendingTransition(R.anim.no_anim, R.anim.no_anim);
             isFavListUpdateReserved = true;
         });
         binding.lvMainSettings.setOnClickListener((v) -> {
             startActivity(new Intent(this, SettingsActivity.class));
+            //noinspection deprecation
             overridePendingTransition(R.anim.no_anim, R.anim.no_anim);
             isFavListUpdateReserved = true;
         });
@@ -432,7 +435,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onNewIntent(Intent intent) {
+    protected void onNewIntent(@NonNull Intent intent) {
         super.onNewIntent(intent);
 
         // check if device rebooted (alternative, set as default launcher)

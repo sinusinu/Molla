@@ -64,11 +64,13 @@ public class AllAppsActivity extends AppCompatActivity {
 
         binding.ivAllBack.setOnClickListener((v) -> {
             finish();
+            //noinspection deprecation
             overridePendingTransition(R.anim.no_anim, R.anim.no_anim);
         });
 
         binding.ivAllManageCustom.setOnClickListener((v) -> {
             startActivity(new Intent(this, ManageCustomShortcutsActivity.class));
+            //noinspection deprecation
             overridePendingTransition(R.anim.no_anim, R.anim.no_anim);
             isListUpdateReserved = true;
         });
@@ -84,6 +86,7 @@ public class AllAppsActivity extends AppCompatActivity {
             @Override
             public void handleOnBackPressed() {
                 finish();
+                //noinspection deprecation
                 overridePendingTransition(R.anim.no_anim, R.anim.no_anim);
             }
         };
