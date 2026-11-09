@@ -530,9 +530,14 @@ public class SettingsActivity extends AppCompatActivity {
                 }
 
                 try (FileOutputStream fos = new FileOutputStream(new File(getFilesDir(), "wallpaper.webp"))) {
-                    selectedImage.compress(Bitmap.CompressFormat.WEBP, 90, fos);
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                        selectedImage.compress(Bitmap.CompressFormat.WEBP_LOSSY, 90, fos);
+                    } else {
+                        //noinspection deprecation
+                        selectedImage.compress(Bitmap.CompressFormat.WEBP, 90, fos);
+                    }
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    //e.printStackTrace();
                     Toast.makeText(this, "Failed to set wallpaper", Toast.LENGTH_LONG).show();
                     // Delete the file in case of it being corrupted, deletion result isn't important
                     // noinspection ResultOfMethodCallIgnored
@@ -543,7 +548,7 @@ public class SettingsActivity extends AppCompatActivity {
 
                 selectedImage.recycle();
             } catch (FileNotFoundException e) {
-                e.printStackTrace();
+                //e.printStackTrace();
                 Toast.makeText(this, "Failed to set wallpaper", Toast.LENGTH_LONG).show();
             }
         }
