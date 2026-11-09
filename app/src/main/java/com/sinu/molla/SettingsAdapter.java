@@ -156,6 +156,10 @@ public class SettingsAdapter extends RecyclerView.Adapter<SettingsAdapter.ViewHo
         for (MollaSetting s : settings) s.fetch(pref);
     }
 
+    public void setShowGoofy(boolean showGoofy) {
+        this.showGoofy = showGoofy;
+    }
+
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
         public TextView tvPropertyTitle;
         public TextView tvPropertyDesc;

@@ -399,9 +399,13 @@ public class SettingsActivity extends AppCompatActivity {
                         var currentShowGoofy = pref.getInt("show_goofy", 0);
                         if (currentShowGoofy == 0) {
                             pref.edit().putInt("show_goofy", 1).apply();
+                            adapter.setShowGoofy(true);
+                            adapter.notifyDataSetChanged();
                             Toast.makeText(this, R.string.settings_about_secret_enabled, Toast.LENGTH_LONG).show();
                         } else {
                             pref.edit().putInt("show_goofy", 0).apply();
+                            adapter.setShowGoofy(false);
+                            adapter.notifyDataSetChanged();
                             Toast.makeText(this, R.string.settings_about_secret_disabled, Toast.LENGTH_LONG).show();
                         }
                     }
