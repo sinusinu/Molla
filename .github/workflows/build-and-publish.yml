@@ -49,6 +49,6 @@ jobs:
       with:
         tag_name: nightly
         name: Nightly build
-        body: This is an automated release.
+        body: Here you can find the latest automated build.
         prerelease: true
         files: app/build/outputs/apk/nightly/*.apk
