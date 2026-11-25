@@ -50,6 +50,8 @@
     <string name="settings_autostart_at_boot_desc">장치가 부팅을 완료하면 Molla를 자동으로 실행합니다. 장치가 기본 런처를 변경하는 기능을 제공하지 않을 경우 유용합니다.</string>
     <string name="settings_kiosk_mode_title">키오스크 모드</string>
     <string name="settings_kiosk_mode_desc">메인 화면에서 바로가기를 제외한 모든 버튼을 숨깁니다.</string>
+    <string name="settings_hold_settings_opens_system_settings_title">설정 꾹 눌러 설정 앱 열기</string>
+    <string name="settings_hold_settings_opens_system_settings_desc">첫 화면의 설정 버튼을 꾹 누르면 설정 앱이 실행되게 합니다.</string>
     <string name="settings_category_autolaunch">자동 실행</string>
     <string name="settings_autolaunch_app_title">자동 실행할 앱</string>
     <string name="settings_autolaunch_app_desc">선택한 앱을 장치 재부팅 후 Molla 첫 실행 시 바로 실행합니다. 일부 장치에서는 작동하지 않습니다.</string>

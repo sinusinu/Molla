@@ -51,6 +51,8 @@
     <string name="settings_autostart_at_boot_desc">Start Molla automatically after the device boots up. Useful if the device does not allow changing the default launcher.</string>
     <string name="settings_kiosk_mode_title">Kiosk Mode</string>
     <string name="settings_kiosk_mode_desc">Hide all buttons except Quick Access icons from the main screen.</string>
+    <string name="settings_hold_settings_opens_system_settings_title">Hold Settings to open System Settings</string>
+    <string name="settings_hold_settings_opens_system_settings_desc">Open Settings app when the Settings button on main screen is long-pressed.</string>
     <string name="settings_category_autolaunch">Auto-Launch</string>
     <string name="settings_autolaunch_app_title">Auto-Launch App</string>
     <string name="settings_autolaunch_app_desc">When set, the selected app will automatically launch when Molla first launches after rebooting the device. May not work on some devices.</string>

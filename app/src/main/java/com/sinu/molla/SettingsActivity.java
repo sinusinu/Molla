@@ -110,6 +110,7 @@ public class SettingsActivity extends AppCompatActivity {
                 case "use_system_bar":
                 case "autolaunch_alt_detect":
                 case "use_focus_outline":
+                case "hold_settings_opens_system_settings":
                     adapter.settings[idx].fetch(pref);
                     if (adapter.settings[idx].value == 0) {
                         adapter.settings[idx].set(pref, 1);

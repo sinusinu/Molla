@@ -8,6 +8,7 @@ import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothManager;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -87,6 +88,7 @@ public class MainActivity extends AppCompatActivity {
     int autoLaunchCountdown = 0;
 
     boolean useFocusOutline;
+    boolean holdSettingsOpensSystemSettings;
 
     boolean kioskModeActive;
     StringBuilder sbPin;
@@ -104,6 +106,7 @@ public class MainActivity extends AppCompatActivity {
 
         pref = getSharedPreferences("com.sinu.molla.settings", Context.MODE_PRIVATE);
         useFocusOutline = pref.getInt("use_focus_outline", 0) == 1;
+        holdSettingsOpensSystemSettings = pref.getInt("hold_settings_opens_system_settings", 0) == 1;
 
         items = new ArrayList<>();
 
@@ -228,6 +231,22 @@ public class MainActivity extends AppCompatActivity {
         binding.lvMainSettings.setOnFocusChangeListener((view, hasFocus) -> {
             binding.lvMainSettings.startAnimation(hasFocus ? animScaleUp : animScaleDown);
         });
+        if (holdSettingsOpensSystemSettings) {
+            binding.lvMainSettings.setOnLongClickListener((view) -> {
+                // keep parity with how SettingsActivity does
+                try {
+                    Intent settingsIntent = new Intent(Settings.ACTION_SETTINGS);
+                    startActivity(settingsIntent);
+                } catch (ActivityNotFoundException e) {
+                    Toast.makeText(this, getString(R.string.settings_error_settings_no_activity), Toast.LENGTH_LONG).show();
+                } catch (SecurityException e) {
+                    Toast.makeText(this, getString(R.string.settings_error_settings_security_error), Toast.LENGTH_LONG).show();
+                }
+                return true;
+            });
+        } else {
+            binding.lvMainSettings.setOnLongClickListener(null);
+        }
 
         // setup system bars (hide/show on onResume)
         WindowInsetsControllerCompat windowInsetsController = WindowCompat.getInsetsController(getWindow(), getWindow().getDecorView());
@@ -543,6 +562,24 @@ public class MainActivity extends AppCompatActivity {
         } else {
             binding.lvMainAll.setBackgroundResource(R.drawable.focus_highlight);
             binding.lvMainSettings.setBackgroundResource(R.drawable.focus_highlight);
+        }
+
+        holdSettingsOpensSystemSettings = pref.getInt("hold_settings_opens_system_settings", 0) == 1;
+        if (holdSettingsOpensSystemSettings) {
+            binding.lvMainSettings.setOnLongClickListener((view) -> {
+                // keep parity with how SettingsActivity does
+                try {
+                    Intent settingsIntent = new Intent(Settings.ACTION_SETTINGS);
+                    startActivity(settingsIntent);
+                } catch (ActivityNotFoundException e) {
+                    Toast.makeText(this, getString(R.string.settings_error_settings_no_activity), Toast.LENGTH_LONG).show();
+                } catch (SecurityException e) {
+                    Toast.makeText(this, getString(R.string.settings_error_settings_security_error), Toast.LENGTH_LONG).show();
+                }
+                return true;
+            });
+        } else {
+            binding.lvMainSettings.setOnLongClickListener(null);
         }
 
         kioskModeActive = pref.getInt("kiosk_mode", 0) == 1;
