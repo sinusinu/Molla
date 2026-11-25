@@ -10,8 +10,8 @@ android {
         applicationId "com.sinu.molla"
         minSdk 23
         targetSdk 37
-        versionCode 24
-        versionName "1.4.7"
+        versionCode 25
+        versionName "1.4.8"
         resourceConfigurations += ['en', 'ko']
     }
 
