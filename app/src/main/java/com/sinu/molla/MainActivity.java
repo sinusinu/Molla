@@ -97,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
+        WindowCompat.enableEdgeToEdge(getWindow());
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
@@ -601,7 +601,7 @@ public class MainActivity extends AppCompatActivity {
             WindowInsetsControllerCompat windowInsetsController = WindowCompat.getInsetsController(getWindow(), getWindow().getDecorView());
             windowInsetsController.show(WindowInsetsCompat.Type.systemBars());
 
-            ViewCompat.setOnApplyWindowInsetsListener(binding.clMainContainer, (v, insets) -> {
+            ViewCompat.setOnApplyWindowInsetsListener(binding.clMainContent, (v, insets) -> {
                 Insets bars = insets.getInsets(WindowInsetsCompat.Type.systemBars() | WindowInsetsCompat.Type.displayCutout());
                 v.setPadding(bars.left, bars.top, bars.right, bars.bottom);
                 return WindowInsetsCompat.CONSUMED;
@@ -610,7 +610,7 @@ public class MainActivity extends AppCompatActivity {
             WindowInsetsControllerCompat windowInsetsController = WindowCompat.getInsetsController(getWindow(), getWindow().getDecorView());
             windowInsetsController.hide(WindowInsetsCompat.Type.systemBars());
 
-            ViewCompat.setOnApplyWindowInsetsListener(binding.clMainContainer, (v, insets) -> {
+            ViewCompat.setOnApplyWindowInsetsListener(binding.clMainContent, (v, insets) -> {
                 Insets bars = insets.getInsets(WindowInsetsCompat.Type.displayCutout());
                 v.setPadding(bars.left, bars.top, bars.right, bars.bottom);
                 return WindowInsetsCompat.CONSUMED;
