@@ -2,9 +2,7 @@
 
 ![Icon](icon.png)
 
-Molla is an alternative launcher for Android.
-
-Originally designed for handheld gaming devices, Molla features an intuitive D-pad first design, with a straightforward Android-centric experience.
+Molla is an alternative launcher for Android, featuring a controller-first design with a straightforward Android-centric experience.
 
 ## Download
 
@@ -14,9 +12,9 @@ or grab the APKs directly: [Latest Release](https://github.com/sinusinu/Molla/re
 
 ## Features
 
-- D-pad first design: no touchscreen required
-- Clutter-free interface, inspired by Android TV
-- Packed with unusual niche features, including:
+- Controller-first design: no touchscreen required
+- Clutter-free interface inspired by Android TV
+- Packed with niche features, including:
   - Separate wallpaper from system wallpaper
   - Closeable
   - Autostart Molla at boot
